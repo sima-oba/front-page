@@ -1,0 +1,31 @@
+<mat-drawer-container class="container">
+    <mat-drawer #drawer
+        class="nav"
+        [mode]="navMode$ | async"
+        [opened]="navOpened$ | async">
+
+        <button *ngIf="isMobile$ | async"
+            mat-icon-button
+            class="button-close"
+            (click)="drawer.close()">
+
+            <mat-icon>close</mat-icon>
+        </button>
+        
+        <app-nav-panel></app-nav-panel>
+    </mat-drawer>
+
+    <mat-drawer-content>
+        <app-page-title>Relatório de Boas Práticas</app-page-title>
+
+        <button *ngIf="isMobile$ | async"
+            mat-icon-button
+            class="mt-3 ml-3 mb-4"
+            (click)="drawer.open()">
+
+            <mat-icon class="button-menu-icon">menu</mat-icon>
+        </button>
+
+        <router-outlet></router-outlet>
+    </mat-drawer-content>
+</mat-drawer-container>

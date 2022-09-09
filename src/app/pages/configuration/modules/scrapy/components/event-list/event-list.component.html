@@ -1,0 +1,8 @@
+<div #scroll class="container scroll mt-3 mb-4 mx-4">
+    <div class="px-4 pt-4">
+        <app-event 
+            *ngFor="let jobEvent of jobEvents" 
+            [jobEvent]="jobEvent">
+        </app-event>
+    </div>
+</div>

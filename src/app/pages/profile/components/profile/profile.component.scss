@@ -1,0 +1,121 @@
+.header {
+    width: 100%;
+    height: 50px;
+    margin-top: -15px;
+    background: rgb(203, 216, 98);
+}
+
+.header p{
+    color:rgb(249, 251, 236);
+    font-weight: 500;
+    text-align: center;
+    padding-top: 15px;
+}
+
+.profile-content {
+    display: flex;
+    flex-direction: row;
+}
+
+.profile {
+    margin-left: 10%;
+    margin-top: 2%;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    max-width: 250px;
+    height: 500px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: rgb(228, 235, 238);
+    position: relative;
+}
+
+#editbtn {
+    display: none;
+    position: absolute;
+    color: white;
+    right: 8px;
+}
+
+.profile h4 {
+    padding-left: 15px;
+    overflow-wrap: break-word;
+    font-weight: 500;
+    width: 500px;
+    color: rgb(114, 114, 113);
+}
+
+.link-divider {
+    border-bottom: 1px solid rgb(206, 206, 206);
+    max-width: 80%;
+    font-size: 15px;
+    margin-top: 15px;
+    text-decoration: none;
+    font-weight: 400;
+    margin-left: 15px;
+    color: rgb(134, 135, 137);
+}
+
+.profile-info {
+    width: 700px;
+    display: flex;
+    flex-direction: column;
+    margin-left: 40px;
+    margin-top: 65px;
+}
+
+.profile-info h4 {
+    align-self: center;
+    color: rgb(139, 149, 200);
+    font-size: 24px;
+    font-weight: 500;
+}
+
+#profile-avatar {
+    width: 150px;
+    height: 150px;
+    align-self: center;
+}
+
+.info-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-self: center;
+    height: 100%;
+    background: rgb(228, 235, 238);
+    width: 100%;
+    border-radius: 15px;
+}
+
+.info-form div{
+    display: flex;
+    flex-direction: column;
+}
+
+.info {
+    margin-left: 15px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+.info p{
+    color: rgb(139, 149, 200);
+    font-weight: 200;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.info a{
+    font-size: 14px;
+    color: rgb(139, 149, 200);
+    background: white;
+    width: 95%;
+    height: 25px;
+    padding-top: 10px;
+    padding-left: 10px;
+    font-weight: 400;
+    border-radius: 4px;
+}

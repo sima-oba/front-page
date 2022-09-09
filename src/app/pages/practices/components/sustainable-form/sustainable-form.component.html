@@ -1,0 +1,411 @@
+<h3 class="title">Práticas Sustentáveis</h3>
+
+<hr class="separator">
+
+<mat-dialog-content>
+    <form
+        id="sustainable-form"
+        class="form"
+        [formGroup]="form"
+        (ngSubmit)="save()">
+
+        <label class="mt-4">Está satisfeito com o Sistema Plantio Direto que executa?</label>
+        <mat-button-toggle-group formControlName="are_satisfied_with_planting">
+            <mat-button-toggle [value]="true">Sim</mat-button-toggle>
+            <mat-button-toggle [value]="false">Não</mat-button-toggle>
+        </mat-button-toggle-group>
+        <mat-error class="text-left mt-2" *ngIf="getError('are_satisfied_with_planting')?.required">
+            Escolha uma opção
+        </mat-error>
+
+        <label class="mt-4">Como você avalia o seu Plantio Direto?</label>
+        <mat-button-toggle-group formControlName="planting_assessment">
+            <mat-button-toggle [value]="0">Ruim</mat-button-toggle>
+            <mat-button-toggle [value]="1">Razoável</mat-button-toggle>
+            <mat-button-toggle [value]="2">Bom</mat-button-toggle>
+            <mat-button-toggle [value]="3">Excelente</mat-button-toggle>
+        </mat-button-toggle-group>
+        <mat-error class="text-left mt-2" *ngIf="getError('planting_assessment')?.required">
+            Escolha uma opção
+        </mat-error>
+        
+        <label class="mt-4">Para você, qual o principal problema ou dificuldades na utilização do sistema plantio direto?</label>
+        <mat-form-field appearance="outline">
+            <textarea
+                rows="5"
+                matInput
+                formControlName="planting_difficulties">
+            </textarea>
+        </mat-form-field>
+
+        <label class="mt-4">Há quanto tempo você utiliza o Sistema Plantio Direto em sua propriedade?</label>
+        <mat-form-field appearance="outline" class="form-field-small">            
+            <input
+                matInput
+                type="number"
+                min="0"
+                formControlName="planting_years">
+
+            <span matSuffix>anos</span>
+
+            <mat-error *ngIf="getError('planting_years')?.required">
+                Campo Obrigatório
+            </mat-error>
+
+            <mat-error *ngIf="getError('planting_years')?.min">
+                Não pode ser negativo
+            </mat-error>
+        </mat-form-field>
+
+        <label class="mt-4">Na sua opinião, qual importância do uso Plantio Direto?</label>
+        <mat-form-field appearance="outline">
+            <textarea
+                rows="5"
+                matInput
+                formControlName="planting_importance">
+            </textarea>
+        </mat-form-field>
+
+        <label class="mt-4">Você executa as operações agrícolas em nível?</label>
+        <mat-button-toggle-group formControlName="perform_agricultural_operations">
+            <mat-button-toggle [value]="true">Sim</mat-button-toggle>
+            <mat-button-toggle [value]="false">Não</mat-button-toggle>
+        </mat-button-toggle-group>
+        <mat-error class="text-left mt-2" *ngIf="getError('perform_agricultural_operations')?.required">
+            Escolha uma opção
+        </mat-error>
+
+        <label class="mt-4">Você possui terraços em sua propriedade?</label>
+        <mat-button-toggle-group formControlName="has_terraces">
+            <mat-button-toggle [value]="true">Sim</mat-button-toggle>
+            <mat-button-toggle [value]="false">Não</mat-button-toggle>
+        </mat-button-toggle-group>
+        <mat-error class="text-left mt-2" *ngIf="getError('has_terraces')?.required">
+            Escolha uma opção
+        </mat-error>
+
+        <label class="mt-4">Você observa erosão (valetas ou acúmulo de terra) em sua lavoura?</label>
+        <mat-button-toggle-group formControlName="has_erosion">
+            <mat-button-toggle [value]="true">Sim</mat-button-toggle>
+            <mat-button-toggle [value]="false">Não</mat-button-toggle>
+        </mat-button-toggle-group>
+        <mat-error class="text-left mt-2" *ngIf="getError('has_erosion')?.required">
+            Escolha uma opção
+        </mat-error>
+
+        <label class="mt-4">Quando na semeadura, você observa revolvimento do solo?</label>
+        <mat-button-toggle-group formControlName="has_soil_disturbance">
+            <mat-button-toggle [value]="true">Sim</mat-button-toggle>
+            <mat-button-toggle [value]="false">Não</mat-button-toggle>
+        </mat-button-toggle-group>
+        <mat-error class="text-left mt-2" *ngIf="getError('has_soil_disturbance')?.required">
+            Escolha uma opção
+        </mat-error>
+
+        <label class="mt-4">Na sua avaliação, o seu solo está compactado?</label>
+        <mat-button-toggle-group formControlName="is_soil_compactated">
+            <mat-button-toggle [value]="true">Sim</mat-button-toggle>
+            <mat-button-toggle [value]="false">Não</mat-button-toggle>
+        </mat-button-toggle-group>
+        <mat-error class="text-left mt-2" *ngIf="getError('is_soil_compactated')?.required">
+            Escolha uma opção
+        </mat-error>
+
+        <label class="mt-4">Com que frequência você faz o preparo do solo no Plantio Direto? Por quê?</label>
+        <mat-form-field appearance="outline">
+            <textarea
+                rows="5"
+                matInput
+                formControlName="soil_preparation_frequency">
+            </textarea>
+        </mat-form-field>
+
+        <label class="mt-4">Quantos meses do ano o seu solo fica com pouca ou sem cobertura?</label>
+        <mat-form-field appearance="outline" class="form-field-small">
+            <input
+                matInput
+                type="number"
+                min="0"
+                formControlName="bare_soil_months">
+
+            <span matSuffix>meses</span>
+
+            <mat-error *ngIf="getError('bare_soil_months')?.required">
+                Campo Obrigatório
+            </mat-error>
+
+            <mat-error *ngIf="getError('bare_soil_months')?.min">
+                Não pode ser negativo
+            </mat-error>
+        </mat-form-field>
+
+        <label class="mt-4">Quais animais em pastoreio em sua área sob Plantio Direto?</label>
+        <mat-form-field appearance="outline">
+            <textarea
+                rows="1"
+                matInput
+                formControlName="animals_on_plating_area">
+            </textarea>
+        </mat-form-field>
+
+        <label class="mt-4">Você já viu minhocas em sua lavoura?</label>
+        <mat-button-toggle-group formControlName="has_earthworms">
+            <mat-button-toggle [value]="true">Sim</mat-button-toggle>
+            <mat-button-toggle [value]="false">Não</mat-button-toggle>
+        </mat-button-toggle-group>
+        <mat-error class="text-left mt-2" *ngIf="getError('has_earthworms')?.required">
+            Escolha uma opção
+        </mat-error>
+
+        <div *ngIf="form.value?.has_earthworms" class="mt-4">
+            <label class="mt-4">São todas iguais ou você observa diferenças entre elas?</label>
+            <mat-button-toggle-group formControlName="are_earthworms_different">
+                <mat-button-toggle [value]="0">Sim</mat-button-toggle>
+                <mat-button-toggle [value]="1">Não</mat-button-toggle>
+                <mat-button-toggle [value]="2">Não sei dizer</mat-button-toggle>
+            </mat-button-toggle-group>
+
+            <label class="mt-4">As minhocas fazem bem ou mal à sua lavoura?</label>
+            <mat-button-toggle-group formControlName="are_earthworms_good_for_crops">
+                <mat-button-toggle [value]="true">Bem</mat-button-toggle>
+                <mat-button-toggle [value]="false">Mal</mat-button-toggle>
+            </mat-button-toggle-group>
+
+            <label class="mt-4">Como as minhocas fazem bem ou mal à sua lavoura?</label>
+            <mat-form-field appearance="outline" class="mb-0">
+                <textarea
+                    rows="5"
+                    matInput
+                    formControlName="earthworms_consequence_for_crops">
+                </textarea>
+            </mat-form-field>
+        </div>
+
+        <label class="mt-4">Que tipo de adubação você utiliza?</label>
+        <mat-button-toggle-group formControlName="fertilizing_type">
+            <mat-button-toggle value="chemical">Química</mat-button-toggle>
+            <mat-button-toggle value="organic">Orgância</mat-button-toggle>
+            <mat-button-toggle value="chemical_organic">Ambas</mat-button-toggle>
+        </mat-button-toggle-group>
+        <mat-error class="text-left mt-2" *ngIf="getError('fertilizing_type')?.required">
+            Escolha uma opção
+        </mat-error>
+
+        <label class="mt-4">Segue critérios/orientações técnicas?</label>
+        <mat-button-toggle-group formControlName="follow_technical_guidelines">
+            <mat-button-toggle [value]="true">Sim</mat-button-toggle>
+            <mat-button-toggle [value]="false">Não</mat-button-toggle>
+        </mat-button-toggle-group>
+        <mat-error class="text-left mt-2" *ngIf="getError('follow_technical_guidelines')?.required">
+            Escolha uma opção
+        </mat-error>
+
+        <label class="mt-4">
+            Você utiliza esterco bovino ou suíno ou cama de frango em sua lavoura?
+        </label>
+        <mat-button-toggle-group formControlName="uses_manure">
+            <mat-button-toggle [value]="true">Sim</mat-button-toggle>
+            <mat-button-toggle [value]="false">Não</mat-button-toggle>
+        </mat-button-toggle-group>
+        <mat-error class="text-left mt-2" *ngIf="getError('uses_manure')?.required">
+            Escolha uma opção
+        </mat-error>
+
+        <label class="mt-4">Quantas vezes por ano?</label>
+        <mat-form-field appearance="outline" class="form-field-small">
+            <input
+                formControlName="manure_per_year"
+                matInput
+                type="number"
+                min="0">
+
+            <mat-error *ngIf="getError('manure_per_year')?.required">
+                Campo Obrigatório
+            </mat-error>
+
+            <mat-error *ngIf="getError('manure_per_year')?.min">
+                Não pode ser negativo
+            </mat-error>
+        </mat-form-field>
+
+        <label class="mt-4">Período de Ausência de revolvimento do solo</label>
+        <div class="form-row">
+            <div class="form-column">                    
+                <mat-form-field appearance="outline">
+                    <input
+                        matInput
+                        [matDatepicker]="pickerSoilPreparationStart"
+                        formControlName="no_soil_preparation_start"
+                        placeholder="Início">
+
+                    <mat-datepicker-toggle
+                        matSuffix
+                        [for]="pickerSoilPreparationStart">
+                    </mat-datepicker-toggle>
+
+                    <mat-datepicker #pickerSoilPreparationStart></mat-datepicker>
+
+                    <mat-error *ngIf="getError('no_soil_preparation_start')?.required">
+                        Campo Obrigatório
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="form-column">                    
+                <mat-form-field appearance="outline">
+                    <input
+                        matInput
+                        [matDatepicker]="pickerSoilPreparationEnd"
+                        formControlName="no_soil_preparation_end"
+                        placeholder="Fim">
+
+                    <mat-datepicker-toggle
+                        matSuffix
+                        [for]="pickerSoilPreparationEnd">
+                    </mat-datepicker-toggle>
+
+                    <mat-datepicker #pickerSoilPreparationEnd></mat-datepicker>
+
+                    <mat-error *ngIf="getError('no_soil_preparation_end')?.required">
+                        Campo Obrigatório
+                    </mat-error>
+
+                    <mat-error *ngIf="getError('no_soil_preparation_end')?.notAfter">
+                        Deve ser posterior a data de início
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    
+
+        <label>Tempo de manejo</label>
+        <div class="form-row mt-4">
+            <div class="form-column">                    
+                <mat-form-field appearance="outline">
+                    <input
+                        matInput
+                        [matDatepicker]="pickerSoilManagementStart"
+                        formControlName="soil_management_start"
+                        placeholder="Início">
+
+                    <mat-datepicker-toggle
+                        matSuffix
+                        [for]="pickerSoilManagementStart">
+                    </mat-datepicker-toggle>
+
+                    <mat-datepicker #pickerSoilManagementStart></mat-datepicker>
+
+                    <mat-error *ngIf="getError('soil_management_start')?.required">
+                        Campo Obrigatório
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="form-column">                    
+                <mat-form-field appearance="outline">
+                    <input
+                        matInput
+                        [matDatepicker]="pickerSoilManagementEnd"
+                        formControlName="soil_management_end"
+                        placeholder="Fim">
+
+                    <mat-datepicker-toggle matSuffix [for]="pickerSoilManagementEnd"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerSoilManagementEnd></mat-datepicker>
+
+                    <mat-error *ngIf="getError('soil_management_end')?.required">
+                        Campo Obrigatório
+                    </mat-error>
+
+                    <mat-error *ngIf="getError('soil_management_end')?.notAfter">
+                        Deve ser posterior a data de início
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <label class="mt-4">Período de Acúmulo de matéria seca no solo</label>
+        <div class="form-row">
+            <div class="form-column">
+                <mat-form-field appearance="outline">
+                    <input
+                        matInput
+                        [matDatepicker]="pickerMaterialAccumulationStart"
+                        formControlName="dry_material_accumulation_start"
+                        placeholder="Início">
+
+                    <mat-datepicker-toggle
+                        matSuffix
+                        [for]="pickerMaterialAccumulationStart">
+                    </mat-datepicker-toggle>
+
+                    <mat-datepicker #pickerMaterialAccumulationStart></mat-datepicker>
+
+                    <mat-error *ngIf="getError('dry_material_accumulation_start')?.required">
+                        Campo Obrigatório
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="form-column">                    
+                <mat-form-field appearance="outline">
+                    <input
+                        matInput
+                        [matDatepicker]="pickerMaterialAccumulationEnd"
+                        formControlName="dry_material_accumulation_end"
+                        placeholder="Fim">
+
+                    <mat-datepicker-toggle matSuffix [for]="pickerMaterialAccumulationEnd"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerMaterialAccumulationEnd></mat-datepicker>
+
+                    <mat-error *ngIf="getError('dry_material_accumulation_end')?.required">
+                        Campo Obrigatório
+                    </mat-error>
+
+                    <mat-error *ngIf="getError('dry_material_accumulation_end')?.notAfter">
+                        Deve ser posterior a data de início
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <label class="mt-4">Volume estimado de matéria seca no solo</label>
+        <mat-form-field appearance="outline">
+            <input
+                formControlName="dry_material_accumulation_tons"
+                matInput
+                placeholder="toneladas"
+                type="number"
+                min="0">
+
+            <span matSuffix>t</span>
+
+            <mat-error *ngIf="getError('dry_material_accumulation_tons')?.required">
+                Campo Obrigatório
+            </mat-error>
+
+            <mat-error *ngIf="getError('dry_material_accumulation_tons')?.min">
+                Não pode ser negativo
+            </mat-error>
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+
+<hr class="separator">
+
+<mat-dialog-actions align="end" class="py-2">
+    <button
+        mat-flat-button
+        form="sustainable-form"
+        type="submit"
+        color="primary">
+        Salvar
+    </button>
+</mat-dialog-actions>
+
+<button
+    matDialogClose
+    mat-icon-button
+    class="button-close">
+
+    <mat-icon>close</mat-icon>
+</button>

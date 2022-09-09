@@ -1,0 +1,59 @@
+<div class="dialog">
+    <h2 mat-dialog-title class="dialog-header mb-0">Informações Sobre a Propriedade</h2>
+
+    <mat-divider></mat-divider>
+
+    <div #content mat-dialog-content class="dialog-content">
+        <div class="content-header">
+            <h3 class="content-title my-3">Fazenda {{ visit.name }}</h3>
+            <span class="content-date">{{ issueDate | date: 'dd/MM/yyyy HH:mm' }}</span>
+        </div>
+        
+        <hr>
+
+        <div class="content-info mt-4">Núcleo: <strong>{{ visit.nucleos }}</strong></div>
+        <div class="content-info">Proprietário: <strong>{{ visit.owner }}</strong></div>
+        <div class="content-info">Classificação: <strong>{{ visit.classification }}</strong></div>
+        <!-- <div class="content-info">Endereço: <strong>{{ visit.address }}</strong></div> -->
+        <div class="content-info">Latitude: <strong>{{ visit.geometry.coordinates[1] | number: '1.1-6' }}</strong></div>
+        <div class="content-info">Longitude: <strong>{{ visit.geometry.coordinates[0] | number: '1.1-6'  }}</strong></div>
+
+        <h4 class="text-center">Visitas</h4>
+
+        <table class="content-table mt-3">
+            <thead>
+                <tr>
+                    <th>Data da Visita</th>
+                    <th>Data da Semeadura</th>
+                    <th>Data da Colheita</th>
+                    <th>Cultura Praticada</th>
+                    <th>Pragas</th>
+                    <th>Observações</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let visit of visits$ | async">
+                    <td>{{ visit.visit_date | date: 'dd/MM/yyyy' }}</td>
+                    <td>{{ visit.seeding_date | date: 'dd/MM/yyyy' }}</td>
+                    <td>{{ visit.harvest_date | date: 'dd/MM/yyyy' }}</td>
+                    <td>{{ visit.crop_type }}</td>
+                    <td>{{ visit.plagues.join(', ') }}</td>
+                    <td>{{ visit.notes || '' }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div mat-dialog-actions class="dialog-actions my-0">
+        <button mat-button color="primary" cdkFocusInitial (click)="export()">
+            Exportar PDF
+        </button>
+    </div>
+</div>
+
+<button mat-icon-button class="button-close" [mat-dialog-close]>
+    <mat-icon>close</mat-icon>
+</button>

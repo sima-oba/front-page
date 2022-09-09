@@ -1,0 +1,29 @@
+<div class="container">
+    <button mat-icon-button class="button-close" (click)="close()">
+        <mat-icon>close</mat-icon>
+    </button>
+
+    <section>
+        <h3>Áreas Irrigadas</h3>
+
+        <div class="checkbox-item">
+            <mat-checkbox
+                [checked]="isIrrigatedAreasEnabled$ | async"
+                (change)="setIrrigatedAreasEnabled($event.checked)">
+                Exibir/ocultar
+            </mat-checkbox>
+        </div>
+    </section>
+
+    <section class="mt-5">
+        <h3>Pivôs Centrais</h3>
+
+        <div class="checkbox-item">
+            <mat-checkbox
+                [checked]="isPivotsEnabled$ | async"
+                (change)="setPivotsEnabled($event.checked)">
+                Exibir/ocultar
+            </mat-checkbox>
+        </div>
+    </section>
+</div>

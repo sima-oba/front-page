@@ -1,0 +1,28 @@
+<div class="container">
+    <h2 *ngIf="options?.title"
+        mat-dialog-title
+        class="pt-4 px-3 text-center">
+        {{ options.title }}
+    </h2>
+    
+    <mat-dialog-content class="py-3 text-center" *ngIf="options?.message">
+        {{ options.message }}
+    </mat-dialog-content>
+    
+    <mat-dialog-actions align="center" class="controls py-3">
+        <button *ngIf="isCancelVisible"
+            mat-flat-button
+            class="button-cancel"
+            (click)="cancel()">
+            {{ options.cancelButton || 'Cancelar' }}
+        </button>
+    
+        <button
+            mat-flat-button
+            color="primary"
+            cdkFocusInitial
+            (click)="confirm()">
+            {{ options.confirmButton || 'OK' }}
+        </button>
+    </mat-dialog-actions>
+</div>

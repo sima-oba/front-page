@@ -1,0 +1,27 @@
+<mat-drawer-container [hasBackdrop]="false">
+    <mat-drawer mode="side" [opened]="true">
+        <h3 class="drawer-heading">Configurações</h3>
+
+        <ul class="drawer-menu">
+            <li matRipple routerLink="accounts" routerLinkActive="active">
+                Usuários e grupos
+            </li>
+
+            <li matRipple routerLink="data-import" routerLinkActive="active">
+                Definições de importação
+            </li>
+
+            <li matRipple routerLink="sicar" routerLinkActive="active">
+                Importação do SICAR
+            </li>
+
+            <li matRipple routerLink="owners" routerLinkActive="active">
+                Importação de produtores/propriedades
+            </li>
+        </ul>
+    </mat-drawer>
+
+    <mat-drawer-content>
+        <router-outlet></router-outlet>
+    </mat-drawer-content>
+</mat-drawer-container>

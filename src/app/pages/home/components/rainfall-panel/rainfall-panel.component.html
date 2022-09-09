@@ -1,0 +1,21 @@
+<div class="container">
+    <button mat-icon-button class="button-close" (click)="close()">
+        <mat-icon>close</mat-icon>
+    </button>
+
+    <section style="flex-grow: 1;">
+        <h3>Estações Meteorológicas</h3>
+
+        <div class="checkbox-list">
+            <div class="scroll">
+                <div class="checkbox-item" *ngFor="let station of stations$ | async">
+                    <mat-checkbox
+                        [checked]="station.isSelected"
+                        (change)="selectStation($event.checked, station._id)">
+                        {{ station.city }}
+                    </mat-checkbox>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

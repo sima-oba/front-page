@@ -1,0 +1,20 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: #f5f7f8;
+}
+
+.content {
+    flex-grow: 1;
+}
+
+.sponsors {
+    height: 72px;
+    background-color: #f5f7f8;
+    text-align: center;
+
+    img {
+        height: 100%;
+    }
+}

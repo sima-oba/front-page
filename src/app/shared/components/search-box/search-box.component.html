@@ -1,0 +1,16 @@
+<div class="form">
+    <mat-form-field appearance="outline">
+        <input matInput
+            type="text"
+            [formControl]="control"
+            [placeholder]="placeholder">
+
+        <button *ngIf="showDeleteButton"
+            matSuffix
+            mat-icon-button
+            (click)="clear()">
+            
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+</div>

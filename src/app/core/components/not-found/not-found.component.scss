@@ -1,0 +1,30 @@
+.container{
+    height: 100%;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.error-404{
+    font-size: 5rem;
+    color: #458985;
+}
+.not-found{
+    margin-top: 2px;
+    font-size: 2.4rem;
+    color: #458985;
+}
+.button-to-home{
+    margin: 50px auto 0 auto;
+    width: 85%;
+    max-width: 370px;
+    height: 60px;
+    font-family: 'Roboto', sans-serif;
+    color: #ffffff;
+    font-size: 1.5rem;
+    border: none;
+    border-radius: 15px;
+    background-color: #458985;
+    cursor: pointer;
+}

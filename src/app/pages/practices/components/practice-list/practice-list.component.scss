@@ -1,0 +1,102 @@
+@use "var";
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    width: 80%;
+    min-width: 650px;
+    margin: 0 auto;
+    flex-grow: 1;
+}
+
+header {
+    color: #4f4f4f;
+
+    .farm-name {
+        font-size: 1.2rem;
+        font-weight: 500;
+    }
+
+    .farm-code {
+        font-size: 0.8rem;
+    }
+}
+
+.toolbar {
+    display: flex;
+    align-items: flex-end;
+
+    .link {
+        display: flex;
+        align-items: center;
+        padding: 0;
+        color: #458985;
+        text-decoration: none;
+    }
+
+    button {
+        font-size: 1rem !important;
+        border-radius: var.$radius-1 !important;
+    }
+}
+
+.separator {
+    height: 1px;
+    margin: 0;
+    background-color: #0000000c;
+    border: none;
+}
+
+.spacing {
+    flex-grow: 1;
+}
+
+.table-wrapper {
+    border-radius: var.$spacing-2;
+    box-shadow: 0 4px 16px #d1d1d1;
+    overflow: hidden;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+tr {
+    font-size: 1rem;
+    font-weight: 300;
+    color: #a3aad2;
+
+    &:nth-child(even) {
+        background-color: #f5f7f8;
+    }
+
+    &:nth-child(odd) {
+        background-color: #f3f3f3;
+    }
+}
+
+td {
+    padding: var.$spacing-2 var.$spacing-4;
+}
+
+.col-last-update {
+    width: 300px;
+}
+
+.col-controls {
+    width: 150px;
+}
+
+.cell-evaluation {
+    display: flex;
+    align-items: center;
+}
+
+.empty {
+    line-height: 40px;
+    text-align: center;
+}

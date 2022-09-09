@@ -1,0 +1,124 @@
+@use "var";
+
+@mixin mobile {
+    @media (max-width: 800px) {
+        @content;
+    }
+}
+
+@mixin desktop {
+    @media (min-width: 801px) {
+        @content;
+    }
+}
+
+.mobile-only {
+    @include desktop {
+        display: none;
+    }
+}
+
+.button-close {
+    z-index: 999;
+
+    @include mobile {
+        position: fixed !important;
+    }
+}
+
+.title {
+    font-size: var.$font-size-3;
+    font-weight: 500;
+    color: #a3aad2;
+}
+
+hr {
+    width: 100%;
+}
+
+.form {
+    padding: 0;
+    border-radius: 0;
+    background-color: transparent;
+
+    @include desktop {
+        width: 60vw;
+        min-height: 450px;
+        max-width: 900px;
+    }
+
+    &-error {
+        font-size: var.$font-size-2;
+    }
+}
+
+.scheduling-container {
+    display: grid;
+    gap: var.$spacing-4;
+
+    @include desktop {
+        grid-template-columns: 180px 1fr;
+    }
+}
+
+.period-group {
+    width: 100%;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: var.$spacing-3;
+}
+
+.hour-group {
+    flex-wrap: wrap;
+    gap: var.$spacing-3;
+
+    @include mobile {
+        justify-content: center;
+    }
+
+    @include desktop {
+        justify-content: flex-start;
+    }
+}
+
+.actions {
+    width: 100%;
+
+    @include mobile {
+        text-align: center;
+    }
+
+    @include desktop {
+        text-align: right;
+    }
+}
+
+.cascade-child ::ng-deep {
+    .mat-tab-header {
+        position: sticky !important;
+        top: 0;
+        z-index: 998;
+        padding-top: var.$spacing-4;
+        background-color: #fff;
+        border: none;
+    }
+
+    .mat-tab-label-content {
+        font-size: var.$font-size-2;
+    }
+}
+
+::ng-deep {
+    .mat-dialog-container {
+        padding-top: 0;
+        border-radius: var.$radius-2;
+    }
+
+    @include mobile {
+        .cdk-overlay-pane {
+            height: 100vh;
+            width: 100vw;
+            max-width: none !important;
+        }
+    }
+}

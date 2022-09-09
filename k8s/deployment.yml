@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: front-page
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: front-page
+  template:
+    metadata:
+      labels:
+        app: front-page
+    spec:
+      containers:
+        - name: front-page
+          image: $REGISTRY-docker.pkg.dev/$PROJECT_ID/sima/front-page:$IMAGE_TAG
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 80
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "100m"

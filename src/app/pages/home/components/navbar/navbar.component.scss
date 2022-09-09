@@ -1,0 +1,21 @@
+.container {
+    position: absolute;
+    top: 45px;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 90%;
+    width: fit-content;
+    z-index: 999;
+}
+
+mat-button-toggle-group {
+    border-radius: 0 16px 16px 0;
+}
+
+mat-button-toggle img  {
+    height: 23px;
+    width: 23px;
+}
+

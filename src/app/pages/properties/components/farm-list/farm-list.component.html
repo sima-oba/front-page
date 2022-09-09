@@ -1,0 +1,81 @@
+<div class="container">
+    <app-page-title>Minhas Propriedades</app-page-title>
+
+    <div class="content-header center-box">
+        <h3 class="farm-name-column">Nome da propriedade</h3>
+        <h3 class="date-column">Última atualização</h3>
+        <h3 class="nucleos-column">Núcleo</h3>
+    </div>
+
+    <mat-accordion>
+        <mat-expansion-panel *ngFor="let data of farms$ | async"
+            #panel
+            [id]="data._id"
+            class="center-box mat-elevation-z0 mt-2"
+            hideToggle
+            [disabled]="expandDisabled"
+            (afterExpand)="scrollTo(data._id)"
+            (click)="expandDisabled = false">
+
+            <mat-expansion-panel-header>
+                <div class="panel-header">
+                    <div class="column farm-name-column">
+                        <span>{{ data.farm_name }}</span>
+                    </div>
+
+                    <div class="column date-column">
+                        <span>{{ data.updated_at | date: 'dd/MM/yyyy'}}</span>
+                    </div>
+
+                    <div class="column nucleos-column">
+                        <span>{{ data.nucleos }}</span>
+                    </div>
+
+                    <div class="column trash-column">
+                        <button mat-icon-button [routerLink]="['./', data._id]">
+                            <mat-icon class="material-icons-outlined">edit</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </mat-expansion-panel-header>
+
+            <div class="panel-body">
+                <div class="panel-body-summary">
+                    <h4 class="mb-3">Informações cadastrais</h4>
+
+                    <div class="summary-row">
+                        Culturas praticadas: {{ data.crops?.join(', ') || '-' }}
+                    </div>
+
+                    <div class="summary-row">
+                        Tipos de vegetação: {{ data.vegetation_types?.join(', ') || '-' }}
+                    </div>
+
+                    <div class="summary-row">
+                        Indústrias: {{ data.industries?.join(', ') || '-' }}
+                    </div>
+                </div>
+
+                <div class="panel-body-status">
+                    <h4 class="mb-3">Áreas</h4>
+
+                    <div class="summary-row" *ngIf="data.open_areas">
+                        Áreas abertas: {{ data.open_areas }} hectare(s)
+                    </div>
+
+                    <div class="summary-row" *ngIf="data.productive_areas">
+                        Áreas produtivas: {{ data.productive_areas }} hectare(s)
+                    </div>
+
+                    <div class="summary-row">
+                        Áreas totais: {{ data.area || '-' }} hectare(s)
+                    </div>
+                </div>
+
+                <button class="button-close" mat-icon-button (click)="panel.expanded=false">
+                    <mat-icon>expand_less</mat-icon>
+                </button>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>

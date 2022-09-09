@@ -1,0 +1,132 @@
+<div class="container">
+    <ng-container *ngIf="!showSuccess; else success">
+        <div class="scroll">
+            <app-page-title>Informações da Propriedade</app-page-title>
+
+            <form [formGroup]="form" class="form block-center mt-3">
+                <mat-form-field appearance="outline">
+                    <input formControlName="farm_name" matInput type="text">
+                </mat-form-field>
+    
+                <label>Núcleo da propriedade</label>
+                <mat-form-field appearance="outline">
+                    <input formControlName="nucleos" matInput type="text">
+                </mat-form-field>
+    
+                <label>Tipos de vegetação</label>
+                <app-chip-list-input
+                    [autocompleteValues]="allVegetationTypes"
+                    [(inputValues)]="selectedVegetationTypes">
+                </app-chip-list-input>
+    
+                <label for="industries">Indústrias</label>
+                <app-chip-list-input
+                    [autocompleteValues]="allIndustries"
+                    [(inputValues)]="selectedIndustries">
+                </app-chip-list-input>
+
+                <label>Aeródromo</label>
+                <div class="form-row">
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <span matPrefix class="mr-2">Lat</span>
+
+                            <input
+                                matInput
+                                formControlName="aerodrome_lat"
+                                type="number">    
+                        </mat-form-field>
+                    </div>
+
+                    <div class="form-column">                        
+                        <mat-form-field appearance="outline">
+                            <span matPrefix class="mr-2">Lon</span>
+
+                            <input 
+                                matInput
+                                formControlName="aerodrome_lng"
+                                type="number">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <label>Culturas praticadas</label>
+                <app-chip-list-input [(inputValues)]="selectedCrops">
+                </app-chip-list-input>
+    
+                <div class="form-row">
+                    <div class="form-column">
+                        <label for="productive_areas">Áreas produtivas</label>
+                        
+                        <mat-form-field appearance="outline" class="form-small">
+                            <input
+                                matInput
+                                formControlName="productive_areas"
+                                type="number"
+                                min="0">
+    
+                            <span matSuffix>ha</span>
+    
+                            <mat-error *ngIf="getError('productive_areas')?.min">
+                                Dever ser positivo
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="form-column">
+                        <label for="open_areas">Áreas abertas</label>
+                        
+                        <mat-form-field appearance="outline" class="form-small">
+                            <input 
+                                matInput
+                                formControlName="open_areas"
+                                type="number"
+                                min="0">
+    
+                            <span matSuffix>ha</span>
+    
+                            <mat-error *ngIf="getError('open_areas')?.min">
+                                Dever ser positivo
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+    
+                    <div class="form-column">
+                        <label for="area">Área total</label>
+                        
+                        <mat-form-field appearance="outline" class="form-small">
+                            <input
+                                matInput
+                                formControlName="area"
+                                type="number"
+                                min="0">
+    
+                            <span matSuffix>ha</span>
+    
+                            <mat-error *ngIf="getError('area')?.min">
+                                Dever ser positivo
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </form>
+        </div>
+    
+        <footer>
+            <button mat-flat-button (click)="submit()">Salvar</button>
+        </footer>
+    </ng-container>
+
+    <ng-template #success>
+        <div class="success">
+            <h3>Dados enviados com sucesso!</h3>
+    
+            <img src="assets/img/general/done.png" alt="Sucesso">
+    
+            <button mat-flat-button routerLink="../">
+                <span>Visualizar dados cadastrados</span>
+                <mat-icon class="material-icons-outlined">arrow_circle_right</mat-icon>
+            </button>
+        </div>
+    </ng-template>
+</div>

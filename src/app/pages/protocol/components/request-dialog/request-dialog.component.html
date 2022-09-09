@@ -1,0 +1,50 @@
+<h3 class="title my-0 mr-5">Novo Requerimento</h3>
+
+<hr class="separator my-3">
+
+<mat-dialog-content class="container">
+    <aside class="menu">
+        <h4 class="menu-title my-0">Categoria</h4>
+
+        <ul class="menu-list mt-2" style="margin-bottom: 21.5px;">
+            <li class="menu-item"
+                [class.item-selected]="protocolType === 'OTHER'"
+                (click)="protocolType = 'OTHER'">
+                Requerimento Simples
+            </li>
+
+            <li class="menu-item"
+                [class.item-selected]="protocolType === 'PLANTING_ANTICIPATION'"
+                (click)="protocolType = 'PLANTING_ANTICIPATION'">
+                Antecipação de Plantio
+            </li>
+        </ul>
+    </aside>
+
+    <section [ngSwitch]="protocolType" class="content">
+        <app-simple-request 
+            #protocolEl
+            *ngSwitchCase="'OTHER'">
+        </app-simple-request>
+
+        <app-planting-anticipating
+            #protocolEl
+            *ngSwitchCase="'PLANTING_ANTICIPATION'">
+        </app-planting-anticipating>
+    </section>
+</mat-dialog-content>
+
+<hr class="separator mt-3">
+
+<mat-dialog-actions align="end">
+    <button
+        mat-flat-button
+        color="primary"
+        (click)="onSave()">
+        Enviar
+    </button>
+</mat-dialog-actions>
+
+<button mat-icon-button class="button-close" matDialogClose>
+    <mat-icon>close</mat-icon>
+</button>

@@ -1,0 +1,54 @@
+@use "var";
+
+.title {
+    margin: 0;
+    padding: 0 var.$spacing-5 var.$spacing-2 var.$spacing-4;
+    font-weight: 500;
+    color: #4f4f4f;
+}
+
+.evaluator {
+    color: #4f4f4f;
+
+    strong {
+        font-weight: 500;
+    }
+}
+
+.form {
+    padding: var.$spacing-3 var.$spacing-4;
+    background-color: transparent;
+
+    .grid {
+        display: grid;
+        grid-template-columns: 1fr 120px;
+    }
+}
+
+.answer {
+    display: inline-block;
+    padding: var.$spacing-2 var.$spacing-4;
+    border-radius: var.$radius-1;
+    background-color: #f3f3f3;
+    text-align: center;
+    color: #4f4f4f;
+}
+
+.evaluation {
+    &-title {
+        color: #4f4f4f;
+    }
+
+    &-check {
+        text-align: center;
+    }
+}
+
+:host ::ng-deep {
+    .mat-checkbox-background,
+    .mat-checkbox-frame {
+        border-width: 1px;
+        border-color: #458985;
+        border-radius: 4px;
+    }
+}

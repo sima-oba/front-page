@@ -1,0 +1,43 @@
+@use "var";
+@use "util";
+
+$text-color: #458985;
+
+.container {
+    @extend %flex-column;
+    height: 100%;
+    width: 350px;
+    overflow: auto;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    background-color: #e6e6e6;
+    color: $text-color;    
+}
+
+h3 {
+    margin: 0;
+    padding: var.$spacing-3 var.$spacing-4;
+    font-size: var.$font-size-3;
+    font-weight: 500;
+    color: $text-color;
+}
+
+.checkbox-list {
+    background-color: #f5f5f5;
+}
+
+:host ::ng-deep {
+    .mat-checkbox-background,
+    .mat-checkbox-frame {
+        border-width: 1px;
+        border-color: #458985;
+        border-radius: 4px;
+    }
+
+    app-search-box {
+        margin-right: var.$spacing-4;
+    }
+}

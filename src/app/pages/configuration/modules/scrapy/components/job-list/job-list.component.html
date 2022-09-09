@@ -1,0 +1,97 @@
+<div class="py-3 px-4">
+    <mat-accordion>
+        <mat-expansion-panel class="mat-elevation-z0">
+            <mat-expansion-panel-header class="py-2 px-4">
+                <h2 class="accordion-title">Previsão do Clima</h2>
+            </mat-expansion-panel-header>
+
+            <app-job jobId="FORECAST" [params]="['Back-end URL']"></app-job>
+            <app-job jobId="OBSERVED_WEATHER" [params]="['Back-end URL']"></app-job>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel class="mat-elevation-z0">
+            <mat-expansion-panel-header class="py-2 px-4">
+                <h2 class="accordion-title">Risco</h2>
+            </mat-expansion-panel-header>
+
+            <app-job jobId="FIRE_RISK" [params]="['URL']"></app-job>
+            <app-job jobId="CLIMATE_RISK"></app-job>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel class="mat-elevation-z0">
+            <mat-expansion-panel-header class="py-2 px-4">
+                <h2 class="accordion-title">Fitossanitário</h2>
+            </mat-expansion-panel-header>
+
+            <app-job jobId="PHYTOSANITARY" [params]="['Usuário', 'Senha']"></app-job>
+            <app-job jobId="ANNUAL_ORDINANCE"></app-job>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel class="mat-elevation-z0">
+            <mat-expansion-panel-header class="py-2 px-4">
+                <h2 class="accordion-title">Hidrografia</h2>
+            </mat-expansion-panel-header>
+
+            <app-job jobId="HYDROGRAPHY_ANA" [params]="['URL']"></app-job>
+            <app-job jobId="LIMIT_LVL_1" [params]="['URL']"></app-job>
+            <app-job jobId="LIMIT_LVL_2" [params]="['URL']"></app-job>
+            <app-job jobId="BASIN_RIO_GRANDE" [params]="['URL']"></app-job>
+            <app-job jobId="CONTRIB" [params]="['URL']"></app-job>
+            <app-job jobId="FLOW_RATE_QMLD" [params]="['URL']"></app-job>
+            <app-job jobId="FLOW_RATE_Q90" [params]="['URL']"></app-job>
+            <app-job jobId="WATER_AVAILABILITY"> [params]="['URL']"</app-job>
+            <app-job jobId="WATER_SECURITY" [params]="['URL']"></app-job>
+            <app-job jobId="WATERBODY" [params]="['URL']"></app-job>
+            <app-job jobId="BASIN_1" [params]="['URL']"></app-job>
+            <app-job jobId="BASIN_2" [params]="['URL']"></app-job>
+            <app-job jobId="AQUIFER" [params]="['URL']"></app-job>
+            <app-job jobId="IRRIGATED_AREA" [params]="['URL']"></app-job>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel class="mat-elevation-z0">
+            <mat-expansion-panel-header class="py-2 px-4">
+                <h2 class="accordion-title">Outros</h2>
+            </mat-expansion-panel-header>
+
+            <app-job jobId="ANA"></app-job>
+            <app-job jobId="IBAMA"></app-job>
+            <app-job jobId="ICMBIO"></app-job>
+            <app-job jobId="INCRA"></app-job>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel class="mat-elevation-z0">
+            <mat-expansion-panel-header class="py-2 px-4">
+                <h2 class="accordion-title">Diário Oficial / Portarias / Outorgas</h2>
+            </mat-expansion-panel-header>
+
+            <app-job jobId="SEIA" [params]="['Usuário', 'Senha']"></app-job>
+            <app-job jobId="DOM_ANGICAL"></app-job>
+            <app-job jobId="DOM_BAIANOPOLIS"></app-job>
+            <app-job jobId="DOM_BARREIRAS"></app-job>
+            <app-job jobId="DOM_BJLAPA"></app-job>
+            <app-job jobId="DOM_BURITIRAMA"></app-job>
+            <app-job jobId="DOM_CANAPOLIS"></app-job>
+            <app-job jobId="DOM_CATOLANDIA"></app-job>
+            <app-job jobId="DOM_COCOS"></app-job>
+            <app-job jobId="DOM_CORIBE"></app-job>
+            <app-job jobId="DOM_CORRENTINA"></app-job>
+            <app-job jobId="DOM_COTEGIPE"></app-job>
+            <app-job jobId="DOM_CRISTOPOLIS"></app-job>
+            <app-job jobId="DOE"></app-job>
+            <app-job jobId="DOE_WARNING"></app-job>
+            <app-job jobId="DOM_FORMOSA"></app-job>
+            <app-job jobId="DOM_JABORANDI"></app-job>
+            <app-job jobId="DOM_LEM"></app-job>
+            <app-job jobId="DOM_MANSIDAO"></app-job>
+            <app-job jobId="DOM_MANSIDAO"></app-job>
+            <app-job jobId="DOM_SMV"></app-job>
+            <app-job jobId="DOM_SRC"></app-job>
+            <app-job jobId="DOM_SANTANA"></app-job>
+            <app-job jobId="DOM_SAO_DESIDERIO"></app-job>
+            <app-job jobId="DOM_SERRA_DOURADA"></app-job>
+            <app-job jobId="DOM_SFCORIBE"></app-job>
+            <app-job jobId="DOM_TABOCAS"></app-job>
+            <app-job jobId="DOM_WANDERLEY"></app-job>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>

@@ -1,0 +1,11 @@
+.background {
+    position: absolute;
+    bottom: 0;
+    height: 40%;
+    width: 100%;
+    background-image: url("../../../assets/img/general/bg-login.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-x: 50%;
+    z-index: -1;
+}

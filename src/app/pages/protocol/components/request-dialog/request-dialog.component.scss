@@ -1,0 +1,82 @@
+@use "var";
+
+@mixin mobile {
+    @media (max-width: 1024px) {
+        @content;
+    }
+}
+
+@mixin desktop {
+    @media (min-width: 1025px) {
+        @content;
+    }
+}
+
+.container {
+    display: flex;
+    align-items: stretch;
+    flex-wrap: wrap;
+    gap: var.$spacing-3;
+}
+
+.title {
+    font-weight: 500;
+    color: #4f4f4f;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+
+    @include mobile {
+        width: 100%;
+    }
+
+    @include desktop {
+        width: 250px;
+    }
+
+    &-title {
+        font-weight: 400;
+        color: #a3aad2;
+    }
+
+    &-list {
+        flex-grow: 1;
+        padding: 0;
+        border: 1px solid #0000001f;
+        border-radius: var.$radius-2;
+        list-style: none;
+        overflow: hidden;
+    }
+
+    &-item {
+        padding: var.$spacing-3;
+        transition: 200ms;
+        background-color: #fff;
+        cursor: pointer;
+
+        &:hover:not(.item-selected) {
+            background-color: #f5f4f4;
+        }
+    }
+
+    .item-selected {
+        background-color: #eeeeee;
+    }
+}
+
+.content {
+    flex-grow: 1;
+
+    @include mobile {
+        width: 100%;
+    }
+
+    @include desktop {
+        height: 60vh;
+        min-width: 500px;
+        overflow-y: scroll;
+        padding-right: var.$spacing-3;
+    }
+}

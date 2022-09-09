@@ -1,0 +1,178 @@
+<h2 class="title mt-5">Cadastre-se</h2>
+
+<form [formGroup]="form" class="form block-center pb-4" *ngIf="!successEmail">
+    
+    <label for="profile">Perfil</label>
+    <mat-button-toggle-group class="profile-toggle mb-4"
+        [value]="profile"
+        (change)="profile = $event.value">
+
+        <mat-button-toggle value="OWNER">Produtor</mat-button-toggle>
+        <mat-button-toggle value="PUBLIC">Público</mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <label for="name">CPF/CNPJ</label>
+    <mat-form-field appearance="outline">
+        <input matInput formControlName="doc" type="text" mask="CPF_CNPJ">
+
+        <div matPrefix class="icon-wrapper">
+            <mat-icon class="material-icons-outlined">
+                assignment_ind
+            </mat-icon>
+        </div>
+
+        <mat-error *ngIf="getError('doc')?.required">
+            Campo obrigatório
+        </mat-error>
+
+        <mat-error *ngIf="getError('doc')?.mask">
+            CPF ou CNPJ inválido
+        </mat-error>
+    </mat-form-field>
+
+    <!-- Only for public profile -->
+    <ng-container *ngIf="profile == 'PUBLIC'">
+        <label for="full_name">Nome completo</label>
+        <mat-form-field appearance="outline">
+            <input formControlName="full_name" matInput type="text">
+
+            <div matPrefix class="icon-wrapper">
+                <mat-icon class="material-icons-outlined">
+                    person
+                </mat-icon>
+            </div>
+
+            <mat-error *ngIf="getError('full_name')?.required">
+                Campo obrigatório
+            </mat-error>
+
+            <mat-error *ngIf="getError('full_name')?.minlength">
+                Deve ter no mínimo {{ getError('full_name').minlength.requiredLength }} caracteres
+            </mat-error>
+        </mat-form-field>
+
+        <label for="email">E-mail</label>
+        <mat-form-field appearance="outline">
+            <input
+                formControlName="email"
+                matInput
+                type="email">
+
+            <div matPrefix class="icon-wrapper">
+                <mat-icon class="material-icons-outlined">
+                    email
+                </mat-icon>
+            </div>
+
+            <mat-error *ngIf="getError('email')?.required">
+                Campo obrigatório
+            </mat-error>
+
+            <mat-error *ngIf="getError('email')?.pattern">
+                Endereço de e-mail inválido
+            </mat-error>
+        </mat-form-field>
+
+        <label for="phone">Telefone</label>
+        <mat-form-field appearance="outline">
+            <input
+                formControlName="phone"
+                matInput
+                type="tel"
+                mask="00000000*">
+
+            <div matPrefix class="icon-wrapper">
+                <mat-icon class="material-icons-outlined">
+                    phone
+                </mat-icon>
+            </div>
+
+            <mat-error *ngIf="getError('phone')?.required">
+                Campo obrigatório
+            </mat-error>
+
+            <mat-error *ngIf="getError('phone')?.mask">
+                Número de telefone inválido
+            </mat-error>
+        </mat-form-field>
+
+        <label for="password">Senha</label>
+        <mat-form-field appearance="outline">
+            <input
+                matInput
+                formControlName="password"
+                autocomplete="new-password"
+                [type]="isPasswordHidden ? 'password' : 'text'">
+
+            <button
+                mat-icon-button
+                matPrefix
+                class="material-icons-outlined"
+                (click)="isPasswordHidden = !isPasswordHidden">
+
+                <mat-icon class="material-icons-outlined">
+                    {{ isPasswordHidden ? 'visibility' : 'visibility_off' }}
+                </mat-icon>
+            </button>
+
+            <mat-error *ngIf="getError('password')?.required">
+                Campo obrigatório
+            </mat-error>
+
+            <mat-error *ngIf="getError('password')?.minlength">
+                Senha deve ter no mínimo {{ getError('password').minlength.requiredLength }} caracteres
+            </mat-error>
+        </mat-form-field>
+
+        <label for="password">Repetir senha</label>
+        <mat-form-field appearance="outline">
+            <input
+                matInput
+                formControlName="confirmPassword"
+                autocomplete="new-password"
+                [type]="isPasswordHidden ? 'password' : 'text'">
+
+            <button
+                mat-icon-button
+                matPrefix
+                class="material-icons-outlined"
+                (click)="isPasswordHidden = !isPasswordHidden">
+
+                <mat-icon class="material-icons-outlined">
+                    {{ isPasswordHidden ? 'visibility' : 'visibility_off' }}
+                </mat-icon>
+            </button>
+
+            <mat-error *ngIf="getError('confirmPassword')?.required">
+                Campo obrigatório
+            </mat-error>
+
+            <mat-error *ngIf="getError('confirmPassword')?.notEquals">
+                As senhas não correspondem
+            </mat-error>
+        </mat-form-field>
+    </ng-container>
+
+    <div class="form-footer mt-4">
+        <button
+            mat-flat-button
+            color="primary"
+            class="button-green"
+            (click)="submit()">
+            
+            <span>Cadastrar</span>
+            <mat-icon class="ml-2">east</mat-icon>
+        </button>
+            
+        <a routerLink="../sign-in" class="link-green mt-2">ou faça login</a>
+    </div>
+</form>
+
+<div class="block-center text-center pt-5" *ngIf="successEmail">
+    <p class="success-message">
+        Um e-mail de verificação foi enviado para 
+        <strong>{{ successEmail }}</strong>.
+    </p>
+
+    <a routerLink="../sign-in" class="link-green">Voltar</a>
+</div>

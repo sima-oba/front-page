@@ -1,0 +1,117 @@
+<h3 class="title">Boas práticas fitossanitárias</h3>
+
+<hr class="separator">
+
+<mat-dialog-content>
+    <form
+        id="phytosanitary-form"
+        class="form"
+        [formGroup]="form"
+        (ngSubmit)="save()">
+
+        <label>Faz adoção de controle de pragas e doenças?</label>
+        <app-chip-list-input
+            placeholder="Adicionar praga..."
+            [(inputValues)]="selectedPlagues"
+            [autocompleteValues]="allPlagues">
+        </app-chip-list-input>
+
+        <label class="mt-3">Faz uso de biodefensivos?</label>
+        <app-chip-list-input
+            placeholder="Adicionar biodefensivo..."
+            [(inputValues)]="selectedPesticides"
+            [autocompleteValues]="allPesticides">
+        </app-chip-list-input>
+
+        <label class="mt-3">Realiza adoção da biotecnologia no campo com...</label>
+        <app-chip-list-input
+            placeholder="Adicionar biotecnologia.."
+            [(inputValues)]="selectedBiotechnologies"
+            [autocompleteValues]="allBiotechnologies">
+        </app-chip-list-input>
+
+        <label class="mt-3">Faz uso de Boas práticas para o manejo da ferrugem da soja?</label>
+        <app-chip-list-input
+            placeholder="Adicionar boas práticas..."
+            [(inputValues)]="selectedPractices"
+            [autocompleteValues]="allPractices">
+        </app-chip-list-input>
+
+        <label class="mt-3">Utiliza técnica de refúgio?</label>
+        <mat-button-toggle-group formControlName="uses_refuge">
+            <mat-button-toggle [value]="true">Sim</mat-button-toggle>
+            <mat-button-toggle [value]="false">Não</mat-button-toggle>
+        </mat-button-toggle-group>
+        <mat-error class="text-left mt-2" *ngIf="getError('uses_refuge')?.required">
+            Escolha uma opção
+        </mat-error>
+
+        <label class="mt-3">Faz controle agronômico?</label>
+        <mat-button-toggle-group
+            formControlName="uses_agronomic_management"
+            class="toggle-group">
+
+            <mat-button-toggle [value]="true">Sim</mat-button-toggle>
+            <mat-button-toggle [value]="false">Não</mat-button-toggle>
+        </mat-button-toggle-group>
+        <mat-error class="text-left mt-2" *ngIf="getError('uses_agronomic_management')?.required">
+            Escolha uma opção
+        </mat-error>
+
+        <label class="mt-3">Utiliza sistemas de precisão?</label>
+        <mat-button-toggle-group
+            formControlName="uses_precision_systems"
+            class="toggle-group">
+
+            <mat-button-toggle [value]="true">Sim</mat-button-toggle>
+            <mat-button-toggle [value]="false">Não</mat-button-toggle>
+        </mat-button-toggle-group>
+        <mat-error class="text-left mt-2" *ngIf="getError('uses_precision_systems')?.required">
+            Escolha uma opção
+        </mat-error>
+
+        <label class="mt-3">Realiza adoção de Manejo Integrado de Pragas (MIP)?</label>
+        <mat-button-toggle-group
+            formControlName="uses_mip"
+            class="toggle-group">
+
+            <mat-button-toggle [value]="true">Sim</mat-button-toggle>
+            <mat-button-toggle [value]="false">Não</mat-button-toggle>
+        </mat-button-toggle-group>
+        <mat-error class="text-left mt-2" *ngIf="getError('uses_mip')?.required">
+            Escolha uma opção
+        </mat-error>
+
+        <label class="mt-3">Realiza adoção de Manejo Integrado de Doenças (MID)?</label>
+        <mat-button-toggle-group
+            formControlName="uses_mid"
+            class="toggle-group">
+            
+            <mat-button-toggle [value]="true">Sim</mat-button-toggle>
+            <mat-button-toggle [value]="false">Não</mat-button-toggle>
+        </mat-button-toggle-group>
+        <mat-error class="text-left mt-2" *ngIf="getError('uses_mid')?.required">
+            Escolha uma opção
+        </mat-error>
+    </form>
+</mat-dialog-content>
+
+<hr class="separator">
+
+<mat-dialog-actions align="end" class="py-2">
+    <button
+        mat-flat-button
+        form="phytosanitary-form"
+        type="submit"
+        color="primary">
+        Salvar
+    </button>
+</mat-dialog-actions>
+
+<button
+    matDialogClose
+    mat-icon-button
+    class="button-close">
+
+    <mat-icon>close</mat-icon>
+</button>

@@ -1,0 +1,38 @@
+@use "var";
+@use "util";
+
+.container {
+    @extend %flex-column;
+    height: 100%;
+    width: 350px;
+    overflow: hidden;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    background-color: #e6e6e6;
+    color: #458985;
+    overflow: hidden;
+}
+
+h3 {
+    margin: var.$spacing-3 var.$spacing-4;
+    font-size: var.$font-size-3;
+    font-weight: 500;
+    color: #458985;
+}
+
+.checkbox-item {
+    background-color: white;
+    padding: 4px 24px;
+}
+
+:host ::ng-deep {
+    .mat-checkbox-background,
+    .mat-checkbox-frame {
+        border-width: 1px;
+        border-color: #458985;
+        border-radius: 4px;
+    }
+}

@@ -1,0 +1,121 @@
+<div class="container">
+    <app-page-title>Acompanhe Suas Solicitações</app-page-title>
+
+    <div class="toolbox center-box">
+        <div class="toolbox-status">
+            <div class="square green"></div>
+            <span class="toolbox-legend">Atendida</span>
+
+            <div class="square yellow"></div>
+            <span class="toolbox-legend">Indeferida</span>
+
+            <div class="square gray"></div>
+            <span class="toolbox-legend">Em análise</span>
+        </div>
+
+        <div class="controls">
+            <button mat-icon-button>
+                <img src="assets/icons/calendar.png" alt="calendar">
+            </button>
+            <span class="toolbox-legend">Período</span>
+
+            <button mat-icon-button>
+                <img src="assets/icons/filter.png" alt="filter">
+            </button>
+            <span class="toolbox-legend">Filtrar</span>
+        </div>
+    </div>
+
+    <div class="content-header center-box">
+        <h3 class="request-column">Solicitação</h3>
+        <h3 class="date-column">Data</h3>
+        <h3 class="status-column">Status</h3>
+    </div>
+
+    <mat-accordion>
+        <mat-expansion-panel *ngFor="let data of summary$ | async"
+            #panel
+            [id]="data._id"
+            class="center-box mat-elevation-z0 mt-2"
+            hideToggle
+            [disabled]="expandDisabled"
+            (afterExpand)="scrollTo(data._id)"
+            (click)="expandDisabled = false">
+
+            <mat-expansion-panel-header>
+                <div class="panel-header">
+                    <div class="column status-indicator" 
+                        [ngClass]="{
+                            'REVIEW': 'review',
+                            'GRANTED': 'granted',
+                            'DENIED': 'denied'
+                        }[data.status]">
+                    </div>
+
+                    <div class="column request-column">
+                        <span>Antecipação de plantio</span>
+                    </div>
+
+                    <div class="column date-column">
+                        <span>{{ data.created_at | date: 'dd/MM/yyyy'}}</span>
+                    </div>
+
+                    <div class="column status-column" [ngSwitch]="data.status">
+                        <span *ngSwitchCase="'REVIEW'">Em análise</span>
+                        <span *ngSwitchCase="'GRANTED'">Deferido</span>
+                        <span *ngSwitchCase="'DENIED'">Indeferido</span>
+                    </div>
+
+                    <div class="column trash-column">
+                        <button mat-icon-button (click)="remove()">
+                            <img src="assets/icons/trash.png" alt="delete">
+                        </button>
+                    </div>
+                </div>
+            </mat-expansion-panel-header>
+
+            <div class="panel-body">
+                <div class="panel-body-summary">
+                    <h4 class="mb-3">Antecipação de plantio</h4>
+
+                    <div class="request-date">
+                        Pedido em: {{ data.created_at | date: 'dd/MM/yyyy' }}
+                    </div>
+
+                    <div class="request-response" *ngIf="data.status !== 'REVIEW'">
+                        Resposta em: {{ data.updated_at | date: 'dd/MM/yyyy' }}
+                    </div>
+
+                    <button *ngIf="data.ordinance_ref"
+                        class="button-document mt-3"
+                        mat-stroked-button
+                        (click)="navigateTo(data.ordinance_ref)">
+                        VISUALIZAR DOCUMENTO
+                    </button>
+                </div>
+
+                <div class="panel-body-status">
+                    <h4 class="mb-3">Status</h4>
+
+                    <p *ngIf="data.status === 'REVIEW'">
+                        Sua solicitação encontra-se em análise.
+                        Será notificado assim que finalizarmos o processo.
+                        Acompanhe o status na opção “notificações” ou entre em contato.
+                    </p>
+
+                    <p *ngIf="data.status !== 'REVIEW' && data.notes">
+                        {{ data.notes }}
+                    </p>
+
+                    <p *ngIf="data.status !== 'REVIEW' && !data.notes">
+                        Não há observações para exibir.
+                    </p>
+                </div>
+
+                <button class="button-close" mat-icon-button (click)="panel.expanded=false">
+                    <mat-icon>expand_less</mat-icon>
+                </button>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>

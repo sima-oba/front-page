@@ -1,0 +1,64 @@
+@use "var";
+
+mat-icon {
+    transform: scale(1.1);
+    color: #a3bcc0;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var.$spacing-3;
+    border: 1px solid #0000000c;
+    border-radius: var.$radius-2;
+}
+
+.data-source {
+    flex-grow: 1;
+    color: #4f4f4f;
+
+    &-name {
+        font-size: 1.2em;
+        font-weight: 500;
+    }
+
+    &-next-run {
+        font-size: 0.9em;
+    }
+}
+
+.button {
+    border-radius: var.$radius-2 !important;
+    font-size: 1.1em !important;
+    background-color: transparent;
+    color: #838181;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+}
+
+.card-title {
+    float: left;
+    font-size: 30px;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+
+@media only screen and (max-width: 600px) {
+    .data-source {
+        width: 100%;
+        text-align: center;
+    }
+
+    .button {
+        flex-grow: 1;
+    }
+
+    .only-desktop {
+        display: none;
+    }
+}

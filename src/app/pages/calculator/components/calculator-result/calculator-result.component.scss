@@ -1,0 +1,153 @@
+@use "var";
+@use "util";
+
+@mixin mobile {
+    @media (max-width: 1000px) {
+        @content;
+    }
+}
+
+.container {
+    background-color: #f5f7f8;
+}
+
+.block {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: var.$spacing-5;
+}
+
+.link {
+    display: flex;
+    align-items: center;
+    color: #458985;
+    text-decoration: none;
+}
+
+.title {
+    color: #a3aad2;
+    font-weight: 400;
+}
+
+.group-1 {
+    padding: var.$spacing-4;
+    border-radius: var.$radius-2;
+    background-color: #f0f0f0;
+}
+
+.group-2 {
+    padding: var.$spacing-1 var.$spacing-4 var.$spacing-4 var.$spacing-4;
+    border-radius: var.$radius-2;
+    background-color: #ebebeb;
+}
+
+.group-title {
+    color: #a3aad2;
+    font-weight: 400;
+    font-size: var.$font-size-2;
+}
+
+.box {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 32px;
+}
+
+.box-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 96px;
+    min-width: 148px;
+    padding: var.$spacing-4 var.$spacing-2;
+    border-radius: var.$radius-2;
+    border: solid 1px #7bc2b0;
+    background: #fff;
+
+    &-shadow {
+        box-shadow: 0 0 24px 0px #7bc2b0cb;
+    }
+}
+
+.box-title {
+    margin: 0;
+    font-size: var.$font-size-2;
+    color: #c4c4c4;
+    text-align: center;
+}
+
+.box-value {
+    font-size: 1.15em;
+    font-weight: 500;
+    text-align: center;
+
+    & > p {
+        margin: 0;
+    }
+
+    &-green {
+        color: #67c973;
+    }
+
+    &-orange {
+        color: #ffa500;
+    }
+
+    &-red {
+        color: #ff0000;
+    }
+
+    &-unit {
+        font-size: 0.8em;
+        font-weight: 400;
+        color: #c1dcd9;
+    }
+
+    &-lg {
+        font-size: 1.3em;
+    }
+}
+
+.header-info {
+    color: #458985;
+}
+
+.header-info-a {
+    color: #7bc2b0;
+}
+
+.info-d {
+    color: #63c89b;
+}
+
+.info-e {
+    color: #eb5757;
+}
+
+@media screen and (max-width: 500px) {
+    .gray-container {
+        display: grid;
+        width: 100%;
+        margin-left: 3px;
+        margin-top: 40px;
+    }
+
+    .box-info {
+        margin-top: 30px;
+    }
+}
+
+.note {
+    margin: 0 auto;
+    border-radius: var.$radius-2;
+    background-color: #e2e2e2;
+    text-align: justify;
+    font-size: 1.05em;
+    color: #4f4f4f;
+}
+
+sub {
+    font-size: 0.7em;
+}

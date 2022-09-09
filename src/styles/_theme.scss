@@ -1,0 +1,119 @@
+@use "var";
+@import "~@angular/material/theming";
+
+@include mat-core();
+
+// Color palettes
+$sima-primary: (
+    50: #e9f1f0,
+    100: #c7dcda,
+    200: #a2c4c2,
+    300: #7dacaa,
+    400: #619b97,
+    500: #458985,
+    600: #3e817d,
+    700: #367672,
+    800: #2e6c68,
+    900: #1f5955,
+    A100: #9afff8,
+    A200: #67fff4,
+    A400: #34fff0,
+    A700: #1affee,
+    contrast: (
+        50: #000000,
+        100: #000000,
+        200: #000000,
+        300: #000000,
+        400: #000000,
+        500: #ffffff,
+        600: #ffffff,
+        700: #ffffff,
+        800: #ffffff,
+        900: #ffffff,
+        A100: #000000,
+        A200: #000000,
+        A400: #000000,
+        A700: #000000,
+    ),
+);
+
+$sima-accent: (
+    50: #f8fbfb,
+    100: #edf5f4,
+    200: #e1eeed,
+    300: #d4e7e5,
+    400: #cbe1e0,
+    500: #c2dcda,
+    600: #bcd8d6,
+    700: #b4d3d0,
+    800: #accecb,
+    900: #9fc5c2,
+    A100: #ffffff,
+    A200: #ffffff,
+    A400: #ffffff,
+    A700: #ebfffe,
+    contrast: (
+        50: #4f4f4f,
+        100: #4f4f4f,
+        200: #4f4f4f,
+        300: #4f4f4f,
+        400: #4f4f4f,
+        500: #4f4f4f,
+        600: #4f4f4f,
+        700: #4f4f4f,
+        800: #4f4f4f,
+        900: #4f4f4f,
+        A100: #4f4f4f,
+        A200: #4f4f4f,
+        A400: #4f4f4f,
+        A700: #4f4f4f,
+    ),
+);
+
+$sima-warn: (
+    50: #ffebe0,
+    100: #ffccb3,
+    200: #ffaa80,
+    300: #ff884d,
+    400: #ff6f26,
+    500: #ff5500,
+    600: #ff4e00,
+    700: #ff4400,
+    800: #ff3b00,
+    900: #ff2a00,
+    A100: #ffffff,
+    A200: #fff4f2,
+    A400: #ffc6bf,
+    A700: #ffb0a6,
+    contrast: (
+        50: #000000,
+        100: #000000,
+        200: #000000,
+        300: #000000,
+        400: #000000,
+        500: #ffffff,
+        600: #ffffff,
+        700: #ffffff,
+        800: #ffffff,
+        900: #ffffff,
+        A100: #000000,
+        A200: #000000,
+        A400: #000000,
+        A700: #000000,
+    ),
+);
+
+// Material theme
+$sima-theme: mat-light-theme(
+    (
+        color: (
+            primary: mat-palette($sima-primary),
+            accent: mat-palette($sima-accent),
+            warn: mat-palette($sima-warn),
+        ),
+    )
+);
+
+@include angular-material-theme($sima-theme);
+
+// Form inputs

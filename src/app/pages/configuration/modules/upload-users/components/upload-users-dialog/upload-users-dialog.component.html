@@ -1,0 +1,43 @@
+<form [formGroup]="form" class="form pb-4">
+    <div class="form-row mt-3">
+        <div class="form-column">
+            <mat-form-field appearance="outline" class="form-sicar">
+                <ngx-mat-file-input
+                    formControlName="file"
+                    accept="application/zip"
+                    placeholder="Anexar arquivo">
+        
+                    <mat-icon ngxMatFileInputIcon class="material-icons-outlined">
+                        arrow_circle_up
+                    </mat-icon>
+                </ngx-mat-file-input>
+        
+                <mat-error *ngIf="error?.required">
+                    Selecione um arquivo
+                </mat-error>
+                
+                <mat-error *ngIf="error?.accept">
+                    Deve ser um arquivo ZIP
+                </mat-error>
+                
+                <mat-error *ngIf="error?.maxSize">
+                    Não pode ser maior que {{ MAX_FILE_SIZE | bytes }} MB
+                </mat-error>
+            </mat-form-field>
+        </div>
+        
+        <div class="form-column">
+            <button
+                mat-flat-button
+                class="button-send"
+                color="accent"
+                (click)="send()">
+                Enviar
+            </button>
+        </div>
+    </div>
+</form>
+
+<button mat-icon-button class="button-close" (click)="close()">
+    <mat-icon>close</mat-icon>
+</button>

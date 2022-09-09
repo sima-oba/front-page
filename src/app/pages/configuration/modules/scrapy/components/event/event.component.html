@@ -1,0 +1,25 @@
+<div class="container mb-3" *ngIf="jobEvent">
+    <div class="data-source">
+        <div class="data-source-name">{{ jobEvent.name }}</div>
+        <div class="data-source-time">
+            <ng-container *ngIf="jobEvent.status === 'START'">
+                Iniciado em: {{ jobEvent.scheduled_at | date: 'dd/MM/yyyy HH:mm' }}
+            </ng-container>
+
+            <ng-container *ngIf="['SUCCESS', 'ERROR'].includes(jobEvent.status)">
+                Encerrado em: {{ jobEvent.time | date: 'dd/MM/yyyy HH:mm' }}
+            </ng-container>
+
+            <ng-container *ngIf="jobEvent.status === 'Missed'">
+                Cancelado em: {{ jobEvent.time | date: 'dd/MM/yyyy HH:mm' }}
+            </ng-container>
+        </div>
+    </div>
+
+    <ng-container [ngSwitch]="jobEvent.status">
+        <div *ngSwitchCase="'START'" class="status start">INICIADO</div>
+        <div *ngSwitchCase="'SUCCESS'" class="status success">SUCESSO</div>
+        <div *ngSwitchCase="'ERROR'" class="status error">ERRO</div>
+        <div *ngSwitchCase="'MISSED'" class="status missed">PERDIDO</div>
+    </ng-container>
+</div>

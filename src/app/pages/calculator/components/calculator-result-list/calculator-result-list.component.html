@@ -1,0 +1,45 @@
+<app-page-title>Calculadora de Balanço de Carbono da Soja</app-page-title>
+
+<div class="block-center my-4" style="min-height: 50vh;">
+    <table>
+        <colgroup>
+            <col>
+            <col class="balance">
+            <col class="date">
+            <col class="delete">
+        </colgroup>
+
+        <thead>
+            <tr>
+                <th>Propriedade</th>
+                <th>Balanço por ha (tCO<sub>2</sub>e)</th>
+                <th>Safra</th>
+                <th>Data de Inserção</th>
+                <th>
+                    <button mat-flat-button color="accent" class="full-width" [routerLink]="['../activity']">
+                        <span>Novo</span>
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let data of bundles$ | async">
+                <td class="text-center clickable" [routerLink]="['../result', data._id]">{{ data.data_collect.farm_name }}</td>
+                <td class="text-right clickable" [routerLink]="['../result', data._id]">{{ data.result.baseline | number: '1.2' }}</td>
+                <td class="text-right clickable" [routerLink]="['../result', data._id]">{{ data.data_collect.crop_year }}</td>
+                <td class="text-center clickable" [routerLink]="['../result', data._id]">{{ data.created_at | date: 'dd/MM/yyyy' }}</td>
+                <td class="text-center">                    
+                    <button mat-icon-button title="Remover" (click)="remove(data._id)">
+                        <mat-icon class="material-icons-outlined">delete</mat-icon>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3 class="empty pt-5" *ngIf="(bundles$ | async)?.length === 0">
+        Ainda não há cálculos registrados
+    </h3>
+</div>

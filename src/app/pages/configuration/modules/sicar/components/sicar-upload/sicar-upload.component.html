@@ -1,0 +1,39 @@
+<app-page-title>Atualizar arquivos do SICAR</app-page-title>
+
+<div class="block-center py-3 px-3">
+    <table>
+        <colgroup>
+            <col class="col-city">
+            <col>
+            <col class="col-upload">
+        </colgroup>
+
+        <thead>
+            <tr>
+                <th>Cidade</th>
+                <th>Última atualização</th>
+                <th>Upload</th>
+            </tr>
+        </thead>
+
+        <div class="mb-2"></div>
+    
+        <tbody>
+            <tr *ngFor="let city of cities$ | async">
+                <td>{{ city.name }}</td>
+                
+                <td>{{ (city.sicar_updated_at | date: 'dd/MM/yyyy') || '—' }}</td>
+
+                <td>
+                    <button
+                        mat-icon-button
+                        class="upload-button"
+                        (click)="openUploadDialog(city._id)">
+
+                        <mat-icon inline="true">arrow_circle_up</mat-icon>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

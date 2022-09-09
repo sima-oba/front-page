@@ -1,0 +1,271 @@
+<div class="container pb-4" *ngIf="bundle">
+    <app-page-title>Comparativo de Emissões e Sequestro de Carbono</app-page-title>
+
+    <section class="block block-solid mt-4">
+        <h2 class="title mb-5">Apresentação</h2>
+
+        <p class="text">
+            Produzir alimentos, fibras e energia com o mínimo de emissão de
+            carbono é o grande desafio para a agricultura moderna. Assim como todos os setores da economia, 
+            a agricultura contribui para a emissão de gases do efeito estufa (GEE), mas também pode ajudar 
+            a remover carbono da atmosfera. O aumento do estoque de carbono no solo favorece ao produtor 
+            resiliência aos veranicos e benefício de melhores preços de venda de seus produtos.
+        </p>
+    
+        <p class="text">
+            Para entender o balanço de carbono na fazenda, foram analisadas as emissões e remoções
+            de GEE na cultura da soja, na safra <strong>{{ bundle.data_collect.crop_year }}</strong>, “porteira para dentro”.
+            Ou seja, não foram consideradas emissões externas à fazenda, como frete de insumos e de
+            escoamento da produção da fazenda.
+        </p>
+    
+        <p class="text">
+            Para o cálculo foi utilizada a calculadora GHG - Protocolo Agrícola
+            (World Resources Institute – WRI), a qual segue metodologia definida pelo Painel
+            Intergovernamental de Mudanças Climáticas das Nações Unidas(IPCC), adaptada a metodologia
+            do Inventário Nacional de Mudanças Climáticas. Os resultados obtidos pela calculadora
+            são expressos em gás carbônico equivalente (CO2e).
+        </p>
+    </section>
+
+    <section class="block block-light mt-4">
+        <h2 class="title mb-3">Comparativo de Emissões</h2>
+
+        <div class="chart-container">
+            <div class="chart-wrapper" style="height: 400px;">
+                <canvas
+                    baseChart
+                    [data]="emissionChartData"
+                    [options]="emissionChartOptions"
+                    type="bar">
+                </canvas>
+            </div>
+
+            <div class="scenaries">
+                <div class="scenaries-worst" style="margin-top: 34px;">
+                    Pior<br>Cenário
+                </div>
+
+                <div class="scenaries-best" style="margin-bottom: 34px;">
+                    Melhor<br>Cenário
+                </div>
+            </div>
+        </div>
+
+        <p class="legend px-4 py-3 my-5">
+            <strong>Nota:</strong> Bahia representa o total de 20 fazendas amostradas e
+            MATOPIBA representa o total de 50 fazendas amostradas
+            referente a safra 2019/2020.
+        </p>
+
+        <div class="text">
+            <p>A principal fonte de emissão da <span class="text-farm">FAZENDA</span> foi
+            <strong>{{ emissionComparison[0].description }} ({{ emissionComparison[0].value | number: '1.2-2' }}%)</strong>, 
+
+            seguida por 
+            <strong>{{ emissionComparison[1].description }} ({{ emissionComparison[1].value | number: '1.2-2' }}%)</strong>.
+            
+            A emissão de carbono do cultivo da soja foi estimada em 
+            <strong>{{ farmEmission | number: '1.2-2' }} tCO<sub>2</sub>e ha/ano</strong>.</p> 
+        </div>
+
+        <div class="box-wrapper my-4">
+            <div class="box">
+                <img
+                    class="box-icon"
+                    [src]="emissionComparison[0].icon"
+                    [alt]="emissionComparison[0].title">
+
+                <p class="box-legend">
+                    {{ emissionComparison[0].title }}<br>
+                    ({{ emissionComparison[0].value | number: '1.2-2' }}%)
+                </p>
+            </div>
+
+            <div class="box">
+                <img
+                    class="box-icon"
+                    [src]="emissionComparison[1].icon"
+                    [alt]="emissionComparison[1].title">
+                    
+                <p class="box-legend">
+                    {{ emissionComparison[1].title }}<br>
+                    ({{ emissionComparison[1].value | number: '1.2-2' }}%)
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="block block-light mt-4">
+        <h2 class="title mb-3">Sequestro de Carbono</h2>
+
+        <div class="chart-container">
+            <div class="chart-wrapper" style="height: 350px;">
+                <canvas
+                    baseChart
+                    [data]="removalChartData"
+                    [options]="removalChartOptions"
+                    type="bar">
+                </canvas>
+            </div>
+
+            <div class="scenaries">
+                <div class="scenaries-worst" style="margin-top: 34px;">
+                    Pior<br>Cenário
+                </div>
+
+                <div class="scenaries-best">
+                    Melhor<br>Cenário
+                </div>
+            </div>
+        </div>
+
+        <div class="text mt-5">
+            <p>O sequestro de carbono da <span class="text-farm">FAZENDA</span> foi 
+            <strong *ngIf="baRemovalDiff >= 0">{{ baRemovalDiff | number: '1.2-2' }}% maior</strong> 
+            <strong *ngIf="baRemovalDiff < 0">{{ -baRemovalDiff | number: '1.2-2' }}% menor</strong> 
+            que a média da <span class="text-bahia">BAHIA</span>, 
+        
+            e 
+            <strong *ngIf="matopibaRemovalDiff >= 0">{{ matopibaRemovalDiff | number: '1.2-2' }}% maior</strong> 
+            <strong *ngIf="matopibaRemovalDiff < 0">{{ -matopibaRemovalDiff | number: '1.2-2' }}% menor</strong> 
+            que a média do <span class="text-matopiba">MATOPIBA</span>.</p>
+        </div>
+    </section>
+
+    <section class="block block-light mt-4">
+        <h2 class="title mb-3">Balanço de Carbono da Fazenda</h2>
+
+        <div class="chart-container-y">
+            <div class="scenary-best">Melhor cenário</div>
+
+            <div class="chart-wrapper">
+                <canvas baseChart
+                    [data]="balanceChartData"
+                    [options]="balanceChartOptions"
+                    type="bar">
+                </canvas>
+            </div>
+
+            <div class="scenary-worst">Pior cenário</div>
+        </div>
+
+        <div class="text mt-5">
+            <p>
+                A emissão de carbono por ha na fazenda foi 
+                <strong>{{ bundle.result.gee_emission_per_area | number: '1.2-2' }} tCO<sub>2</sub>e/ha</strong>
+                
+                e o sequestro de carbono por hectare na fazenda foi 
+                <strong>{{ farmRemoval | number: '1.2-2' }} tCO<sub>2</sub>e/ha</strong>. 
+                
+                O balanço de carbono por ha na fazenda foi 
+                <strong>{{ bundle.result.baseline_per_area | number: '1.2-2' }} tCO<sub>2</sub>e/ha</strong>.
+            </p>
+        </div>
+    </section>
+
+    <section class="block block-light mt-4">
+        <h2 class="title mb-3">Cenários de Balanço de Carbono</h2>
+
+        <div class="chart-container">
+            <div class="chart-wrapper" style="height: 400px;">
+                <canvas baseChart
+                    [data]="sceneriesChartData"
+                    [options]="sceneriesChartOptions"
+                    type="bar">
+                </canvas>
+            </div>
+
+            <div class="scenaries">
+                <div class="scenaries-worst" style="margin-top: 34px;">
+                    Pior<br>Cenário
+                </div>
+
+                <div class="scenaries-best" style="margin-bottom: 18px;">
+                    Melhor<br>Cenário
+                </div>
+            </div>
+        </div>
+
+        <div class="text mt-5">
+            <p>
+                <strong>Cenário de Balanço de Carbono em Sistema Plantio Direto com Braquiária:</strong> conversão das áreas atualmente em SPC (Sistema Plantio
+                Convencional) para SPD com utilização de braquiárias. O balanço passa a ser de 
+                <strong>{{ bundle.result.gee_scenery_4_per_area | number: '1.2-2' }} tCO<sub>2</sub>e/ha</strong>, sendo o balanço da 
+                linha de base <strong>{{ bundle.result.baseline_per_area | number: '1.2-2' }} tCO<sub>2</sub>e/ha</strong>.
+            </p>
+        </div>
+    </section>
+
+    <section class="block block-light mt-4">
+        <h2 class="title">Estoque de Carbono na Vegetação Nativa</h2>        
+        
+        <div class="carbon-box mt-5">
+            <img src="assets/icons/carbon-stock.svg"alt="Estoque de Carbono">
+            
+            <div class="carbon-box-content">
+                <div class="carbon-box-value">{{ bundle.result.baseline_c_stock | number: '1.2-2' }} tC</div>
+                <span class="carbon-box-legend">
+                    {{ bundle.result.baseline_c_stock >= 0
+                        ? 'Estoque de carbono na vegetação nativa'
+                        : 'Não há estoque de carbono vegetação nativa'
+                    }}
+                </span>
+            </div>
+        </div>
+
+        <div class="carbon-box my-4">
+            <img src="assets/icons/carbon-suplus.svg" alt="Estoque de Carbono">
+            
+            <div class="carbon-box-content">
+                <div class="carbon-box-value">{{ bundle.result.forest_c_stock | number: '1.2-2' }} tC</div>
+                <span class="carbon-box-legend">{{ 
+                    bundle.result.forest_c_stock <= 0
+                        ? 'Não há excente na fazenda'
+                        : 'Há excedente na fazenda'
+                    }}
+                </span>
+            </div>
+        </div>
+
+        <p class="text mt-5">
+            As áreas de vegetação nativa na fazenda são importantes estoques de carbono,
+            porém as áreas de Reserva Legal (RL) e Área de Preservação Permanente (APP) 
+            não fazem parte do cálculo de balanço de carbono. 
+        </p>
+    </section>
+
+    <section class="block block-solid mt-4">
+        <h1 class="title">Conclusão e Recomendações para Redução das Emissões</h1>
+
+        <p class="text mt-5">
+            Baseado nos resultados apresentados, recomenda-se o uso de tecnologias da Agricultura de Precisão. 
+            Manter o solo coberto é fundamental, e a escolha por plantas de cobertura que produzam considerável 
+            volume de palha pode auxiliar na melhoria da matéria orgânica do solo. Também é interessante 
+            rotacionar as plantas de cobertura, hora alternando entre leguminosas e gramíneas ou até mesmo 
+            utilizando de mixes de culturas para a cobertura do solo. O uso de plantas de cobertura com 
+            diferentes sistemas radiculares é importante para diminuira compactaçãodosolo.
+        </p>
+        
+        <p class="text">
+            Recomendamos desenvolver estratégias e tecnologias agrícolas caracterizadas por baixas emissões de 
+            carbono, alto armazenamento de carbono na vegetação e no solo e forte mitigação de emissões de CO2. 
+            Considere estratégias para adubação do sistema e não da cultura, pois assim há um aproveitamento de 
+            nutrientes residuais deixadas no solo pela cultura seguinte.
+        </p>
+
+        <p class="text">
+            Procure informar-se junto a assistência técnica especializada, e preste atenção ao treinamento e 
+            gerenciamento da sua equipe, e se seu parque de máquinas está adequado. Importante também é avaliar 
+            sua lavoura e eliminar compactação ou camadas adensadas e erosões, e corrigir a fertilidade do solo 
+            aliada ao uso de microrganismos, como exemplo o Azospirillum.
+        </p>
+
+        <p class="text">
+            Técnicas e tecnologias adicionaisimportantessão o tráfego controlado de máquinas para evitar 
+            compactação do solo; gestão eficiente da irrigação; energias renováveis(uso de painéissolares e 
+            turbinas eólicas, minimizando o uso de combustíveis fósseis nos geradores da fazenda, armazenamento 
+            e transporte de safras).
+        </p>
+    </section>
+</div>

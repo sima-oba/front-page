@@ -1,0 +1,8 @@
+<div class="container">
+    <app-group-list
+        (onGroupSelected)="selectedGroup = $event"
+        (onClickAdd)="selectedGroup = null">
+    </app-group-list>
+
+    <app-group-details [group]="selectedGroup"></app-group-details>
+</div>

@@ -1,0 +1,21 @@
+<div class="container">
+    <button mat-icon-button class="button-close" (click)="close()">
+        <mat-icon>close</mat-icon>
+    </button>
+
+    <section style="flex-grow: 1;">
+        <h3>Publicações</h3>
+
+        <div class="checkbox-list">
+            <div class="scroll">
+                <div class="checkbox-item" *ngFor="let ordinance of ordinanceSummary$ | async">
+                    <mat-checkbox
+                        [checked]="ordinance.isSelected"
+                        (change)="selectOrdinance($event.checked, ordinance.ordinanceType)">
+                        {{ ordinance.ordinance_name }}
+                    </mat-checkbox>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

@@ -1,0 +1,22 @@
+<form [formGroup]="form" class="form">
+    <label>Solicitação</label>
+    <mat-form-field appearance="outline">
+        <textarea
+            matInput
+            formControlName="text"
+            rows="15">
+        </textarea>
+
+        <mat-error *ngIf="getError('text')?.required">
+            Campo obrigatório
+        </mat-error>
+
+        <mat-error *ngIf="getError('text')?.minlength as error">
+            Mínimo de {{ error.requiredLength }} caracteres
+        </mat-error>
+
+        <mat-error *ngIf="getError('text')?.maxlength as error">
+            Máximo de {{ error.requiredLength }} caracteres
+        </mat-error>
+    </mat-form-field>
+</form>

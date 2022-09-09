@@ -1,0 +1,1378 @@
+<div class="container">
+    <app-page-title>Fatores e Constantes</app-page-title>
+
+<div class="btn-menu">
+    <button class="button-menu" mat-icon-button (click)="modalService.getModal('myModal').open()">
+        <img style=" width: 25px;" src="assets/icons/menu.svg" alt="">
+    </button>
+</div>
+
+<div class="gray-container">
+    <div class="column-1">
+        <div class="example-action-buttons">
+            <button mat-button (click)="accordion.openAll()">Expandir todos</button>
+            <button mat-button (click)="accordion.closeAll()">Fechar todos</button>
+        </div>
+
+        <mat-accordion #accordion="matAccordion" class="example-headers-align" multi>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header class="expansion-header-conversion">
+                    <mat-panel-title class="panel-title">
+                        FATORES DE CONVERSÃO
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <li  (click)="viewMode ='tab1'" [ngClass]="{'active':viewMode =='tab1'}">POTENCIAL DE AQUECIMENTO GLOBAL (PAG)</li>
+                <li  (click)="viewMode ='tab3'" [ngClass]="{'active':viewMode =='tab3'}">Emissão Secundária (Dep. Atm, lixiviação ou escoa)</li>
+                <li  (click)="viewMode ='tab4'" [ngClass]="{'active':viewMode =='tab4'}">Decomposição de Restos Culturais</li>
+                <li  (click)="viewMode ='tab5'" [ngClass]="{'active':viewMode =='tab5'}">Combustíveis (Composição)</li>
+
+            </mat-expansion-panel>
+
+            <mat-expansion-panel>
+                <mat-expansion-panel-header class="expansion-header-emissao">
+                    <mat-panel-title class="panel-title">
+                        FATORES DE EMISSÃO/REMOÇÃO  
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <li  (click)="viewMode ='tab6'" [ngClass]="{'active':viewMode =='tab6'}">Adubação Sintética (Fonte de Emissão)</li>
+                <li  (click)="viewMode ='tab7'" [ngClass]="{'active':viewMode =='tab7'}">Adubação Orgânica (Fonte de Emissão)</li>
+                <li  (click)="viewMode ='tab8'" [ngClass]="{'active':viewMode =='tab8'}">Adubação Verde (Fonte de Emissão)</li>
+                <li  (click)="viewMode ='tab9'" [ngClass]="{'active':viewMode =='tab9'}">Adubação N (Fonte de Emissão Secundária)</li>
+                <li  (click)="viewMode ='tab11'" [ngClass]="{'active':viewMode =='tab11'}">Consumo de Combustível (Fonte de Emissão)</li>
+                <li  (click)="viewMode ='tab12'" [ngClass]="{'active':viewMode =='tab12'}">Compra de Eletricidade (Fonte de Emissão)</li>
+                <li  (click)="viewMode ='tab13'" [ngClass]="{'active':viewMode =='tab13'}">Solos Orgânicos (Fonte de Emissão)</li>
+                <li  (click)="viewMode ='tab14'" [ngClass]="{'active':viewMode =='tab14'}">Estoque de C no solo de Mata Nativa preservada (descrição)</li>
+                <li  (click)="viewMode ='tab15'" [ngClass]="{'active':viewMode =='tab15'}">Consumo de Biocombustívies (Fonte de Emissão)</li>
+
+            </mat-expansion-panel>
+
+            <mat-expansion-panel>
+                <mat-expansion-panel-header class="expansion-header-ocupacao-solo">
+                    <mat-panel-title class="panel-title">
+                        REMOÇÕES/EMISSÕES PELO USO E OCUPAÇÃO DO SOLO
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <li  (click)="viewMode ='tab16'" [ngClass]="{'active':viewMode =='tab16'}">Uso Anterior → Uso Atual (Descrição)</li>
+                <li  (click)="viewMode ='tab17'" [ngClass]="{'active':viewMode =='tab17'}">Sistema de Plantio Direto (SPD) e Sistema de Plantio Convencional (SPC)</li>
+
+            </mat-expansion-panel>
+
+        </mat-accordion>
+
+        <div (click)="accordion.closeAll(); viewMode ='tab18'" class="form-column form-info" style="background: #f2f0a3;margin-top: 30px;">
+            <label style=" color: #448883;">Lista de Referências</label>
+            <button  style=" color: #448883;" mat-icon-button type="button" matTooltip="Lista de Referências">
+                <mat-icon>info</mat-icon>
+            </button>
+        </div>
+
+    </div>
+    <div class="column-2" [ngSwitch]="viewMode">
+        <form class="form" [formGroup]="this.form" [method]="'POST'" (ngSubmit)="this.submit()">
+
+            <div *ngSwitchCase="'tab1'">
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Óxido Nitroso</label>
+                        <button mat-icon-button type="button" matTooltip="Área de Cultivo em hectares">
+                            <mat-icon>help_outline</mat-icon>
+                        </button>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'nitrous_oxide'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Metano</label>
+                        <button mat-icon-button type="button" >
+                            <mat-icon>help_outline</mat-icon>
+                        </button>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'methane'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div *ngSwitchCase="'tab3'">
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Volatilização N Sintético</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'synthetic_n_volatilization'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Volatilização N Resíduo</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'volatilization_n_residue'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Volatilização N Uréia</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'urea_n_volatilization'" >
+                        </mat-form-field>
+                    </div> 
+                </div> 
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Lixiviação/Escoamento Superficial</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'leaching'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+
+
+            <div *ngSwitchCase="'tab4'">
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Slope - Soja</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'soy_slope'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Intercept - Soja</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'soy_intercept'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Nag - Soja</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'soy_nag'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Nbg - Soja</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'soy_nbg'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Rbg Bio - Soja</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'soy_rbg_bio'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Frac dm - Soja</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'soy_frac_dm'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Slope - 2ª Safra (Milho)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'corn_slope_second_crop'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Intercept - 2ª Safra (Milho)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'corn_intercept_second_crop'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Nag - 2ª Safra (Milho)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'corn_nag_second_crop'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Nbg - 2ª Safra (Milho)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'corn_nbg_second_crop'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Rbg-bio - 2ª Safra (Milho)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'corn_rbg_bio_second_crop'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Frac dm - 2ª Safra (Milho)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'corn_frac_dm_second_crop'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div *ngSwitchCase="'tab5'">
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Diesel B10</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'diesel_b10'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Gasolina Comum</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'regular_gasoline'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div *ngSwitchCase="'tab6'">
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Fertilizante Sintético</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'synthetic_fertilization'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Ureia CO2</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'urea_co2'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Ureia N2O</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'urea_n2o'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div *ngSwitchCase="'tab7'">
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Adubo N Orgânico</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'organic_n_fertilizer'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div *ngSwitchCase="'tab8'">
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Adubação Verde #1</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'green_fertilizer_1'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Adubação Verde #2</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'green_fertilizer_2'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Adubação Verde #3</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'green_fertilizer_3'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Adubação Verde #3</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'nitrogen_fertilization_green_fertilizer'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div *ngSwitchCase="'tab9'">
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Deposição Atmosférica</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'atmospheric_deposition'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Lixiviação N Fertilizante</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'leaching_n_fertilizer'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+
+
+            <div *ngSwitchCase="'tab10'">
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Calcário Calcítico</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'calcitic_limestone'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Calcário Dolomítico</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'dolomitic_limestone'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Gesso Agrícola</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'agricultural_plaster'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div *ngSwitchCase="'tab11'">
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Diesel CO2 (fonte móvel)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'diesel_c02_mobile_source'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Diesel CH4 (fonte móvel)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'diesel_ch4_mobile_source'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Diesel CO2 (fonte estacionária)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'diesel_c02_stationary_source'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Diesel CH4 (fonte estacionária)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'diesel_ch4_stationary_source'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Diesel N20 (fonte estacionária)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'diesel_n20_stationary_source'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div *ngSwitchCase="'tab12'">
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Compra de Energia Elétrica - 2019</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'purchase_of_electricity_2019'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Compra de Energia Elétrica - 2020</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'purchase_of_electricity_2020'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div *ngSwitchCase="'tab13'">
+
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Cultivo de Solos Orgânicos</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'organic_soils_cultivation'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Cultivo de Solos Orgânicos</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'diesel_n2o_mobile_source'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Perda de Nitrogênio (N)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'nitrogen_loss'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div *ngSwitchCase="'tab14'">
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Amazônia (Floresta Ombrófila Aberta Terras Baixas)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'preserved_native_forest_soil_1'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Amazônia (Floresta Ombrófila Aberta Submontana)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'preserved_native_forest_soil_2'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Amazônia (Floresta Ombrófila Densa Aluvial)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'preserved_native_forest_soil_3'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Amazônia (Floresta Ombrófila Densa de Terras Baixas)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'preserved_native_forest_soil_4'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Amazônia (Floresta Ombrófila Densa Submontana)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'preserved_native_forest_soil_5'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Amazônia (Floresta Estacional Semidecidual Submontana)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'preserved_native_forest_soil_6'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Amazônia (Floresta Ombrófila Aberta Aluvial)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'preserved_native_forest_soil_7'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Amazônia (Campinarana Florestada)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'preserved_native_forest_soil_8'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Amazônia (Vegetação com influência fluvial e/ou lacustre)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'preserved_native_forest_soil_9'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Amazônia (Savana Arborizada)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'preserved_native_forest_soil_10'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Amazônia (Savana Florestada)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'preserved_native_forest_soil_11'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Amazônia (Savana Parque)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'preserved_native_forest_soil_12'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Cerrado (Savana Arborizada)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'preserved_native_forest_soil_13'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Cerrado (Savana Florestada (BA-DF-GO-MG))</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'preserved_native_forest_soil_14'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Cerrado (Savana Florestada (MS-MT))</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'preserved_native_forest_soil_15'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Cerrado (Savana Florestada (MA-PI-TO))</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'preserved_native_forest_soil_16'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Cerrado (Savana Gramíneo-lenhosa)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'preserved_native_forest_soil_17'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Cerrado (Contato Savana/Floresta Estacional)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'preserved_native_forest_soil_18'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Cerrado (Savana Parque)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'preserved_native_forest_soil_19'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Cerrado (Floresta Estacional Decidual Montana (BA-GO-MG-PI))</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'preserved_native_forest_soil_20'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Cerrado (Floresta Estacional Decidual Montana (MS-TO))</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'preserved_native_forest_soil_21'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Cerrado (Floresta Estacional Decidual Submontana (BA-GO-MA-MG-PI-TO))</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'preserved_native_forest_soil_22'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Cerrado (Floresta Estacional Decidual Submontana (MS-MT-SP))</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'preserved_native_forest_soil_23'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Cerrado (Floresta Estacional Semidecidual Aluvial (MA-PA-TO))</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'preserved_native_forest_soil_24'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Cerrado (Floresta Estacional Semidecidual Aluvial (BA-GO-MG-PI))</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'preserved_native_forest_soil_25'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Cerrado (Floresta Estacional Semidecidual Aluvial (MS-MT))</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'preserved_native_forest_soil_26'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Cerrado (Floresta Estacional Semidecidual Montana (BA-PI))</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'preserved_native_forest_soil_27'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Cerrado (Floresta Estacional Semidecidual Montana (GO-MG-MS-PR-SP-TO))</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'preserved_native_forest_soil_28'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Cerrado (Floresta Estacional Semidecidual Submontana (BA-MA-PI))</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'preserved_native_forest_soil_29'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Cerrado (Floresta Estacional Semidecidual Submontana (GO/MG/MS/MT/SP/TO))</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'preserved_native_forest_soil_30'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Cerrado (Savana)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'preserved_native_forest_soil_31'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div *ngSwitchCase="'tab15'">
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Biodiesel CO2 (fonte móvel)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'consumption_biodiesel_co2_mobile_source'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Biodiesel CH4 (fonte móvel)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'consumption_biodiesel_ch4_mobile_source'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Biodiesel N20 (fonte móvel)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'consumption_biodiesel_n20_mobile_source'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Etanol CO2 (fonte estacionária)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'consumption_ethanol_co2_stationary_source'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Etanol CH4 (fonte estacionária)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'consumption_ethanol_ch4_stationary_source'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Etanol N20 (fonte estacionária)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'consumption_ethanol_n20_stationary_source'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div *ngSwitchCase="'tab16'">
+
+                
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Cultivo Convencional → iLPF (Geral)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'land_occupation_1'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Cultivo Convencional → Plantio Direto (Demais Regiões)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'land_occupation_2'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Cultivo Convencional → Plantio Direto (Sul)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'land_occupation_3'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Pastagem Degradada → Cultivo Convencional (Geral)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'land_occupation_4'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Pastagem Degradada → iLPF (Geral)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'land_occupation_5'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Pastagem Degradada → Plantio Direto (Geral)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'land_occupation_6'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Pastagem/Pastagem melhorada → iLPF (Geral)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'land_occupation_7'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Plantio Direto → Cultivo Convencional (Geral)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'land_occupation_8'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Plantio Direto → iLPF (Geral)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'land_occupation_9'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Floresta Nativa → Cultivo Convencional (Argila > 60%)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'land_occupation_10'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Floresta Nativa → Cultivo Convencional (Argila < 60%)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'land_occupation_11'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Floresta Nativa → iLPF (Geral)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'land_occupation_12'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Floresta Nativa → Plantio Direto (Amazônia)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'land_occupation_13'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Floresta Nativa → Plantio Direto (Cerrado)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'land_occupation_14'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Floresta Nativa → Pastagem Degradada 15</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'land_occupation_15'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Floresta Nativa → Pastagem Nominal 16</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'land_occupation_16'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Floresta Nativa → Pastagem Melhorada 17</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'land_occupation_17'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div *ngSwitchCase="'tab17'">
+
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Sistema de Plantio Direto (SPD) - Uso de Cobertura</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'no_tillage_system_coverage'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Sistema de Plantio Direto (SPD)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'no_tillage_system'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column form-info">
+                        <label>Sistema de Plantio Convencional (SPC)</label>
+                    </div>
+                    <div class="form-column">
+                        <mat-form-field appearance="outline">
+                            <input matInput type="text" [formControlName]="'conventional_planting_system'" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="footer">
+            <button
+                    class="px-6 ml-3"
+                    mat-flat-button
+                    [color]="'primary'">
+                Atualizar
+            </button>
+    </div>
+
+    <ngx-smart-modal #myModal identifier="myModal" [customClass]="'custom-modal'" style="background: none">
+        <ul class="vertical-menu">
+            <li  (click)="viewMode ='tab1'" [ngClass]="{'active':viewMode =='tab1'}">POTENCIAL DE AQUECIMENTO GLOBAL (PAG)</li>
+            <li  (click)="viewMode ='tab2'" [ngClass]="{'active':viewMode =='tab2'}">Conversão de GEE</li>
+            <li  (click)="viewMode ='tab3'" [ngClass]="{'active':viewMode =='tab3'}">Emissão Secundária (Dep. Atm, lixiviação ou escoa)</li>
+            <li  (click)="viewMode ='tab4'" [ngClass]="{'active':viewMode =='tab4'}">Decomposição de Restos Culturais</li>
+            <li  (click)="viewMode ='tab5'" [ngClass]="{'active':viewMode =='tab5'}">Combustíveis (Composição)</li>
+        </ul>
+    </ngx-smart-modal>
+
+
+        </form>
+        <div *ngSwitchCase="'tab18'">
+
+            <div class="row" style="  margin-top: 30%;   margin-left: -40%;">
+                <div class="form-column form-info">
+                    <label>LISTA DAS BOAS PRÁTICAS AGRÍCOLAS </label>
+                </div>
+
+                <div class="form-column form-info" style="background: #fff;margin-top: 12px;">
+                    <a href="#" style="color: #34b5de;font-weight: 600;font-size: 20px;text-decoration: none;">Aplicação de Agrotóxicos e Meio Ambiente</a>
+                </div>
+
+                <div class="form-column form-info" style="background: #fff;margin-top: 12px;">
+                    <a href="#" style="color: #34b5de;font-weight: 600;font-size: 20px;text-decoration: none;">Boas Práticas de Manejo da Pecuária para Regeneração do Butiazal e Conservação do Campo Nativo</a>
+                </div>
+
+                <div class="form-column form-info" style="background: #fff;margin-top: 12px;">
+                    <a href="#" style="color: #34b5de;font-weight: 600;font-size: 20px;text-decoration: none;">BPM - Boas Práticas de Manejo para a Aquicultura</a>
+                </div>
+
+                <div class="form-column form-info" style="background: #fff;margin-top: 12px;">
+                    <a href="#" style="color: #34b5de;font-weight: 600;font-size: 20px;text-decoration: none;">BPM – Boas Práticas de Manejo para Produção de Peixes em Tanques Rede</a>
+                </div>
+
+                <div class="form-column form-info" style="background: #fff;margin-top: 12px;">
+                    <a href="#" style="color: #34b5de;font-weight: 600;font-size: 20px;text-decoration: none;">Controle de processos erosivos lineares (ravinas e voçorocas) em solos arenosos</a>
+                </div>
+
+                <div class="form-column form-info" style="background: #fff;margin-top: 12px;">
+                    <a href="#" style="color: #34b5de;font-weight: 600;font-size: 20px;text-decoration: none;">Cultivo do café orgânico: solos e preparo da área</a>
+                </div>
+
+                <div class="form-column form-info" style="background: #fff;margin-top: 12px;">
+                    <a href="#" style="color: #34b5de;font-weight: 600;font-size: 20px;text-decoration: none;">Modelo Digital de Exploração Florestal - MODEFLORA</a>
+                </div>
+
+                <div class="form-column form-info" style="background: #fff;margin-top: 12px;">
+                    <a href="#" style="color: #34b5de;font-weight: 600;font-size: 20px;text-decoration: none;">Plantios de Enriquecimento em Florestas de Produção</a>
+                </div>
+
+                <div class="form-column form-info" style="background: #fff;margin-top: 12px;">
+                    <a href="#" style="color: #34b5de;font-weight: 600;font-size: 20px;text-decoration: none;">Aplicação de Agrotóxicos e Meio Ambiente</a>
+                </div>
+
+                <div class="form-column form-info" style="background: #fff;margin-top: 12px;">
+                    <a href="#" style="color: #34b5de;font-weight: 600;font-size: 20px;text-decoration: none;">Boas Práticas de Manejo da Pecuária para Regeneração do Butiazal e Conservação do Campo Nativo</a>
+                </div>
+
+                <div class="form-column form-info" style="background: #fff;margin-top: 12px;">
+                    <a href="#" style="color: #34b5de;font-weight: 600;font-size: 20px;text-decoration: none;">BPM - Boas Práticas de Manejo para a Aquicultura</a>
+                </div>
+
+                <div class="form-column form-info" style="background: #fff;margin-top: 12px;">
+                    <a href="#" style="color: #34b5de;font-weight: 600;font-size: 20px;text-decoration: none;">BPM – Boas Práticas de Manejo para Produção de Peixes em Tanques Rede</a>
+                </div>
+
+                <div class="form-column form-info" style="background: #fff;margin-top: 12px;">
+                    <a href="#" style="color: #34b5de;font-weight: 600;font-size: 20px;text-decoration: none;">Controle de processos erosivos lineares (ravinas e voçorocas) em solos arenosos</a>
+                </div>
+
+                <div class="form-column form-info" style="background: #fff;margin-top: 12px;">
+                    <a href="#" style="color: #34b5de;font-weight: 600;font-size: 20px;text-decoration: none;">Cultivo do café orgânico: solos e preparo da área</a>
+                </div>
+
+                <div class="form-column form-info" style="background: #fff;margin-top: 12px;">
+                    <a href="#" style="color: #34b5de;font-weight: 600;font-size: 20px;text-decoration: none;">Modelo Digital de Exploração Florestal - MODEFLORA</a>
+                </div>
+
+                <div class="form-column form-info" style="background: #fff;margin-top: 12px;">
+                    <a href="#" style="color: #34b5de;font-weight: 600;font-size: 20px;text-decoration: none;">Plantios de Enriquecimento em Florestas de Produção</a>
+                </div>
+
+                <div class="form-column form-info" style="background: #fff;margin-top: 12px;">
+                    <a href="#" style="color: #34b5de;font-weight: 600;font-size: 20px;text-decoration: none;">BPM – Boas Práticas de Manejo para Produção de Peixes em Tanques Rede</a>
+                </div>
+
+                <div class="form-column form-info" style="background: #fff;margin-top: 12px;">
+                    <a href="#" style="color: #34b5de;font-weight: 600;font-size: 20px;text-decoration: none;">Controle de processos erosivos lineares (ravinas e voçorocas) em solos arenosos</a>
+                </div>
+
+                <div class="form-column form-info" style="background: #fff;margin-top: 12px;">
+                    <a href="#" style="color: #34b5de;font-weight: 600;font-size: 20px;text-decoration: none;">Cultivo do café orgânico: solos e preparo da área</a>
+                </div>
+
+                <div class="form-column form-info" style="background: #fff;margin-top: 12px;">
+                    <a href="#" style="color: #34b5de;font-weight: 600;font-size: 20px;text-decoration: none;">Cultivo do café orgânico: solos e preparo da área</a>
+                </div>
+
+                <div class="form-column form-info" style="background: #fff;margin-top: 12px;">
+                    <a href="#" style="color: #34b5de;font-weight: 600;font-size: 20px;text-decoration: none;">Cultivo do café orgânico: solos e preparo da área</a>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>

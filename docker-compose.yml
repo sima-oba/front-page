@@ -1,0 +1,13 @@
+version: '3.4'
+
+services:
+  sima-ui:
+    image: sima
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args: 
+        BASE_URL: $BASE_URL
+        MAP_KEY: $MAP_KEY
+    ports:
+      - 8080:80

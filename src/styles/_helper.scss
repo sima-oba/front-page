@@ -1,0 +1,82 @@
+@use "var";
+@use "util";
+
+$directions: 't' 'top',
+             'r' 'right',
+             'b' 'bottom',
+             'l' 'left',
+             'x' 'left',
+             'x' 'right',
+             'y' 'top',
+             'y' 'bottom';
+
+$sizes: '0' 0
+        '1' var.$spacing-1,
+        '2' var.$spacing-2,
+        '3' var.$spacing-3,
+        '4' var.$spacing-4,
+        '5' var.$spacing-5;
+
+// Generates helper classes for padding and margin.
+// The classes are named using the format {property}{side}-{size} where:
+//      {property} is either "m" (margin) or "p" (padding).
+//      {side} is one of "t" (top), "r" (right), "b" (bottom), "l" (left), "x" (horizontal) or "y" (vertical).
+//      {size} is the spacing size raging from 0 to 5.
+//
+// Examples: 
+//      "mt-2" is for a margin of 8px at the top
+//      "pl-3" applies padding left of 16px
+//      "mx-0" applies horizontal margin of 0
+//
+@each $dirKey, $dirValue in $directions {
+    @each $sizeKey, $sizeValue in $sizes {
+        .m#{$dirKey}-#{$sizeKey} {
+            margin-#{$dirValue}: $sizeValue !important;
+        }
+
+        .p#{$dirKey}-#{$sizeKey} {
+            padding-#{$dirValue}: $sizeValue !important;
+        }
+    }
+}
+
+// Generates classes for text alignment such as 
+// "text-left", "text-right" and so on...
+@each $align in left, right, center, justify {
+    .text-#{$align} {
+        text-align: $align !important;
+    }
+}
+
+// Positioning
+.block-center {
+    max-width: 600px;
+    display: block;
+    @include util.horizontal-margin(auto);
+}
+
+// Links
+.link-green {
+    color: #67c973;
+    text-decoration: none;
+    transition-duration: 150ms;
+
+    &:hover {
+        color: #9de2a5;
+    }
+}
+
+.flex-row {
+    @extend %flex-row;
+}
+
+.flex-column {
+    @extend %flex-column;
+}
+
+.separator {
+    height: 1px;
+    margin: 0;
+    background-color: #0000000c;
+    border: none;
+}

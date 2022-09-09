@@ -1,0 +1,101 @@
+<div class="container">
+    <button mat-icon-button class="button-close" (click)="close()">
+        <mat-icon>close</mat-icon>
+    </button>
+
+    <section style="flex-grow: 1;">
+        <h3>Malhas Hidrográficas</h3>
+
+        <mat-progress-bar
+            mode="indeterminate"
+            [style.visibility]="(isRiversAndLimitsLoading$ | async) ? 'visible' : 'hidden'">
+        </mat-progress-bar>
+
+        <div class="checkbox-list">
+            <div class="checkbox-item">
+                <mat-checkbox
+                    [checked]="isLimitsSelected$ | async"
+                    (change)="selectLimits($event.checked)">
+                    Limites da Bacia do São Francisco
+                </mat-checkbox>
+
+                <mat-checkbox
+                    [checked]="isAllRiversSelected"
+                    (change)="selectAllRivers($event.checked)">
+                    Selecionar todos os rios
+                </mat-checkbox>
+            </div>
+
+            <mat-divider></mat-divider>
+    
+            <cdk-virtual-scroll-viewport itemSize="32" class="scroll">
+                <div *cdkVirtualFor="let river of riversSummary$ | async" class="checkbox-item">
+                    <mat-checkbox
+                        [disabled]="isAllRiversSelected"
+                        [checked]="riversSelection.isSelected(river._id)"
+                        (change)="selectRiver($event.checked, river._id)">
+                        {{ river.name_river }}
+                    </mat-checkbox>
+                </div>
+            </cdk-virtual-scroll-viewport>
+        </div>
+    </section>
+
+    <section style="flex-grow: 1;">
+        <h3>Aquíferos</h3>
+
+        <mat-progress-bar
+            mode="indeterminate"
+            [style.visibility]="(isAquifersLoading$ | async) ? 'visible' : 'hidden'">
+        </mat-progress-bar>
+
+        <div class="checkbox-list">
+            <div class="checkbox-item" *ngFor="let aquifer of featuredAquiferSummary$ | async">
+                <mat-checkbox
+                    [checked]="aquifer._id === selectedAquifer"
+                    (change)="selectAquifer($event.checked, aquifer._id)">
+                    {{ aquifer.name }}
+                </mat-checkbox>
+            </div>
+
+            <mat-divider></mat-divider>
+
+            <cdk-virtual-scroll-viewport itemSize="32" class="scroll">
+                <div *cdkVirtualFor="let aquifer of aquiferSummary$ | async" class="checkbox-item">
+                    <mat-checkbox
+                        [checked]="aquifer._id === selectedAquifer"
+                        (change)="selectAquifer($event.checked, aquifer._id)">
+                        {{ aquifer.name }}
+                    </mat-checkbox>
+                </div>
+            </cdk-virtual-scroll-viewport>
+        </div>
+    </section>
+
+    <section>
+        <h3>Vazão Específica</h3>
+
+        <mat-progress-bar
+            mode="indeterminate"
+            [style.visibility]="(isFlowRatesLoading$ | async) ? 'visible' : 'hidden'">
+        </mat-progress-bar>
+
+        <div class="checkbox-list">
+            <div class="checkbox-item">
+                <mat-checkbox
+                    [checked]="isQ90Selected$ | async"
+                    (change)="selectQ90($event.checked)">
+                    Vazão Específica Q90
+                </mat-checkbox>
+            </div>
+
+            <div class="checkbox-item">
+                <mat-checkbox
+                    [checked]="isQmldSelected$ | async"
+                    (change)="selectQmld($event.checked)">
+                    Vazão Específica Qmld
+                </mat-checkbox>
+            </div>
+        </div>
+    </section>
+</div>

@@ -1,0 +1,214 @@
+<form [formGroup]="form" class="form">
+    <label>Propriedade*</label>
+    <mat-form-field appearance="outline">
+        <mat-select formControlName="farm_id" placeholder="Selecione a propriedade">
+            <mat-option
+                *ngFor="let farm of farms$ | async"
+                [value]="farm._id">
+                {{ farm.farm_name }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <label for="sketch">Croqui da área cadastrada*</label>
+    <mat-form-field appearance="outline">
+        <ngx-mat-file-input
+            formControlName="sketch"
+            accept="application/pdf"
+            placeholder="Anexar arquivo">
+
+            <mat-icon ngxMatFileInputIcon class="material-icons-outlined">
+                arrow_circle_up
+            </mat-icon>
+        </ngx-mat-file-input>
+
+        <mat-error *ngIf="getError('sketch')?.required">
+            Selecione um arquivo
+        </mat-error>
+        
+        <mat-error *ngIf="getError('sketch')?.accept">
+            Deve ser um documento PDF
+        </mat-error>
+        
+        <mat-error *ngIf="getError('sketch')?.maxSize">
+            Não pode ser maior que {{ MAX_FILE_SIZE | bytes }} MB
+        </mat-error>
+    </mat-form-field>
+
+    <label for="rg_cnpj">RG/CNH ou CNPJ*</label>
+    <mat-form-field appearance="outline">
+        <ngx-mat-file-input
+            formControlName="rg_cnpj"
+            accept="image/jpeg"
+            placeholder="Anexar arquivo">
+
+            <mat-icon ngxMatFileInputIcon class="material-icons-outlined">
+                arrow_circle_up
+            </mat-icon>
+        </ngx-mat-file-input>
+
+        <mat-error *ngIf="getError('rg_cnpj')?.required">
+            Selecione um arquivo
+        </mat-error>
+        
+        <mat-error *ngIf="getError('rg_cnpj')?.accept">
+            Deve ser um documento PDF
+        </mat-error>
+        
+        <mat-error *ngIf="getError('rg_cnpj')?.maxSize">
+            Não pode ser maior que {{ MAX_FILE_SIZE | bytes }} MB
+        </mat-error>
+    </mat-form-field>
+
+    <label for="art">ART preenchida e assinada*</label>
+    <mat-form-field appearance="outline">
+        <ngx-mat-file-input
+            formControlName="art"
+            accept="application/pdf"
+            placeholder="Anexar arquivo">
+
+            <mat-icon ngxMatFileInputIcon class="material-icons-outlined">
+                arrow_circle_up
+            </mat-icon>
+        </ngx-mat-file-input>
+
+        <mat-error *ngIf="getError('art')?.required">
+            Selecione um arquivo
+        </mat-error>
+        
+        <mat-error *ngIf="getError('art')?.accept">
+            Deve ser um documento PDF
+        </mat-error>
+        
+        <mat-error *ngIf="getError('art')?.maxSize">
+            Não pode ser maior que {{ MAX_FILE_SIZE | bytes }} MB
+        </mat-error>
+    </mat-form-field>
+
+    <label for="attorney_letter">Procuração (opcional)</label>
+    <mat-form-field appearance="outline">
+        <ngx-mat-file-input
+            formControlName="attorney_letter"
+            accept="application/pdf"
+            placeholder="Anexar arquivo">
+
+            <mat-icon ngxMatFileInputIcon class="material-icons-outlined">
+                arrow_circle_up
+            </mat-icon>
+        </ngx-mat-file-input>
+
+        <mat-error *ngIf="getError('attorney_letter')?.required">
+            Selecione um arquivo
+        </mat-error>
+        
+        <mat-error *ngIf="getError('attorney_letter')?.accept">
+            Deve ser um documento PDF
+        </mat-error>
+        
+        <mat-error *ngIf="getError('attorney_letter')?.maxSize">
+            Não pode ser maior que {{ MAX_FILE_SIZE | bytes }} MB
+        </mat-error>
+    </mat-form-field>
+
+    <label class="mb-0">Termo de compromisso e responsabilidade</label>
+    <a class="download-link mb-2" target="_blank" href="https://aiba.org.br/wp-content/uploads/2021/08/Termo-de-compromisso-plantio-de-soja-safra-2021-22.pdf">
+        <span class="download-link-text">Baixe o modelo do documento</span>
+        <mat-icon class="download-link-icon">download</mat-icon>
+    </a>
+    <mat-form-field appearance="outline">
+        <ngx-mat-file-input
+            formControlName="commitment"
+            accept="application/pdf"
+            placeholder="Anexar arquivo">
+
+            <mat-icon ngxMatFileInputIcon class="material-icons-outlined">
+                arrow_circle_down
+            </mat-icon>
+        </ngx-mat-file-input>
+
+        <mat-error *ngIf="getError('commitment')?.required">
+            Selecione um arquivo
+        </mat-error>
+        
+        <mat-error *ngIf="getError('commitment')?.accept">
+            Deve ser um documento PDF
+        </mat-error>
+        
+        <mat-error *ngIf="getError('commitment')?.maxSize">
+            Não pode ser maior que {{ MAX_FILE_SIZE | bytes }} MB
+        </mat-error>
+    </mat-form-field>
+
+    <label for="soy_planting">Requerimento para plantio de soja</label>
+    <a class="download-link mb-2" 
+        target="_blank"
+        href="https://aiba.org.br/wp-content/uploads/2021/08/REQUERIMENTO-PLANTIO-ANTECIPADO-SOJA-2021-22.pdf">
+
+        <span class="download-link-text">Baixe o modelo do documento</span>
+        <mat-icon class="download-link-icon">download</mat-icon>
+    </a>
+    <mat-form-field appearance="outline">
+        <ngx-mat-file-input
+            formControlName="soy_planting"
+            accept="application/pdf"
+            placeholder="Anexar arquivo">
+
+            <mat-icon ngxMatFileInputIcon class="material-icons-outlined">
+                arrow_circle_up
+            </mat-icon>
+        </ngx-mat-file-input>
+
+        <mat-error *ngIf="getError('soy_planting')?.required">
+            Selecione um arquivo
+        </mat-error>
+        
+        <mat-error *ngIf="getError('soy_planting')?.accept">
+            Deve ser um documento PDF
+        </mat-error>
+        
+        <mat-error *ngIf="getError('soy_planting')?.maxSize">
+            Não pode ser maior que {{ MAX_FILE_SIZE | bytes }} MB
+        </mat-error>
+    </mat-form-field>
+
+    <label for="work_plan">Plano de trabalho</label>
+    <a class="download-link mb-2" 
+        target="_blank"
+        href="https://aiba.org.br/wp-content/uploads/2021/08/Termo-de-compromisso-plantio-de-soja-safra-2021-22.pdf">
+
+        <span class="download-link-text">Baixe o modelo do documento</span>
+        <mat-icon class="download-link-icon">download</mat-icon>
+    </a>
+    <mat-form-field appearance="outline">
+        <ngx-mat-file-input
+            formControlName="work_plan"
+            accept="application/pdf"
+            placeholder="Anexar arquivo">
+
+            <mat-icon ngxMatFileInputIcon class="material-icons-outlined">
+                arrow_circle_up
+            </mat-icon>
+        </ngx-mat-file-input>
+
+        <mat-error *ngIf="getError('work_plan')?.required">
+            Selecione um arquivo
+        </mat-error>
+        
+        <mat-error *ngIf="getError('work_plan')?.accept">
+            Deve ser um documento PDF
+        </mat-error>
+        
+        <mat-error *ngIf="getError('work_plan')?.maxSize">
+            Não pode ser maior que {{ MAX_FILE_SIZE | bytes }} MB
+        </mat-error>
+    </mat-form-field>
+
+    <label>Observações</label>
+    <mat-form-field appearance="outline">
+        <textarea
+            matInput
+            formControlName="notes"
+            rows="10">
+        </textarea>
+    </mat-form-field>
+</form>

@@ -1,0 +1,11 @@
+@use "var";
+
+.title {
+    margin: 0 auto;
+    padding: var.$spacing-3;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: #fff;
+    background-color: #cbd862;
+}

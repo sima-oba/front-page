@@ -1,0 +1,140 @@
+<div class="container">
+    <div #scroll class="scroll" *ngIf="user">
+        <form [formGroup]="form" class="container" class="form">
+            <fieldset>
+                <legend>Informações do Usuário</legend>
+
+                <label for="username">Usuário (CNPJ/CPF)</label>
+                <mat-form-field appearance="outline">
+                    <input matInput type="text" disabled [value]="username">
+                </mat-form-field>
+
+                <label for="email">Email</label>
+                <mat-form-field appearance="outline">
+                    <input matInput type="email" disabled [value]="email">
+                </mat-form-field>
+            
+                <label for="firstName">Nome</label>
+                <mat-form-field appearance="outline">
+                    <input matInput formControlName="firstName" type="text">
+                </mat-form-field>
+            
+                <label for="lastName">Sobrenome</label>
+                <mat-form-field appearance="outline">
+                    <input matInput formControlName="lastName" type="text">
+                </mat-form-field>
+            
+                <label for="enabled">Ativação de usuário</label>
+                <mat-slide-toggle formControlName="enabled" class="mt-2"></mat-slide-toggle>
+            </fieldset>
+
+            <hr class="mt-5 mb-4">
+        
+            <fieldset>
+                <legend>Grupos</legend>
+
+                <div cdkDropListGroup class="transfer-grid">
+                    <div>
+                        <label>Grupos disponíveis</label>
+    
+                        <div class="chip-list"
+                            cdkDropList
+                            [cdkDropListData]="availableGroups"
+                            cdkDropListSortingDisabled
+                            (cdkDropListDropped)="drop($event)">
+    
+                            <span class="chip" cdkDrag *ngFor="let group of availableGroups">
+                                {{ group }}
+                            </span>
+                        </div>
+                    </div>
+            
+                    <div>
+                        <label>Grupos do usuário</label>
+    
+                        <div class="chip-list"
+                            cdkDropList
+                            [cdkDropListData]="userGroups"
+                            cdkDropListSortingDisabled
+                            (cdkDropListDropped)="drop($event)">
+    
+                            <span class="chip" cdkDrag *ngFor="let group of userGroups">
+                                {{ group }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+            <hr class="mt-5 mb-4">
+
+            <fieldset>
+                <legend>Permissões</legend>
+
+                <div cdkDropListGroup class="transfer-grid">
+                    <div class="transfer-grid-content">
+                        <label>Permissões disponíveis</label>
+    
+                        <div
+                            cdkDropList
+                            [cdkDropListData]="availableRoles"
+                            class="chip-list"
+                            cdkDropListSortingDisabled
+                            (cdkDropListDropped)="drop($event)">
+    
+                            <span class="chip" cdkDrag *ngFor="let roles of availableRoles">
+                                {{ roles }}
+                            </span>
+                        </div>
+                    </div>
+            
+                    <div class="transfer-grid-content">
+                        <label>Permissões do usuário</label>
+    
+                        <div
+                            cdkDropList
+                            [cdkDropListData]="userRoles"
+                            class="chip-list"
+                            cdkDropListSortingDisabled
+                            (cdkDropListDropped)="drop($event)">
+    
+                            <span class="chip" cdkDrag *ngFor="let roles of userRoles">
+                                {{ roles }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="text-right mt-5">
+                <button
+                    type="button"
+                    mat-flat-button
+                    color="warn"
+                    class="mr-3"
+                    (click)="remove()">
+                    Remover
+                </button>
+
+                <button
+                    type="button"
+                    mat-flat-button
+                    color="accent"
+                    class="button-large"
+                    (click)="save()">
+                    Salvar
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div *ngIf="!user" class="empty">
+        <h3 class="empty-title">Selecione um usuário na lista</h3>
+    </div>
+
+    <app-loading 
+        *ngIf="isLoading"
+        backgroundColor="#f5f7f8"
+        opacity="1">
+    </app-loading>
+</div>

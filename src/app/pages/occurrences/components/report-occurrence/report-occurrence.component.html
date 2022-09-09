@@ -1,0 +1,156 @@
+<app-page-title>Reportar Ocorrência</app-page-title>
+
+<div class="container mt-3">
+    <form [formGroup]="form" class="form block-center">
+        <div class="form-row">
+            <!-- Ocurrence date -->
+            <div class="form-column">
+                <label for="occurrence_date">Data:</label>
+                <mat-form-field appearance="outline">
+                    <input
+                        matInput
+                        formControlName="occurrence_date"
+                        [matDatepicker]="occurrenceDate">
+
+                    <mat-datepicker-toggle matSuffix [for]="occurrenceDate">
+                        <mat-icon matDatepickerToggleIcon class="material-icons-outlined">
+                            date_range
+                        </mat-icon>
+                    </mat-datepicker-toggle>
+
+                    <mat-datepicker #occurrenceDate></mat-datepicker>
+
+                    <mat-error *ngIf="getError('occurrence_date')?.required">
+                        Campo obrigatório
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <!-- Area -->
+            <div class="form-column">
+                <label for="area">Tamanho da área (hectares):</label>
+                <mat-form-field appearance="outline">
+                    <input matInput formControlName="area" type="number" min="0">
+
+                    <span matSuffix>ha</span>
+
+                    <mat-error *ngIf="getError('area')?.required">
+                        Campo obrigatório
+                    </mat-error>
+
+                    <mat-error *ngIf="getError('area')?.min">
+                        Área deve ser no mínimo 0
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <!-- Coordinates -->
+        <label>Coordenadas:</label>
+        <div class="form-row">
+            <div class="form-column">
+                <mat-form-field appearance="outline">
+                    <input matInput
+                        formControlName="latitude"
+                        type="number"
+                        placeholder="Latitude"
+                        min="-90"
+                        max="90">
+
+                    <span matSuffix>&#176;</span>
+    
+                    <mat-error *ngIf="getError('latitude')?.required">
+                        Campo obrigatório
+                    </mat-error>
+    
+                    <mat-error *ngIf="getError('latitude')?.min || getError('latitude')?.max">
+                        Latitude deve ser entre -90 e 90
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="form-column">
+                <mat-form-field appearance="outline">
+                    <input
+                        matInput
+                        formControlName="longitude"
+                        type="number"
+                        placeholder="Longitude"
+                        min="-180"
+                        max="180">
+
+                    <span matSuffix>&#176;</span>
+    
+                    <mat-error *ngIf="getError('longitude')?.required">
+                        Campo obrigatório
+                    </mat-error>
+    
+                    <mat-error *ngIf="getError('longitude')?.min || getError('longitude')?.max">
+                        Longitude deve ser entre -180 e 180
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <!-- Location -->
+        <label for="location">Localização:</label>
+        <mat-form-field appearance="outline">
+            <input matInput formControlName="location" type="text" placeholder="Ex.: Fazenda Rio Branco">
+
+            <mat-error *ngIf="getError('location')?.required">
+                Campo obrigatório
+            </mat-error>
+
+            <mat-error *ngIf="getError('location')?.minlength">
+                Localização deve ter no mínimo {{ getError('location')?.minlength?.requiredLength }} caracteres
+            </mat-error>
+        </mat-form-field>
+
+        <label for="occurence_type">Tipo de Ocorrência</label>
+        <mat-form-field appearance="outline">
+            <mat-select formControlName="occurrence_type">
+                <mat-option [value]="''" disabled>Selecione o tipo da ocorrência</mat-option>
+
+                <mat-option value="FALLOW">
+                    Incidência de Tiguera
+                </mat-option>
+
+                <mat-option value="RUST">
+                    Incidência de Ferrugem Asiática
+                </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+        <!-- Photo -->
+        <label for="photo">Foto:</label>
+        <mat-form-field appearance="outline">
+            <ngx-mat-file-input
+                formControlName="photo"
+                [accept]="'image/jpeg'"
+                placeholder="Selecione uma foto">
+
+                <mat-icon ngxMatFileInputIcon class="material-icons-outlined">
+                    photo_camera
+                </mat-icon>
+            </ngx-mat-file-input>
+
+            <mat-error *ngIf="getError('photo')?.required">
+                Campo obrigatório
+            </mat-error>
+
+            <mat-error *ngIf="getError('photo')?.accept">
+                O arquivo deve ser uma imagem JPEG
+            </mat-error>
+
+            <mat-error *ngIf="getError('photo')?.maxSize">
+                O arquivo não pode ser maior que 2MB
+            </mat-error>
+        </mat-form-field>
+    </form>
+
+    <div class="block-center text-center py-3">
+        <button mat-flat-button color="accent"(click)="submit()">
+            Registar Ocorrência
+        </button>
+    </div>
+</div>

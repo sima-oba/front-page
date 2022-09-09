@@ -1,0 +1,61 @@
+<mat-toolbar class="container">
+
+    <mat-form-field appearance="none" class="city">
+        <mat-select
+            [value]="selectedCity"
+            panelClass="weather-bar-select-panel"
+            (selectionChange)="onCityChanged($event.value)">
+
+            <mat-option value="" disabled>Cidades</mat-option>
+
+            <mat-option *ngFor="let city of cities$ | async" [value]="city._id">
+                {{ city.name }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <div class="forecast">
+        <ng-container *ngIf="currentForecast$ | async as forecast">
+            <img class="thermometer" src="assets/icons/weather-bar/thermometer/min-temp.svg" title="Temperatura mínima">
+            <div class="temperature-value text-cold">{{ forecast.min_temp }}°</div>
+    
+            <img class="thermometer" src="assets/icons/weather-bar/thermometer/max-temp.svg" title="Temperatura máxima">
+            <div class="temperature-value text-hot">{{ forecast.max_temp }}°</div>
+    
+            <img class="sun" src="assets/icons/weather-bar/sun-1.svg" title="Resumo">
+            <div class="sun-text">{{ forecast.summary }}</div>
+    
+            <img class="wind" src="assets/icons/weather-bar/wind.svg" title="Velocidade do vento">
+            <div class="sun-text">{{ forecast.wind_speed }}</div>
+
+            <img class="wind" src="assets/icons/weather-bar/humidity-min.svg" title="Umidade mínima">
+            <div class="sun-text">{{ forecast.min_humidity }}%</div>
+    
+            <img class="wind" src="assets/icons/weather-bar/humidity-max.svg" title="Umidade máxima">
+            <div class="sun-text">{{ forecast.max_humidity }}%</div>
+    
+            <img class="wind" src="assets/icons/weather-bar/sun-3.svg" title="Alvorada">
+            <div class="sun-text">{{ forecast.sunrise | date: 'HH:mm' }}</div>
+    
+            <img class="wind" src="assets/icons/weather-bar/sun-4.svg" title="Ocaso">
+            <div class="sun-text">{{ forecast.sunset | date: 'HH:mm' }}</div>
+        </ng-container>
+    </div>
+
+    <div class="date">
+        <input 
+            matInput
+            readonly
+            [matDatepicker]="picker"
+            [value]="today"
+            (focus)="picker.open()"
+            (dateChange)="onDateChanged($event.value)">
+
+        <button mat-icon-button (click)="picker.open()">
+            <img src="assets/icons/weather-bar/calendar.svg" alt="Selecionar data">
+        </button>
+
+        <mat-datepicker #picker></mat-datepicker>
+    </div>
+
+</mat-toolbar>

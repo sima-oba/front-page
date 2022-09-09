@@ -1,0 +1,131 @@
+<h3 class="title">Avaliação de boas Práticas fitossanitárias</h3>
+
+<hr class="separator">
+
+<mat-dialog-content>
+    <form
+        id="soil-humidity-eval"
+        class="form"
+        [formGroup]="this.form"
+        (ngSubmit)="save()">
+
+        <div class="grid">
+            <div class="evaluator">
+                <span *ngIf="practice.evaluation?.resp_name">
+                    Responsável: <strong>{{ practice.evaluation.resp_name }}</strong>
+                </span>
+            </div>
+            <div class="text-center evaluation-title">Avaliação</div>
+    
+            <div class="mt-4">
+                <label>Faz adoção de controle de pragas e doenças?</label>
+                <div class="answer">{{ practice.plague_management?.join(', ') || 'Não se aplica' }}</div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="plague_management"></mat-checkbox>
+            </div>
+
+            <div class="mt-4">
+                <label>Faz uso de biodefensivos?</label>
+                <div class="answer">{{ practice.pesticides?.join(', ') || 'Não se aplica' }}</div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="pesticides"></mat-checkbox>
+            </div>
+
+            <div class="mt-4">
+                <label>Realiza adoção da biotecnologia no campo com...</label>
+                <div class="answer">{{ practice.biotechnology_employed?.join(', ') || 'Não se aplica' }}</div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="biotechnology_employed"></mat-checkbox>
+            </div>
+
+            <div class="mt-4">
+                <label>Faz uso de Boas práticas para o manejo da ferrugem da soja?</label>
+                <div class="answer">{{ practice.soybean_rust_management?.join(', ') || 'Não se aplica' }}</div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="soybean_rust_management"></mat-checkbox>
+            </div>
+
+            <div class="mt-4">
+                <label>Utiliza técnica de refúgio?</label>
+                <div class="answer">{{ practice.uses_refuge ? 'Sim' : 'Não' }}</div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="uses_refuge"></mat-checkbox>
+            </div>
+
+            <div class="mt-4">
+                <label>Faz controle agronômico?</label>
+                <div class="answer">{{ practice.uses_agronomic_management ? 'Sim' : 'Não' }}</div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="uses_agronomic_management"></mat-checkbox>
+            </div>
+
+            <div class="mt-4">
+                <label>Utiliza sistemas de precisão?</label>
+                <div class="answer">{{ practice.uses_precision_systems ? 'Sim' : 'Não' }}</div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="uses_precision_systems"></mat-checkbox>
+            </div>
+
+            <div class="mt-4">
+                <label>Realiza adoção de Manejo Integrado de Pragas (MIP)?</label>
+                <div class="answer">{{ practice.uses_mip ? 'Sim' : 'Não' }}</div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="uses_mip"></mat-checkbox>
+            </div>
+
+            <div class="mt-4">
+                <label>Realiza adoção de Manejo Integrado de Doenças (MID)?</label>
+                <div class="answer">{{ practice.uses_mid ? 'Sim' : 'Não' }}</div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="uses_mid"></mat-checkbox>
+            </div>
+        </div>
+
+        <div class="mt-5">
+            <label>Observações</label>
+            <mat-form-field appearance="outline">
+                <textarea
+                    matInput
+                    rows="5"
+                    formControlName="notes">
+                </textarea>
+            </mat-form-field>
+        </div>
+    </form>
+</mat-dialog-content>
+
+<hr class="separator">
+
+<mat-dialog-actions align="end" class="py-2">
+    <button *ngIf="canSave"
+        mat-flat-button
+        form="soil-humidity-eval"
+        type="submit"
+        color="primary">
+        Salvar
+    </button>
+
+    <button *ngIf="!canSave"
+        mat-flat-button
+        matDialogClose
+        color="primary">
+        Fechar
+    </button>
+</mat-dialog-actions>
+
+<button
+    matDialogClose
+    mat-icon-button
+    class="button-close">
+
+    <mat-icon>close</mat-icon>
+</button>

@@ -1,0 +1,301 @@
+<h3 class="title">Avalição de práticas sustentáveis</h3>
+
+<hr class="separator">
+
+<mat-dialog-content>
+    <form
+        id="soil-humidity-eval"
+        class="form"
+        [formGroup]="this.form"
+        (ngSubmit)="save()">
+
+        <div class="grid">
+            <div class="evaluator">
+                <span *ngIf="practice.evaluation?.resp_name">
+                    Responsável: <strong>{{ practice.evaluation.resp_name }}</strong>
+                </span>
+            </div>
+            <div class="text-center evaluation-title">Avaliação</div>
+    
+            <div class="mt-4">
+                <label>Está satisfeito com o Sistema Plantio Direto que executa?</label>
+                <div class="answer">{{ practice.are_satisfied_with_planting ? 'Sim' : 'Não' }}</div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="are_satisfied_with_planting"></mat-checkbox>
+            </div>
+    
+            <div class="mt-4">
+                <label>Como você avalia o seu Plantio Direto?</label>
+                <div class="answer" [ngSwitch]="practice.planting_assessment">
+                    <ng-container *ngSwitchCase="0">Ruim</ng-container>
+                    <ng-container *ngSwitchCase="1">Razoável</ng-container>
+                    <ng-container *ngSwitchCase="2">Bom</ng-container>
+                    <ng-container *ngSwitchCase="3">Excelente</ng-container>
+                </div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="planting_assessment"></mat-checkbox>
+            </div>
+
+            <div class="mt-4">
+                <label>Para você, qual o principal problema ou dificuldades na utilização do sistema plantio direto?</label>
+                <div class="answer">{{ practice.planting_difficulties || 'Não se aplica' }}</div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="planting_difficulties"></mat-checkbox>
+            </div>
+
+            <div class="mt-4">
+                <label>Há quanto tempo você utiliza o Sistema Plantio Direto em sua propriedade?</label>
+                <div class="answer">{{ practice.planting_years }} anos</div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="planting_years"></mat-checkbox>
+            </div>
+
+            <div class="mt-4">
+                <label>Na sua opinião, qual importância do uso Plantio Direto?</label>
+                <div class="answer">{{ practice.planting_importance || 'Não se aplica' }}</div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="planting_importance"></mat-checkbox>
+            </div>
+
+            <div class="mt-4">
+                <label>Você executa as operações agrícolas em nível?</label>
+                <div class="answer">{{ practice.perform_agricultural_operations ? 'Sim' : 'Não' }}</div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="perform_agricultural_operations"></mat-checkbox>
+            </div>
+
+            <div class="mt-4">
+                <label>Você possui terraços em sua propriedade?</label>
+                <div class="answer">{{ practice.has_terraces ? 'Sim' : 'Não' }}</div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="has_terraces"></mat-checkbox>
+            </div>
+
+            <div class="mt-4">
+                <label>Você observa erosão (valetas ou acúmulo de terra) em sua lavoura?</label>
+                <div class="answer">{{ practice.has_erosion ? 'Sim' : 'Não' }}</div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="has_erosion"></mat-checkbox>
+            </div>
+
+            <div class="mt-4">
+                <label>Quando na semeadura, você observa revolvimento do solo?</label>
+                <div class="answer">{{ practice.has_soil_disturbance ? 'Sim' : 'Não' }}</div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="has_soil_disturbance"></mat-checkbox>
+            </div>
+
+            <div class="mt-4">
+                <label>Na sua avaliação, o seu solo está compactado?</label>
+                <div class="answer">{{ practice.is_soil_compactated ? 'Sim' : 'Não' }}</div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="is_soil_compactated"></mat-checkbox>
+            </div>
+
+            <div class="mt-4">
+                <label>Com que frequência você faz o preparo do solo no Plantio Direto? Por quê?</label>
+                <div class="answer">{{ practice.soil_preparation_frequency || 'Não se aplica' }}</div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="soil_preparation_frequency"></mat-checkbox>
+            </div>
+
+            <div class="mt-4">
+                <label>Quantos meses do ano o seu solo fica com pouca ou sem cobertura?</label>
+                <div class="answer">{{ practice.bare_soil_months }} meses</div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="bare_soil_months"></mat-checkbox>
+            </div>
+
+            <div class="mt-4">
+                <label>Quais animais em pastoreio em sua área sob Plantio Direto?</label>
+                <div class="answer">{{ practice.animals_on_plating_area || 'Não se aplica' }}</div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="animals_on_plating_area"></mat-checkbox>
+            </div>
+
+            <div class="mt-4">
+                <label>Você já viu minhocas em sua lavoura?</label>
+                <div class="answer">{{ practice.has_earthworms ? 'Sim' : 'Não' }}</div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="has_earthworms"></mat-checkbox>
+            </div>
+
+            <div class="mt-4">
+                <label>São todas iguais ou você observa diferenças entre elas?</label>
+                <div class="answer" [ngSwitch]="practice.are_earthworms_different">
+                    <ng-container *ngSwitchCase="0">Sim</ng-container>
+                    <ng-container *ngSwitchCase="1">Não</ng-container>
+                    <ng-container *ngSwitchCase="2">Não sei dizer</ng-container>
+                    <ng-container *ngSwitchDefault>Não se aplica</ng-container>
+                </div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="are_earthworms_different"></mat-checkbox>
+            </div>
+
+            <div class="mt-4">
+                <label>As minhocas fazem bem ou mal à sua lavoura?</label>
+                <div class="answer" [ngSwitch]="practice.are_earthworms_good_for_crops">
+                    <ng-container *ngSwitchCase="true">Sim</ng-container>
+                    <ng-container *ngSwitchCase="false">Não</ng-container>
+                    <ng-container *ngSwitchDefault>Não se aplica</ng-container>
+                </div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="are_earthworms_good_for_crops"></mat-checkbox>
+            </div>
+
+            <div class="mt-4">
+                <label>Como as minhocas fazem bem ou mal à sua lavoura?</label>
+                <div class="answer">{{ practice.earthworms_consequence_for_crops || 'Não se aplica ' }}</div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="earthworms_consequence_for_crops"></mat-checkbox>
+            </div>
+
+            <div class="mt-4">
+                <label>Que tipo de adubação você utiliza?</label>
+                <div class="answer" [ngSwitch]="practice.fertilizing_type">
+                    <ng-container *ngSwitchCase="'chemical'">Química</ng-container>
+                    <ng-container *ngSwitchCase="'organic'">Orgância</ng-container>
+                    <ng-container *ngSwitchCase="'chemical_organic'">Ambas</ng-container>
+                </div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="fertilizing_type"></mat-checkbox>
+            </div>
+
+            <div class="mt-4">
+                <label>Segue critérios/orientações técnicas?</label>
+                <div class="answer">{{ practice.follow_technical_guidelines ? 'Sim' : 'Não' }}</div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="follow_technical_guidelines"></mat-checkbox>
+            </div>
+
+            <div class="mt-4">
+                <label>Você utiliza esterco bovino ou suíno ou cama de frango em sua lavoura?</label>
+                <div class="answer">{{ practice.uses_manure ? 'Sim' : 'Não' }}</div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="uses_manure"></mat-checkbox>
+            </div>
+
+            <div class="mt-4">
+                <label>Quantas vezes por ano?</label>
+                <div class="answer">{{ practice.manure_per_year }} anos</div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="manure_per_year"></mat-checkbox>
+            </div>
+
+            <div class="mt-4">
+                <label>Período de Ausência de revolvimento do solo (Início).</label>
+                <div class="answer">{{ practice.no_soil_preparation_start | date: 'dd/MM/yyyy' }}</div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="no_soil_preparation_start"></mat-checkbox>
+            </div>
+
+            <div class="mt-4">
+                <label>Período de Ausência de revolvimento do solo (Fim).</label>
+                <div class="answer">{{ practice.no_soil_preparation_end | date: 'dd/MM/yyyy' }}</div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="no_soil_preparation_end"></mat-checkbox>
+            </div>
+
+            <div class="mt-4">
+                <label>Tempo de manejo (Início).</label>
+                <div class="answer">{{ practice.soil_management_start | date: 'dd/MM/yyyy' }}</div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="soil_management_end"></mat-checkbox>
+            </div>
+
+            <div class="mt-4">
+                <label>Tempo de manejo (Fim).</label>
+                <div class="answer">{{ practice.no_soil_preparation_end | date: 'dd/MM/yyyy' }}</div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="soil_management_end"></mat-checkbox>
+            </div>
+
+            <div class="mt-4">
+                <label>Período de Acúmulo de matéria seca no solo (Início).</label>
+                <div class="answer">{{ practice.dry_material_accumulation_start | date: 'dd/MM/yyyy' }}</div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="dry_material_accumulation_start"></mat-checkbox>
+            </div>
+
+            <div class="mt-4">
+                <label>Período de Acúmulo de matéria seca no solo (Fim).</label>
+                <div class="answer">{{ practice.dry_material_accumulation_end | date: 'dd/MM/yyyy' }}</div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="dry_material_accumulation_end"></mat-checkbox>
+            </div>
+
+            <div class="mt-4">
+                <label>Volume estimado de matéria seca no solo.</label>
+                <div class="answer">{{ practice.dry_material_accumulation_tons }} toneladas</div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="dry_material_accumulation_tons"></mat-checkbox>
+            </div>
+        </div>
+
+        <div class="mt-5">
+            <label>Observações</label>
+            <mat-form-field appearance="outline">
+                <textarea
+                    matInput
+                    rows="5"
+                    formControlName="notes">
+                </textarea>
+            </mat-form-field>
+        </div>
+    </form>
+</mat-dialog-content>
+
+<hr class="separator">
+
+<mat-dialog-actions align="end" class="py-2">
+    <button *ngIf="canSave"
+        mat-flat-button
+        form="soil-humidity-eval"
+        type="submit"
+        color="primary">
+        Salvar
+    </button>
+
+    <button *ngIf="!canSave"
+        mat-flat-button
+        matDialogClose
+        color="primary">
+        Fechar
+    </button>
+</mat-dialog-actions>
+
+<button
+    matDialogClose
+    mat-icon-button
+    class="button-close">
+
+    <mat-icon>close</mat-icon>
+</button>

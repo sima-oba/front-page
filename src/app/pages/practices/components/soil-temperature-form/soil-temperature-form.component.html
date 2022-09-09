@@ -1,0 +1,41 @@
+<h3 class="title">Temperatura do Solo</h3>
+
+<hr class="separator">
+
+<mat-dialog-content>
+    <form
+        id="soil-temperature-form"
+        class="form"
+        [formGroup]="form"
+        (ngSubmit)="save()">
+
+        <label class="mt-4">Faz aferição e registro de temperatura do solo?</label>
+        <mat-button-toggle-group formControlName="temperature_measurement" class="toggle-group">
+            <mat-button-toggle [value]="true">Sim</mat-button-toggle>
+            <mat-button-toggle [value]="false">Não</mat-button-toggle>
+        </mat-button-toggle-group>
+        <mat-error class="text-left mt-2" *ngIf="form.get('temperature_measurement').touched && form.get('temperature_measurement').errors?.required">
+            Escolha uma opção
+        </mat-error>
+    </form>
+</mat-dialog-content>
+
+<hr class="separator">
+
+<mat-dialog-actions align="end" class="py-2">
+    <button
+        mat-flat-button
+        form="soil-temperature-form"
+        type="submit"
+        color="primary">
+        Salvar
+    </button>
+</mat-dialog-actions>
+
+<button
+    matDialogClose
+    mat-icon-button
+    class="button-close">
+
+    <mat-icon>close</mat-icon>
+</button>

@@ -1,0 +1,55 @@
+<h3 class="title">Rotação de Culturas</h3>
+
+<hr class="separator">
+
+<mat-dialog-content>
+    <form
+        id="crop-rotation-form"
+        class="form"
+        [formGroup]="form"
+        (ngSubmit)="save()">
+
+        <label class="mt-4">A Propriedade pratica Rotação de Culturas?</label>
+        <mat-button-toggle-group formControlName="practice_crop_rotation">
+            <mat-button-toggle [value]="true">Sim</mat-button-toggle>
+            <mat-button-toggle [value]="false">Não</mat-button-toggle>
+        </mat-button-toggle-group>
+        <mat-error class="text-left mt-2"
+            *ngIf="form.get('practice_crop_rotation').touched && form.get('practice_crop_rotation').errors?.required">
+            Escolha uma opção
+        </mat-error>
+
+        <label class="mt-4">Quais culturas são praticadas na propriedade?</label>
+        <mat-button-toggle-group multiple formControlName="crops" class="toggle-group">
+            <mat-button-toggle class="mb-3" value="algodao">Algodão</mat-button-toggle>
+            <mat-button-toggle class="mb-3" value="milho">Milho</mat-button-toggle>
+            <mat-button-toggle class="mb-3" value="soja">Soja</mat-button-toggle>
+            <mat-button-toggle class="mb-3" value="cafe">Café</mat-button-toggle>
+            <mat-button-toggle class="mb-3" value="sorgo">Sorgo</mat-button-toggle>
+            <mat-button-toggle class="mb-3" value="milheto">Milheto</mat-button-toggle>
+            <mat-button-toggle class="mb-3" value="feijao">Feijão</mat-button-toggle>
+            <mat-button-toggle class="mb-3" value="trigo">Trigo</mat-button-toggle>
+            <mat-button-toggle class="mb-3" value="outras">Outras</mat-button-toggle>
+        </mat-button-toggle-group>
+    </form>
+</mat-dialog-content>
+
+<hr class="separator">
+
+<mat-dialog-actions align="end" class="py-2">
+    <button
+        mat-flat-button
+        form="crop-rotation-form"
+        type="submit"
+        color="primary">
+        Salvar
+    </button>
+</mat-dialog-actions>
+
+<button
+    matDialogClose
+    mat-icon-button
+    class="button-close">
+
+    <mat-icon>close</mat-icon>
+</button>

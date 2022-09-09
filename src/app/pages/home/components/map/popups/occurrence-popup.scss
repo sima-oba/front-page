@@ -1,0 +1,98 @@
+:host ::ng-deep {
+    .occurrence-popup-fallow,
+    .occurrence-popup-rust,
+    .occurrence-popup-resolved {
+        .mapboxgl-popup {
+            a.link {
+                color: #2b726d;
+            }
+
+            &-tip {
+                margin-top: -2px !important;
+                border-width: 16px;
+            }
+
+            &-close-button {
+                width: 36px;
+                height: 36px;
+                border-radius: 18px;
+                color: #a3aad2;
+                font-size: 2rem;
+            }
+
+            &-content {
+                width: 250px;
+                padding: 8px 8px 4px 8px;
+                border-radius: 8px;
+                box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, 0.25);
+                font-family: Roboto, sans-serif;
+
+                img {
+                    width: 100%;
+                    height: auto;
+                    border-radius: 8px;
+                    cursor: pointer;
+                }
+                
+                span {
+                    display: block;
+                    font-size: 0.8rem;
+                }
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .resolve-button {
+            display: block;
+            box-sizing: border-box;
+            width: 100%;
+            padding: 10px;
+            text-align: center;
+            text-decoration: none;
+            color: white;
+            font-size: 1rem;
+            font-weight: 500;
+            border: none;
+            border-radius: 6px;
+            background-color: #458985;
+            cursor: pointer;
+            transition: 250ms;
+
+            &:hover {
+                background-color: #2b726d;
+            }
+        }
+
+        .resolved-footer {
+            display: none;
+        }
+    }
+
+    .occurrence-popup-fallow .mapboxgl-popup-content {
+        border: solid 1px #f0b01d;
+    }
+
+    .occurrence-popup-rust .mapboxgl-popup-content {
+        border: solid 1px #e23629;
+    }
+
+    .occurrence-popup-resolved {
+        .mapboxgl-popup-content {
+            border: solid 1px #458985;
+        }
+
+        .resolve-button {
+            display: none;
+        }
+
+        .resolved-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #2b726d;
+        }
+    }
+}

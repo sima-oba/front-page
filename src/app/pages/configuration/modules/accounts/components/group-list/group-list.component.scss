@@ -1,0 +1,37 @@
+@use "var";
+
+.container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+}
+
+.form {
+    background-color: transparent;
+}
+
+.scroll {
+    flex-grow: 1;
+    overflow-y: scroll;
+}
+
+mat-list-option {
+    height: 64px !important;
+}
+
+.list-item {
+    padding-left: var.$spacing-3 !important;
+    padding-right: var.$spacing-3 !important;
+    font-size: 1.1em;
+    color: #969A98;
+}
+
+.btn-add {
+    border-radius: 0 !important;
+    color: #9fc5c2;
+}
+
+:host ::ng-deep .mat-list-single-selected-option .list-item {
+    color: #4F4F4F;
+}

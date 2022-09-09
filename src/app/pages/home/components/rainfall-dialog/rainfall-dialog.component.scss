@@ -1,0 +1,57 @@
+@use "var";
+
+.title {
+    font-weight: 500;
+}
+
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @media (max-width: 1128px) {
+        flex-direction: column;
+    }
+}
+
+.header-info {
+    padding: var.$spacing-3 0;
+
+    &-item {
+        @media (max-width: 610px) {
+            display: block;
+        }
+
+        @media (min-width: 611px) {
+            display: inline-block;
+        }
+    }
+
+    span {
+        display: inline-block;
+        font-size: 0.9em;
+    }
+}
+
+.form {
+    padding: var.$spacing-3 0 0 0;
+    background-color: transparent;
+    text-align: center;
+
+    & > * {
+        display: inline-block;
+    }
+}
+
+.chart-wrapper {
+    position: relative;
+    height: 350px;
+}
+
+.section-title {
+    margin: var.$spacing-3 0;
+    text-align: center;
+    font-weight: 500;
+    font-size: 1.2em;
+    color: #a3aad2;
+}

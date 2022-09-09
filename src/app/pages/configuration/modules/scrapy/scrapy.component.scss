@@ -1,0 +1,17 @@
+@use "var";
+
+.legend {
+    color: #a3aad2;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    border-radius: var.$radius-2;
+    background-color: var.$color-surface;
+}
+
+
+.cascade-child ::ng-deep .mat-tab-header {
+    border: none;
+}

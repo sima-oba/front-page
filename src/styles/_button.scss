@@ -1,0 +1,62 @@
+@use "var";
+@use "util";
+
+$color-secondary: #e4ebee;
+$color-text: #4f4f4f;
+
+button {
+    &[mat-button],
+    &[mat-raised-button],
+    &[mat-stroked-button],
+    &[mat-flat-button] {
+        min-height: var.$button-medium;
+        border-radius: var.$radius-2;
+        font-size: 1.2rem !important;
+        font-weight: 500;
+        @include util.horizontal-padding(var.$spacing-4)
+    }
+
+    &[color="secondary"] {
+        color: #939696;
+        background-color: $color-secondary;
+    }
+}
+
+.download-button {
+    box-sizing: border-box;
+    min-height: 50.78px;
+    display: flex;
+    align-items: center;
+    padding: 0 var.$spacing-3;
+    border-radius: var.$radius-2;
+    background-color: #d5f3ff;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 200ms;
+
+    &:active {
+        background-color: #b4dbeb;
+    }
+
+    p {
+        flex-grow: 1;
+        margin-right: var.$spacing-2;
+        line-height: normal;
+        white-space: normal;
+        text-align: center;
+        font-size: 0.7rem;
+        color: #a3aad2;
+    }
+
+    mat-icon {
+        height: 28px;
+        width: 28px;
+        padding: 0 6px;
+        font-size: 28px;
+        color: #a3aad2;
+    }
+}
+
+.mat-tooltip {
+    font-size: 0.9rem;
+}

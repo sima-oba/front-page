@@ -1,0 +1,64 @@
+<mat-toolbar>
+    <a routerLink="/" class="img-logo-wrapper">
+        <img src="assets/img/logos/logo-header.svg" alt="SIMA">
+    </a>
+
+    <ng-container *ngIf="this.usuario?.firstName">
+        <div>
+            <button mat-button [mat-menu-trigger-for]="menu" class="button-user">
+                <span class="button-user-name">{{ usuario?.firstName }}</span>
+                <img src="assets/icons/user.svg" class="button-user-icon" alt="Usuário">
+            </button>
+
+            <mat-menu #menu="matMenu" class="header-menu">
+                <button mat-menu-item *ngIf="!auth.hasRole(auth.roles.ADMIN)" [routerLink]="['/profile']">
+                    <span>Meu Perfil</span>
+                </button>
+
+                <button mat-menu-item *ngIf="auth.hasRole(auth.roles.ADMIN)" [routerLink]="['/configuration']">
+                    <mat-icon class="material-icons-outlined">settings</mat-icon>
+                    <span>Configurações</span>
+                </button>
+
+                <button mat-menu-item *ngIf="auth.hasRole(auth.roles.READ_PROPERTIES)" [routerLink]="['/properties/farms']">
+                    <mat-icon class="material-icons-outlined">agriculture</mat-icon>
+                    <span>Propriedades</span>
+                </button>
+                
+                <button mat-menu-item *ngIf="auth.hasRole(auth.roles.READ_PROTOCOLS)" [routerLink]="['/protocol']">
+                    <mat-icon class="material-icons-outlined">post_add</mat-icon>
+                    <span>Protocolos</span>
+                </button>
+
+                <button mat-menu-item *ngIf="auth.hasRole(auth.roles.READ_PROPERTIES)" [routerLink]="['/calculator']">
+                    <mat-icon class="material-icons-outlined">calculate</mat-icon>
+                    <span>Calculadora de Carbono</span>
+                </button>
+
+                <button mat-menu-item *ngIf="auth.hasRole(auth.roles.READ_ORDINANCES)" [routerLink]="['/documents']">
+                    <mat-icon class="material-icons-outlined">receipt_long</mat-icon>
+                    <span>Publicações</span>
+                </button>
+
+                <button mat-menu-item *ngIf="auth.hasRole(auth.roles.MANAGE_OCCURRENCES)" [routerLink]="['/occurrences']">
+                    <mat-icon class="material-icons-outlined">report</mat-icon>
+                    <span>Reportar Ocorrência</span>
+                </button>
+
+                <button mat-menu-item *ngIf="auth.hasRole(auth.roles.READ_PROPERTIES)" [routerLink]="['/practices']">
+                    <mat-icon class="material-icons-outlined">eco</mat-icon>
+                    <span>Boas Práticas</span>
+                </button>
+
+                <button mat-menu-item [routerLink]="" (click)="this.doLogoff()">
+                    <mat-icon class="material-icons-outlined">logout</mat-icon>
+                    <span>Sair</span>
+                </button>
+            </mat-menu>
+        </div>
+    </ng-container>
+
+</mat-toolbar>
+
+
+

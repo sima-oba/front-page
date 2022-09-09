@@ -1,0 +1,30 @@
+%flex-row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+%flex-column {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+@mixin horizontal-padding($size) {
+    padding-left: $size;
+    padding-right: $size;
+}
+
+@mixin vertical-padding($size) {
+    padding-top: $size;
+    padding-bottom: $size;
+}
+
+@mixin horizontal-margin($size) {
+    margin-left: $size;
+    margin-right: $size;
+}
+
+@mixin vertical-margin($size) {
+    margin-top: $size;
+    margin-bottom: $size;
+}

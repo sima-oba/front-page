@@ -1,0 +1,99 @@
+@use "var";
+@use "util";
+
+@mixin stepper-button($side) {
+    position: absolute;
+    color: #cbd862;
+
+    @if $side == "left" {
+        left: 48px;
+    } @else {
+        right: 48px;
+    }
+
+    // Mobile
+    @media (max-width: 1000px) {
+        top: 100px;
+        height: 48px;
+        width: 48px;
+        font-size: 32px;
+    }
+
+    //Desktop
+    @media (min-width: 1001px) {
+        top: 50%;
+        height: 72px;
+        width: 72px;
+        font-size: 56px;
+    }
+}
+
+.container {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.stepper-container {
+    flex-grow: 1;
+    background-color: #f5f7f8;
+    overflow-y: auto;
+
+    mat-horizontal-stepper {
+        background-color: transparent;
+    }
+
+    .step-content {
+        position: relative;
+        padding: var.$spacing-4;
+
+        mat-card {
+            box-sizing: border-box;
+            margin: 0 auto;
+            max-width: 764px;
+            // padding: var.$spacing-5;
+            border-radius: var.$radius-2;
+        }
+    
+        img {
+            height: auto;
+            width: 100%;
+            max-width: 764px;
+            display: block;
+            @include util.horizontal-margin(auto);
+        }
+
+        p {
+            margin: 0;
+        }
+    }
+
+    .button-previous {
+        @include stepper-button("left");
+    }
+
+    .button-next {
+        @include stepper-button("right");
+    }
+}
+
+.link-green {
+    color: #67c973;
+    text-decoration: none;
+    transition-duration: 150ms;
+
+    &:hover {
+        color: #9de2a5;
+    }
+}
+
+.grey-container {
+    background-color: #f5f7f8;
+}
+
+:host ::ng-deep .mat-horizontal-stepper-header-container {
+    margin: 0;
+    padding: var.$spacing-3 0;
+    background-color: #fff;
+}

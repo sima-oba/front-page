@@ -1,0 +1,5 @@
+@use "var";
+
+img {
+    border-radius: var.$radius-2;
+}

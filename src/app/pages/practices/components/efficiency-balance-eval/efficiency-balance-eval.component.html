@@ -1,0 +1,99 @@
+<h3 class="title">Avalição de eficiência de uso da irrigação de precisão e balanço</h3>
+
+<hr class="separator">
+
+<mat-dialog-content>
+    <form
+        id="soil-humidity-eval"
+        class="form"
+        [formGroup]="this.form"
+        (ngSubmit)="save()">
+
+        <div class="grid">
+            <div class="evaluator">
+                <span *ngIf="practice.evaluation?.resp_name">
+                    Responsável: <strong>{{ practice.evaluation.resp_name }}</strong>
+                </span>
+            </div>
+            <div class="text-center evaluation-title">Avaliação</div>
+    
+            <div class="mt-4">
+                <label>A propriedade possui área com agricultura irrigada?</label>
+                <div class="answer">{{ practice.has_irrigated_agriculturearea ? 'Sim' : 'Não' }}</div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="has_irrigated_agriculturearea"></mat-checkbox>
+            </div>
+    
+            <div class="mt-5">
+                <label>Possui medidor de vazão?</label>
+                <div class="answer">{{ practice.has_flow_meter ? 'Sim' : 'Não' }}</div>
+            </div>
+            <div class="evaluation-check mt-5">
+                <mat-checkbox formControlName="has_flow_meter"></mat-checkbox>
+            </div>
+
+            <div class="mt-5">
+                <label>Medidor transmite dados telemétrico?</label>
+                <div class="answer">{{ practice.meter_transmits_telemetric_data ? 'Sim' : 'Não' }}</div>
+            </div>
+            <div class="evaluation-check mt-5">
+                <mat-checkbox formControlName="meter_transmits_telemetric_data"></mat-checkbox>
+            </div>
+
+            <div class="mt-5">
+                <label>Faz uso de sistemas de irrigação e análise de balanço hídrico?</label>
+                <div class="answer">{{ practice.use_of_irrigation_systems ? 'Sim' : 'Não' }}</div>
+            </div>
+            <div class="evaluation-check mt-5">
+                <mat-checkbox formControlName="use_of_irrigation_systems"></mat-checkbox>
+            </div>
+
+            <div class="mt-5">
+                <label>Qual total de áreas (ha) utililzam sistema de irrigação eficiente?</label>
+                <div class="answer">{{ practice.total_area_of_irrigation_systems }} hectares</div>
+            </div>
+            <div class="evaluation-check mt-5">
+                <mat-checkbox formControlName="total_area_of_irrigation_systems"></mat-checkbox>
+            </div>
+        </div>
+
+        <div class="mt-5">
+            <label>Observações</label>
+            <mat-form-field appearance="outline">
+                <textarea
+                    matInput
+                    rows="5"
+                    formControlName="notes">
+                </textarea>
+            </mat-form-field>
+        </div>
+    </form>
+</mat-dialog-content>
+
+<hr class="separator">
+
+<mat-dialog-actions align="end" class="py-2">
+    <button *ngIf="canSave"
+        mat-flat-button
+        form="soil-humidity-eval"
+        type="submit"
+        color="primary">
+        Salvar
+    </button>
+
+    <button *ngIf="!canSave"
+        mat-flat-button
+        matDialogClose
+        color="primary">
+        Fechar
+    </button>
+</mat-dialog-actions>
+
+<button
+    matDialogClose
+    mat-icon-button
+    class="button-close">
+
+    <mat-icon>close</mat-icon>
+</button>

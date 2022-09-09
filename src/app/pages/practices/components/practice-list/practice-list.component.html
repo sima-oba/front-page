@@ -1,0 +1,83 @@
+<div class="container">
+    <app-page-title>{{ title }}</app-page-title>
+
+    <div class="content">
+        <header *ngIf="currentFarm" class="mt-5 mb-2">
+            <h4 class="farm-name my-0">{{ currentFarm.farm_name }}</h4>
+            <span class="farm-code">{{ currentFarm.farm_code }}</span>
+        </header>
+
+        <hr class="separator mb-3">
+
+        <div class="toolbar py-3">
+            <a [href]="referenceLink" class="link" target="_blank">
+                <span class="mr-2">Referência</span>
+                <mat-icon class="material-icons-outlined">info</mat-icon>
+            </a>
+
+            <div class="spacing"></div>
+
+            <button mat-flat-button color="primary" (click)="onAdd()">
+                <span>Novo</span>
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+    
+        <div class="table-wrapper">
+            <table>
+                <colgroup>
+                    <col class="col-last-update">
+                    <col>
+                    <col class="col-controls">
+                </colgroup>
+    
+                <tbody *ngIf="practices$ | loading | async as practices">
+                    <tr *ngFor="let practice of practices">
+                        <td>
+                            <span class="mr-4">{{ practice.updated_at | date: 'dd/MM/yyyy' }}</span> 
+                            <span>{{ practice.updated_at | relativeTime }}</span>
+                        </td>
+                        
+                        <td>
+                            <div class="cell-evaluation">
+                                <ng-container *ngIf="practice.evaluation === null">
+                                    <mat-icon class="material-icons-outlined mr-2">do_not_disturb_on</mat-icon>
+                                    <span>Não avaliado</span>
+                                </ng-container>
+        
+                                <ng-container *ngIf="practice.evaluation != null">
+                                    <mat-icon class="material-icons-outlined mr-2">check_circle</mat-icon>
+                                    <span>Avaliado</span>
+                                </ng-container>
+                            </div>
+                        </td>
+                        
+                        <td class="text-right">
+                            <button
+                                mat-icon-button
+                                matTooltip="Avaliação"
+                                (click)="onEvaluate(practice)">
+
+                                <mat-icon class="material-icons-outlined">checklist_rtl</mat-icon>
+                            </button>
+        
+                            <button
+                                mat-icon-button
+                                matTooltip="Remover"
+                                (click)="onRemove(practice)">
+                                
+                                <mat-icon class="material-icons-outlined">delete</mat-icon>
+                            </button>
+                        </td>
+                    </tr>
+
+                    <tr *ngIf="practices.length === 0">
+                        <td colspan="4">
+                            <div class="empty">Ainda não há práticas cadastradas</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

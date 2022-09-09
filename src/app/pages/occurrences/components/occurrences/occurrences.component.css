@@ -1,0 +1,193 @@
+.container {
+    background-image: url('../../../../../assets/img/general/occurrences-background.png');
+    background-size: cover;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 70px auto;
+    grid-template-areas:
+        "header header"
+        "illustration content";
+}
+
+.left-text{
+    display: flex;
+    align-items: center;
+    vertical-align: middle;
+    font-family: Roboto;
+    font-size: 3.75rem;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    color: #fff;
+}
+
+.title {
+    grid-area: header;
+}
+
+img.tiguera {
+    width: 100%;
+    height: auto;
+    object-fit: scale-down;
+}
+
+.illustration {
+    display: flex;
+    grid-area: illustration;
+    padding-left: 11.111111%; /* 128/1152 */
+    padding-right: 4.166667%; /* 48/1152 */
+}
+
+@media screen and (max-width: 900px) {
+    /*MOBILE*/
+    .illustration {
+        display: none !important;
+    }
+
+    .container {
+        grid-template-rows: 60px auto !important;
+        grid-template-columns: 1fr !important;
+        grid-template-areas:
+            "header header"
+            "content" !important;
+    }
+
+    .content {
+        padding: 0 3% 0 3% !important;
+        padding-right: 3% !important; /* 128/1920 */
+        padding-left: 3% !important;
+        text-align: center;
+    }
+
+    header {
+        line-height: 60px !important;
+    }
+
+    .content h4 {
+        font-size: 2em !important;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .content p {
+        font-size: 1.6em !important;
+    }
+    .box-margin{
+        margin: 0 auto 0 auto!important;
+    }
+}
+
+.content {
+    display: flex;
+    align-self: center;
+
+    flex-direction: row;
+    justify-content: center;
+    align-items: baseline;
+    padding-right: 5.5%;
+    font-family: Robot, sans-serif;
+    color: #c4a830;
+    grid-area: content;
+}
+
+@media screen and (max-width: 500px){ 
+    .content{
+        flex-direction: column!important;
+        width: fit-content;
+    }
+    .inner-content{
+        width: 100%!important;
+    }
+    .white-bar{
+        display: none;
+    }
+    .occurrences-icon{
+        margin: 10px auto 0 auto!important;
+    }
+    .box-margin{
+        margin: 0 auto 0 auto!important;
+    }
+    .content button{
+        margin-top: 7px!important;
+    }
+    .icon-container{
+        height: 90px!important;
+        margin: 0 0 10px 0!important;
+    }
+    .container {
+        grid-template-rows: 90px auto!important;
+    }
+    
+}
+
+@media screen and (min-width: 1600px) {
+    .content {
+        padding-right: 20%;
+    }
+}
+
+.content h4 {
+    font-size: 2.4em;
+    font-family: Roboto;
+    font-weight: bold;
+}
+
+.content p {
+    font-size: 2em;
+    font-weight: 500;
+    font-family: Roboto;
+}
+
+.content button {
+    align-self: center;
+    border-radius: 10px;
+    padding: 8px 0px 8px 0px;
+    width: 170px;
+    font-size: 1.7em;
+    background-color: #ffffff;
+    color: #c4a830;
+}
+
+.sub-text {
+    color: #e2d28d;
+}
+
+.margin-top-large {
+    margin-top: 9.4% !important;
+}
+
+.white-bar{
+    background-color: white;
+    width: 8px;
+    height: 111px;
+    margin: 0 10px 0 0;
+}
+
+.occurrences-icon{
+    margin: 0 0 0 25px;
+}
+
+.icon-container{
+    display: flex;
+    height: 111px;
+    margin: 0 0 25px 0;
+}
+
+.text-content{
+    display: block;
+    font-family: Roboto;
+    font-size: 24px;
+    color: #fff;
+}
+
+.inner-content{
+    width: 35%;
+}
+
+.box-margin{
+    margin-right: 10%;
+}

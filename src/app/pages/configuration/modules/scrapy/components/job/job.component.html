@@ -1,0 +1,18 @@
+<div class="container mb-3 px-3 py-2" *ngIf="job">
+    <div class="data-source">
+        <div class="data-source-name">{{ job.name }}</div>
+        <div class="data-source-next-run">
+            Agendamento: {{ job.next_run_time | date: 'dd/MM/yyyy HH:mm' }}
+        </div>
+    </div>
+
+    <button mat-button class="button" title="Executar agora" (click)="execute()">
+        <span class="only-desktop">Importar</span>
+        <mat-icon class="ml-1">play_arrow</mat-icon>
+    </button>
+
+    <button mat-button class="button" title="Abrir configurações" (click)="configure()">
+        <span class="only-desktop">Configurar</span>
+        <mat-icon class="material-icons-outlined ml-2">settings</mat-icon>
+    </button>
+</div>

@@ -1,0 +1,25 @@
+<mat-drawer-container class="container">
+    <mat-drawer [opened]="true" [mode]="'side'">
+        <div class="sidebar">
+            <app-farm-search
+                class="search"
+                [farms]="allFarms$ | async"
+                [(selectedFarm)]="currentFarm">
+            </app-farm-search>
+
+            <hr class="separator mx-4 mt-3">
+
+            <div class="links">
+                <a *ngIf="auth.hasRole(auth.roles.MANAGE_PROPERTIES)"
+                    matRipple
+                    [routerLink]="['/practices-report']">
+                    Relatório de Boas Práticas
+                </a>
+            </div>
+        </div>
+    </mat-drawer>
+
+    <mat-drawer-content>
+        <router-outlet></router-outlet>
+    </mat-drawer-content>
+</mat-drawer-container>

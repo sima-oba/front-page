@@ -1,0 +1,13 @@
+<div class="container">
+    <section class="chart">
+        <h2 class="title">Uso da Irrigação</h2>
+
+        <div class="chart-wrapper">
+            <canvas baseChart *ngIf="data$ | async; let data"
+                [data]="data"
+                [options]="chartOptions"
+                type="bar">
+            </canvas>
+        </div>
+    </section>
+</div>

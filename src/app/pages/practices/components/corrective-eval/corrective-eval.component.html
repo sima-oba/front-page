@@ -1,0 +1,107 @@
+<h3 class="title">Avalição de recarga e umidade do Solo</h3>
+
+<hr class="separator">
+
+<mat-dialog-content>
+    <form
+        id="soil-humidity-eval"
+        class="form"
+        [formGroup]="this.form"
+        (ngSubmit)="save()">
+
+        <div class="grid">
+            <div class="evaluator">
+                <span *ngIf="practice.evaluation?.resp_name">
+                    Responsável: <strong>{{ practice.evaluation.resp_name }}</strong>
+                </span>
+            </div>
+            <div class="text-center evaluation-title">Avaliação</div>
+    
+            <div class="mt-4">
+                <label>Fertilizante/Produto.</label>
+                <div class="answer">{{ practice.product?.split(', ') }}</div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="product"></mat-checkbox>
+            </div>
+    
+            <div class="mt-5">
+                <label>Produto apresenta densidade adequada (massa/vol), de acordo com as especificidades estabelecidas pelo MAPA e Fabricante?</label>
+                <div class="answer">{{ practice.is_density_adequate ? 'Sim' : 'Não' }}</div>
+            </div>
+            <div class="evaluation-check mt-5">
+                <mat-checkbox formControlName="is_density_adequate"></mat-checkbox>
+            </div>
+
+            <div class="mt-5">
+                <label>O Fertilizante passou por todas etapas de acondicionamento e embalagem adequadas?</label>
+                <div class="answer">{{ practice.is_conditioning_adequate ? 'Sim' : 'Não' }}</div>
+            </div>
+            <div class="evaluation-check mt-5">
+                <mat-checkbox formControlName="is_conditioning_adequate"></mat-checkbox>
+            </div>
+
+            <div class="mt-5">
+                <label>A Natureza do produto granulado, é constituída de partículas que cada grânulo contém todos os elementos declarados ou garantidos do pelo fornecedor do produto?</label>
+                <div class="answer">{{ practice.has_declared_elements ? 'Sim' : 'Não' }}</div>
+            </div>
+            <div class="evaluation-check mt-5">
+                <mat-checkbox formControlName="has_declared_elements"></mat-checkbox>
+            </div>
+
+            <div class="mt-5">
+                <label>Há problema com contaminação (associação ou mistura de dois ou mais materiais incompatíveis entre si), cuja interação produz uma deterioração de suas propriedades físico-químicas, comprometendo a qualidade e o aproveitamento do produto final?</label>
+                <div class="answer">{{ practice.is_contaminated ? 'Sim' : 'Não' }}</div>
+            </div>
+            <div class="evaluation-check mt-5">
+                <mat-checkbox formControlName="is_contaminated"></mat-checkbox>
+            </div>
+
+            <div class="mt-5">
+                <label>Existe problema com a logística/entrega e distribuição dos insumos na propriedade?</label>
+                <div class="answer">{{ practice.has_logistical_problems ? 'Sim' : 'Não' }}</div>
+            </div>
+            <div class="evaluation-check mt-5">
+                <mat-checkbox formControlName="has_logistical_problems"></mat-checkbox>
+            </div>
+        </div>
+
+        <div class="mt-5">
+            <label>Observações</label>
+            <mat-form-field appearance="outline">
+                <textarea
+                    matInput
+                    rows="5"
+                    formControlName="notes">
+                </textarea>
+            </mat-form-field>
+        </div>
+    </form>
+</mat-dialog-content>
+
+<hr class="separator">
+
+<mat-dialog-actions align="end" class="py-2">
+    <button *ngIf="canSave"
+        mat-flat-button
+        form="soil-humidity-eval"
+        type="submit"
+        color="primary">
+        Salvar
+    </button>
+
+    <button *ngIf="!canSave"
+        mat-flat-button
+        matDialogClose
+        color="primary">
+        Fechar
+    </button>
+</mat-dialog-actions>
+
+<button
+    matDialogClose
+    mat-icon-button
+    class="button-close">
+
+    <mat-icon>close</mat-icon>
+</button>

@@ -1,0 +1,277 @@
+<div class="container">
+    <div class="block py-5" *ngIf="bundle$ | async as bundle">
+        <div class="text-right">
+            <button mat-button color="primary" [routerLink]="['../../report', bundle._id]">
+                <span>Relatório</span>
+                <mat-icon class="material-icons-outlined">analytics</mat-icon>
+            </button>
+        </div>
+    
+        <section class="group-1 mt-2">
+            <h2 class="title mt-0 mb-4">Balanço de Carbono</h2>
+    
+            <div class="box pl-2">
+                <div class="box-info box-info-shadow ml-2 mr-2">
+                    <p class="box-title">Total</p>
+    
+                    <div class="box-value">
+                        <p class="box-value-lg" [ngClass]="getBoxValueClass(bundle.result.baseline)">{{ bundle.result.baseline | number: '1.2' }}</p>
+                        <p class="box-value-unit">tCO<sub>2</sub>e</p>
+                    </div>
+                </div>
+            
+                <div class="box-info">
+                    <p class="box-title">Por hectare</p>
+    
+                    <div class="box-value">
+                        <p class="box-value-lg" [ngClass]="getBoxValueClass(bundle.result.baseline_per_area)">{{ bundle.result.baseline_per_area | number: '1.2' }}</p>
+                        <p class="box-value-unit">tCO<sub>2</sub>e/ha</p>
+                    </div>
+                </div>
+            
+                <div class="box-info">
+                    <p class="box-title">Por saca (soja)</p>
+    
+                    <div class="box-value">
+                        <p class="box-value-lg" [ngClass]="getBoxValueClass(bundle.result.baseline_per_bag)">{{ bundle.result.baseline_per_bag | number: '1.2' }}</p>
+                        <p class="box-value-unit">tCO<sub>2</sub>e/saca</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    
+        <section class="mt-5 group-1">
+            <h2 class="title mt-0 mb-4">Emissões de Carbono</h2>
+    
+            <div class="box">
+                <div class="box-info box-info-shadow ml-4">
+                    <p class="box-title">Total</p>
+    
+                    <div class="box-value">
+                        <p class="box-value-red box-value-lg">{{ bundle.result.gee_emission | number: '1.2' }}</p>
+                        
+                        <p class="box-value-unit">tCO<sub>2</sub>e</p>
+                    </div>
+                </div>
+    
+                <div class="box-info">
+                    <p class="box-title">Por hectare</p>
+    
+                    <div class="box-value">
+                        <p class="box-value-lg box-value-red">{{ bundle.result.gee_emission_per_area | number: '1.2' }}</p>
+                        <p class="box-value-unit">tCO<sub>2</sub>e/ha</p>
+                    </div>
+                </div>
+            
+                <div class="box-info">
+                    <p class="box-title">Por saca (soja)</p>
+    
+                    <div class="box-value">
+                        <p class="box-value-lg box-value-red">{{ bundle.result.gee_emission_per_bag | number: '1.2' }}</p>
+                        <p class="box-value-unit">tCO<sub>2</sub>e/saca</p>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="group-2 pt-4 mt-5 mb-4">
+                <h4 class="title mt-0">Indicadores de Emissão</h4>
+    
+                <div class="box">
+                    <div class="box-info">
+                        <p class="box-title">Calagem e <br> Gessagem</p>
+                        
+                        <div class="box-value">
+                            <p class="box-value-red">{{ bundle.result.emission_liming_and_plastering | number: '1.2' }}</p>
+                            <p class="box-value-unit">tCO<sub>2</sub>e</p>
+                        </div>
+                    </div>
+        
+                    <div class="box-info">
+                        <p class="box-title">Decomposição <br>de Resíduos</p>
+                        
+                        <div class="box-value">
+                            <p class="box-value-red">{{ bundle.result.emission_waste_decomposition | number: '1.2' }}</p>
+                            <p class="box-value-unit">tCO<sub>2</sub>e</p>
+                        </div>
+                    </div>
+        
+                    <div class="box-info">
+                        <p class="box-title">Manejo de <br> solos orgânicos</p>
+                        
+                        <div class="box-value">
+                            <p class="box-value-red">{{ bundle.result.emission_organic_soils_handling | number: '1.2' }}</p>
+                            <p class="box-value-unit">tCO<sub>2</sub>e</p>
+                        </div>
+                    </div>
+            
+                    <div class="box-info">
+                        <p class="box-title"> Uso de<br> Diesel</p>
+                        
+                        <div class="box-value">
+                            <p class="box-value-red">{{ bundle.result.fuel_consumption | number: '1.2' }}</p>
+                            <p class="box-value-unit">tCO<sub>2</sub>e</p>
+                        </div>
+                    </div>
+            
+                    <div class="box-info">
+                        <p class="box-title">Energia Elétrica</p>
+        
+                        <div class="box-value">
+                            <p class="box-value-red">{{ bundle.result.electricity_purchase | number: '1.2' }}</p>
+                            <p class="box-value-unit">tCO<sub>2</sub>e</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="group-2 mb-4">
+                <h4 class="group-title">Fertilização Nitrogenada</h4>
+    
+                <div class="box">
+    
+                    <div class="box-info">
+                        <p class="box-title">Fertilizante N <br> Sintético</p>
+        
+                        <div class="box-value">
+                            <p class="box-value-red">{{ bundle.result.emission_n_synthetic_fertilizer | number: '1.2' }}</p>
+                            <p class="box-value-unit">tCO<sub>2</sub>e</p>
+                        </div>
+                    </div>
+        
+                    <div class="box-info">
+                        <p class="box-title">Ureia</p>
+                        
+                        <div class="box-value">
+                            <p class="box-value-red">{{ bundle.result.emission_urea | number: '1.2' }}</p>
+                            <p class="box-value-unit">tCO<sub>2</sub>e</p>
+                        </div>
+                    </div>
+        
+                    <div class="box-info">
+                        <p class="box-title">Adubo N <br> Orgânico</p>
+                        
+                        <div class="box-value">
+                            <p class="box-value-red">{{ bundle.result.emission_n_organic_fertilizer | number: '1.2' }}</p>
+                            <p class="box-value-unit">tCO<sub>2</sub>e</p>
+                        </div>
+                    </div>
+    
+                    <div class="box-info">
+                        <p class="box-title">Lixiviação/ <br> escoamento</p>
+                        
+                        <div class="box-value">
+                            <p class="box-value-red">{{ bundle.result.emission_leaching | number: '1.2' }}</p>
+                            <p class="box-value-unit">tCO<sub>2</sub>e</p>
+                        </div>
+                    </div>
+        
+                    <div class="box-info">
+                        <p class="box-title">Deposição atm. de <br> N volatilizado</p>
+                        
+                        <div class="box-value">
+                            <p class="box-value-red">{{ bundle.result.emission_volatilization | number: '1.2' }}</p>
+                            <p class="box-value-unit">tCO<sub>2</sub>e</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    
+        <section class="mt-5 group-1">
+            <h2 class="title mt-0 mb-4">Sequestro de Carbono</h2>
+    
+            <div class="box ml-2">
+                <div class="box-info box-info-shadow ml-4">
+                    <p class="box-title">Total</p>
+    
+                    <div class="box-value">
+                        <p class="box-value-green box-value">
+                            {{ bundle.result.baseline_removal | number: '1.2' }}
+                        </p>
+                        
+                        <p class="box-value-unit">tCO<sub>2</sub>e</p>
+                    </div>
+                </div>
+    
+                <div class="box-info">
+                    <p class="box-title">Por hectare</p>
+        
+                    <div class="box-value">
+                        <p class="box-value box-value-green">
+                            {{ 
+                                bundle.result.baseline_removal /
+                                bundle.data_collect.cultivated_area | number: '1.2' 
+                            }}
+                        </p>
+
+                        <p class="box-value-unit">tCO<sub>2</sub>e/ha</p>
+                    </div>
+                </div>
+
+                <div class="box-info">
+                    <p class="box-title">Por saca (soja)</p>
+        
+                    <div class="box-value">
+                        <p class="box-value box-value-green">
+                            {{ 
+                                bundle.result.baseline_removal / 
+                                (bundle.data_collect.average_productivity * 
+                                bundle.data_collect.cultivated_area) / 
+                                60 | number: '1.4-4' 
+                            }}
+                        </p>
+    
+                        <p class="box-value-unit">tCO<sub>2</sub>e/saca</p>
+                    </div>
+                </div>
+            </div>
+    
+    
+            <div class="group-2 mt-5">
+                <h4 class="group-title">Cenário de Balanço de Carbono em Sistema Plantio Direto com Braquiária</h4>
+    
+                <div class="box">
+                
+                    <div class="box-info box-info-shadow ml-2 mr-2">
+                        <p class="box-title">Balanço de<br>Carbono</p>
+    
+                        <div class="box-value">
+                            <p class="box-value box-value-green">{{ bundle.result.gee_scenery_4 | number: '1.2' }}</p>
+                            <p class="box-value-unit">tCO<sub>2</sub>e</p>
+                        </div>
+                    </div>
+
+                    <div class="box-info">
+                        <p class="box-title">Por hectare</p>
+
+                        <div class="box-value">
+                            <p class="box-value box-value-green">
+                                {{ bundle.result.gee_scenery_4_per_area | number: '1.2' }}
+                            </p>
+
+                            <p class="box-value-unit">tCO<sub>2</sub>e/ha</p>
+                        </div>
+                    </div>
+            
+                    <div class="box-info">
+                        <p class="box-title">Por saca (soja)</p>
+    
+                        <div class="box-value">
+                            <p class="box-value box-value-green">
+                                {{ bundle.result.gee_scenery_4_per_bag | number: '1.3-3' }}
+                            </p>
+    
+                            <p class="box-value-unit">tCO<sub>2</sub>e/saca</p>
+                        </div>
+                    </div>
+
+                    <p class="note px-4 py-3">
+                        Nesta seção é apresentado o valor do balanço de carbono da área de cultivo, 
+                        caso nela fosse aplicado integralmente o sistema de plantio direto com uso de 
+                        braquiária (em consórcio com outra cultura ou pós soja).
+                    </p>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

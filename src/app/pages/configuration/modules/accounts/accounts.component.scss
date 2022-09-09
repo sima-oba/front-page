@@ -1,0 +1,20 @@
+@use "var";
+
+.container {
+    height: 100%;
+    background-color: var.$color-surface;
+}
+
+:host ::ng-deep {
+    .mat-tab-body-wrapper {
+        flex-grow: 1;
+    }
+
+    .mat-tab-header {
+        border: none;
+    }
+
+    .mat-tab-label-content {
+        font-size: 1.2rem;
+    }
+}

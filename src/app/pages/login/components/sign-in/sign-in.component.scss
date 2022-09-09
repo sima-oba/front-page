@@ -1,0 +1,80 @@
+@use "var";
+@use "util";
+
+$color-label: #458985;
+$color-input-text: #a3bcc0;
+
+.block-center {
+    max-width: 400px;
+}
+
+.title {
+    margin: 0;
+    font-size: 1.6rem;
+    font-weight: 600;
+    letter-spacing: 0.08rem;
+    text-align: center;
+    text-transform: uppercase;
+    color: $color-label;
+}
+
+.form {
+    background-color: transparent;
+
+    &-footer {
+        @extend %flex-column;
+        align-items: center;
+    }
+}
+
+label {
+    color: $color-label;
+}
+
+.icon-wrapper {
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button-green {
+    @include util.horizontal-padding(48px);
+    background-color: #67c973;
+}
+
+.link-green {
+    font-size: var.$font-size-3;
+}
+
+.text-gray{
+    color: #c4c4c4!important;
+}
+
+.invalid-credentials {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 16px;
+    border-radius: var.$radius-2;
+    background-color: #ff000015;
+
+    span,
+    button {
+        color: #ff0000;
+    }
+}
+
+:host ::ng-deep {
+    .mat-form-field {
+        &-outline {
+            background-color: #eef5ef;
+            color: #eef5ef;
+        }
+
+        &-prefix .mat-icon {
+            color: $color-input-text !important;
+        }
+    }
+}

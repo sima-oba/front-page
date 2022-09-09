@@ -1,0 +1,120 @@
+$label-color: #a3aad2;
+$input-color: #656b8d;
+$input-color-disabled: #656b8d7c;
+$button-color: #4f4f4f;
+$button-background-color: #c2dcda;
+$border-radius-1: 8px;
+$border-radius-2: 12px;
+
+@mixin mobile {
+    @media (max-width: 585px) {
+        @content;
+    }
+}
+
+@mixin desktop {
+    @media (min-width: 586px) {
+        @content;
+    }
+}
+
+%button-base {
+    border-radius: $border-radius-1;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: $button-color;
+    background-color: $button-background-color;
+}
+
+.container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.scroll {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+header {
+    background-color: #cbd862;
+    padding: 18px;
+
+    h2 {
+        text-align: center;
+        font-size: 1.75rem;
+        font-weight: 500;
+        letter-spacing: 0.05rem;
+        color: #fff;
+    }
+}
+
+footer {
+    padding: 16px 24px;
+    text-align: center;
+
+    @media (max-height: 960px) {
+        z-index: 1;
+        box-shadow: 0 0 4px 0 rgb(0 0 0 / 10%);
+    }
+
+    button {
+        @extend %button-base;
+        padding: 8px;
+
+        @include mobile {
+            width: 100%;
+        }
+
+        @include desktop {
+            width: 196px;
+        }
+    }
+}
+
+.success {
+    height: 100%;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    h3 {
+        text-align: center;
+        font-size: 1.8rem;
+        color: #6d5f16;
+    }
+
+    img {
+        height: auto;
+        margin: 7vh 0;
+
+        @include mobile {
+            width: 50vw;
+        }
+
+        @include desktop {
+            width: 15vw;
+        }
+    }
+
+    button {
+        @extend %button-base;
+        padding: 8px 32px;
+
+        span {
+            color: $button-color;
+        }
+
+        mat-icon {
+            width: 32px !important;
+            height: 32px !important;
+            margin-left: 4px;
+            line-height: 32px !important;
+            font-size: 32px !important;
+            color: $button-color;
+        }
+    }
+}

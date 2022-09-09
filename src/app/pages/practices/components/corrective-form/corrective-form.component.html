@@ -1,0 +1,86 @@
+<h3 class="title">Práticas Corretivas</h3>
+
+<hr class="separator">
+
+<mat-dialog-content>
+    <form
+        id="corrective-form"
+        class="form"
+        [formGroup]="form"
+        (ngSubmit)="save()">
+
+        <label for="product">Fertilizante/Produto</label>
+        <mat-form-field appearance="outline">
+            <input matInput type="text" formControlName="product">
+
+            <mat-error *ngIf="getError('product')?.required">
+                Campo obrigatório
+            </mat-error>
+        </mat-form-field>
+
+        <label class="mt-4">Produto apresenta densidade adequada (massa/vol), de acordo com as especificidades estabelecidas pelo MAPA e Fabricante?</label>
+        <mat-button-toggle-group formControlName="is_density_adequate">
+            <mat-button-toggle [value]="true">Sim</mat-button-toggle>
+            <mat-button-toggle [value]="false">Não</mat-button-toggle>
+        </mat-button-toggle-group>
+        <mat-error class="text-left mt-2" *ngIf="getError('is_density_adequate')?.required">
+            Escolha uma opção
+        </mat-error>
+
+        <label class="mt-4">O Fertilizante passou por todas etapas de acondicionamento e embalagem adequadas?</label>
+        <mat-button-toggle-group formControlName="is_conditioning_adequate">
+            <mat-button-toggle [value]="true">Sim</mat-button-toggle>
+            <mat-button-toggle [value]="false">Não</mat-button-toggle>
+        </mat-button-toggle-group>
+        <mat-error class="text-left mt-2" *ngIf="getError('is_conditioning_adequate')?.required">
+            Escolha uma opção
+        </mat-error>
+
+        <label class="mt-4">A Natureza do produto granulado, é constituída de partículas que cada grânulo contém todos os elementos declarados ou garantidos do pelo fornecedor do produto?</label>
+        <mat-button-toggle-group formControlName="has_declared_elements">
+            <mat-button-toggle [value]="true">Sim</mat-button-toggle>
+            <mat-button-toggle [value]="false">Não</mat-button-toggle>
+        </mat-button-toggle-group>
+        <mat-error class="text-left mt-2" *ngIf="getError('has_declared_elements')?.required">
+            Escolha uma opção
+        </mat-error>
+
+        <label class="mt-4">Há problema com contaminação (associação ou mistura de dois ou mais materiais incompatíveis entre si), cuja interação produz uma deterioração de suas propriedades físico-químicas, comprometendo a qualidade e o aproveitamento do produto final?</label>
+        <mat-button-toggle-group formControlName="is_contaminated">
+            <mat-button-toggle [value]="true">Sim</mat-button-toggle>
+            <mat-button-toggle [value]="false">Não</mat-button-toggle>
+        </mat-button-toggle-group>
+        <mat-error class="text-left mt-2" *ngIf="getError('is_contaminated')?.required">
+            Escolha uma opção
+        </mat-error>
+
+        <label class="mt-4">Existe problema com a logística/entrega e distribuição dos insumos na propriedade?</label>
+        <mat-button-toggle-group formControlName="has_logistical_problems">
+            <mat-button-toggle [value]="true">Sim</mat-button-toggle>
+            <mat-button-toggle [value]="false">Não</mat-button-toggle>
+        </mat-button-toggle-group>
+        <mat-error class="text-left mt-2" *ngIf="getError('has_logistical_problems')?.required">
+            Escolha uma opção
+        </mat-error>
+    </form>
+</mat-dialog-content>
+
+<hr class="separator">
+
+<mat-dialog-actions align="end" class="py-2">
+    <button
+        mat-flat-button
+        form="corrective-form"
+        type="submit"
+        color="primary">
+        Salvar
+    </button>
+</mat-dialog-actions>
+
+<button
+    matDialogClose
+    mat-icon-button
+    class="button-close">
+
+    <mat-icon>close</mat-icon>
+</button>

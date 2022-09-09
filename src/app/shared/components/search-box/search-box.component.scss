@@ -1,0 +1,10 @@
+.form {
+    padding: 0;
+    background-color: transparent;
+}
+
+.form ::ng-deep {
+    .mat-form-field-wrapper {
+        padding: 0;
+    }
+}

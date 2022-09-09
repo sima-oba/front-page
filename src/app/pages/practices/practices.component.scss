@@ -1,0 +1,31 @@
+@use "var";
+
+.container {
+    height: 100%;
+}
+
+.sidebar {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+}
+
+.search {
+    flex-grow: 2;
+}
+
+.links {
+    display: flex;
+    flex-grow: 1;
+    align-items: flex-end;
+
+    a {
+        width: 100%;
+        padding: var.$spacing-4 var.$spacing-4;
+        font-size: var.$font-size-2;
+        font-weight: 500;
+        color: #689c99;
+        text-decoration: none;
+    }
+}

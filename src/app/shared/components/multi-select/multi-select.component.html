@@ -1,0 +1,30 @@
+<div class="container" *ngIf="filteredItems">
+    <app-search-box
+        [normalize]="true"
+        [debounce]="500"
+        [placeholder]="placeholder"
+        (textChanges)="applyFilter($event)"
+        (deleteClick)="clearFilter()">
+    </app-search-box>
+
+    <hr class="separator mt-3 mr-4">
+
+    <div class="scroll">
+        <div class="checkbox-list">
+            <mat-checkbox *ngFor="let item of filteredItems"
+                class="checkbox-list__item"
+                [disableRipple]="true"
+                [checked]="item.isSelected"
+                (change)="onSelectionChange($event, item)">
+                
+                <div class="checkbox-list__item__label">
+                    {{ item.label }}
+                </div>
+                
+                <div class="checkbox-list__item__legend" *ngIf="item.legend">
+                    {{ item.legend }}
+                </div>
+            </mat-checkbox>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,86 @@
+<div class="container">
+    <div #scroll class="scroll" *ngIf="group !== undefined">
+        <form class="container" class="form">
+            <fieldset>            
+                <label for="group">Nome do grupo</label>
+                <mat-form-field appearance="outline">
+                    <input
+                        matInput
+                        [formControl]="control"
+                        type="text"
+                        placeholder="Novo Grupo">
+                </mat-form-field>
+            </fieldset>
+
+            <hr class="mt-5 mb-4">
+
+            <fieldset *ngIf="group">
+                <legend>Permissões</legend>
+
+                <div cdkDropListGroup class="transfer-grid">
+                    <div class="transfer-grid-content">
+                        <label>Permissões disponíveis</label>
+    
+                        <div
+                            cdkDropList
+                            [cdkDropListData]="availableRoles"
+                            class="chip-list"
+                            cdkDropListSortingDisabled
+                            (cdkDropListDropped)="drop($event)">
+    
+                            <span class="chip" cdkDrag *ngFor="let roles of availableRoles">
+                                {{ roles }}
+                            </span>
+                        </div>
+                    </div>
+            
+                    <div class="transfer-grid-content">
+                        <label>Permissões do grupo</label>
+    
+                        <div
+                            cdkDropList
+                            [cdkDropListData]="groupRoles"
+                            class="chip-list"
+                            cdkDropListSortingDisabled
+                            (cdkDropListDropped)="drop($event)">
+    
+                            <span class="chip" cdkDrag *ngFor="let roles of groupRoles">
+                                {{ roles }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="text-right mt-5">
+                <button *ngIf="group"
+                    type="button"
+                    mat-flat-button
+                    color="warn"
+                    class="mr-3"
+                    (click)="remove()">
+                    Remover
+                </button>
+
+                <button
+                    type="button"
+                    mat-flat-button
+                    color="accent"
+                    class="button-large"
+                    (click)="save()">
+                    Salvar
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div *ngIf="group === undefined" class="empty">
+        <h3 class="empty-title">Selecione um grupo na lista</h3>
+    </div>
+
+    <app-loading 
+        *ngIf="isLoading"
+        backgroundColor="#f5f7f8"
+        opacity="1">
+    </app-loading>
+</div>

@@ -1,0 +1,111 @@
+$font-size: 0.8125rem;
+
+.container {
+    display: flex;
+    height: 48px;
+    background-color: #fff;
+    overflow-x: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.city {
+    min-width: 150px;
+    font-size: $font-size;
+    color: #a3aad2;
+}
+
+.forecast {
+    display: flex;
+    margin: 0 32px;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.mat-datepicker-input {
+    width: 80px;
+    border: none;
+    font-size: $font-size;
+    color: #a3aad2;
+    cursor: pointer;
+}
+
+.thermometer {
+    width: 21.5px;
+    height: 23.7px;
+}
+
+.temperature-value {
+    margin: 6px 16px 3px 5.5px;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+}
+
+.text-cold {
+    color: #0093c7;
+}
+
+.text-hot {
+    color: #ef980c;
+}
+
+.sun {
+    width: 24px;
+    height: 24px;
+    margin-top: 2px;
+}
+
+.sun-text {
+    margin-top: 0;
+    margin-left: 7px;
+    font-size: $font-size;
+    font-weight: normal;
+    color: #a3aad2;
+}
+
+.wind {
+    width: 23px;
+    height: 21.6px;
+    margin-left: 16px;
+}
+
+.umidity {
+    width: 20px;
+    height: 20px;
+    margin-top: 3px;
+}
+
+.date {
+    display: flex;
+    align-items: center;
+}
+
+::ng-deep .weather-bar-select-panel {
+    max-height: 60vh !important;
+}
+
+:host ::ng-deep {
+    .mat-form-field-wrapper {
+        width: 100px;
+        padding-bottom: 10px;
+    }
+
+    .mat-form-field-flex {
+        background-color: white !important;
+    }
+
+    .mat-select-value {
+        max-width: 150px;
+    }
+}

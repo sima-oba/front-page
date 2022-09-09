@@ -1,0 +1,81 @@
+<h3 class="title">Contenção de escoamento de água de chuva por curva de nível e microbarragens</h3>
+
+<hr class="separator">
+
+<mat-dialog-content>
+    <form
+        id="containment-form"
+        class="form"
+        [formGroup]="form"
+        (ngSubmit)="save()">
+        
+        <label>A propriedade possui microbarragens em margens das estradas internas da propriedade?</label>
+        <mat-button-toggle-group formControlName="has_micro_dams">
+            <mat-button-toggle [value]="true">Sim</mat-button-toggle>
+            <mat-button-toggle [value]="false">Não</mat-button-toggle>
+        </mat-button-toggle-group>
+        <mat-error class="text-left mt-2" *ngIf="form.get('has_micro_dams').touched && form.get('has_micro_dams').errors?.required">
+            Escolha uma opção
+        </mat-error>
+
+        <label class="mt-4">Nível de qualidade das microbarragens.</label>
+        <mat-button-toggle-group formControlName="micro_dams_quality">
+            <mat-button-toggle [value]="3">Ótimo</mat-button-toggle>
+            <mat-button-toggle [value]="2">Bom</mat-button-toggle>
+            <mat-button-toggle [value]="1">Regular</mat-button-toggle>
+            <mat-button-toggle [value]="0">Ruim</mat-button-toggle>
+        </mat-button-toggle-group>
+        <mat-error class="text-left mt-2" *ngIf="form.get('micro_dams_quality').touched && form.get('micro_dams_quality').errors?.required">
+            Escolha uma opção
+        </mat-error>
+
+        <label class="mt-4">A propriedade possui curvas de nível ou terraço?</label>
+        <mat-button-toggle-group formControlName="has_level_curves">
+            <mat-button-toggle [value]="true">Sim</mat-button-toggle>
+            <mat-button-toggle [value]="false">Não</mat-button-toggle>
+        </mat-button-toggle-group>
+        <mat-error class="text-left mt-2" *ngIf="form.get('has_level_curves').touched && form.get('has_level_curves').errors?.required">
+            Escolha uma opção
+        </mat-error>
+
+        <label class="mt-4">Nível de qualidade das curvas de nível ou terraço.</label>
+        <mat-button-toggle-group formControlName="level_curves_quality">
+            <mat-button-toggle [value]="0">Ótimo</mat-button-toggle>
+            <mat-button-toggle [value]="1">Bom</mat-button-toggle>
+            <mat-button-toggle [value]="2">Regular</mat-button-toggle>
+            <mat-button-toggle [value]="3">Ruim</mat-button-toggle>
+        </mat-button-toggle-group>
+        <mat-error class="text-left mt-2" *ngIf="form.get('level_curves_quality').touched && form.get('level_curves_quality').errors?.required">
+            Escolha uma opção
+        </mat-error>
+
+        <label class="mt-4">As curvas de nível ou terraço são convergentes com as propriedades vizinhas?</label>
+        <mat-button-toggle-group formControlName="level_curves_convergent_with_neighbors">
+            <mat-button-toggle [value]="true">Sim</mat-button-toggle>
+            <mat-button-toggle [value]="false">Não</mat-button-toggle>
+        </mat-button-toggle-group>
+        <mat-error class="text-left mt-2" *ngIf="form.get('level_curves_convergent_with_neighbors').touched && form.get('level_curves_convergent_with_neighbors').errors?.required">
+            Escolha uma opção
+        </mat-error>
+    </form>
+</mat-dialog-content>
+
+<hr class="separator">
+
+<mat-dialog-actions align="end" class="py-2">
+    <button
+        mat-flat-button
+        form="containment-form"
+        type="submit"
+        color="primary">
+        Salvar
+    </button>
+</mat-dialog-actions>
+
+<button
+    matDialogClose
+    mat-icon-button
+    class="button-close">
+
+    <mat-icon>close</mat-icon>
+</button>

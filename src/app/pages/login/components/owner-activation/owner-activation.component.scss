@@ -1,0 +1,54 @@
+@use "var";
+@use "util";
+
+$color-label: #458985;
+$color-input-text: #a3bcc0;
+
+.block-center {
+    max-width: 400px;
+}
+
+.title {
+    margin: 0;
+    font-size: 1.6rem;
+    font-weight: 600;
+    letter-spacing: 0.08rem;
+    text-align: center;
+    text-transform: uppercase;
+    color: $color-label;
+}
+
+.form {
+    background-color: transparent;
+
+    &-footer {
+        @extend %flex-column;
+        align-items: center;
+    }
+}
+
+label {
+    color: $color-label;
+}
+
+.button-save {
+    @include util.horizontal-padding(var.$spacing-5);
+    background-color: #67c973;
+}
+
+.link-green {
+    font-size: var.$font-size-3;
+}
+
+:host ::ng-deep {
+    .mat-form-field {
+        &-outline {
+            background-color: #eef5ef;
+            color: #eef5ef;
+        }
+
+        &-suffix .mat-icon {
+            color: $color-input-text !important;
+        }
+    }
+}

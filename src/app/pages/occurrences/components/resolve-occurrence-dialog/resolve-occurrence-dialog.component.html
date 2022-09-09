@@ -1,0 +1,80 @@
+<form [formGroup]="form" class="form">
+
+    <div class="form-row">
+        <div class="form-column">
+            <label for="resolved_date">Data:</label>
+            <mat-form-field appearance="outline">
+                <input
+                    matInput
+                    formControlName="resolved_date"
+                    [matDatepicker]="resolvedDate">
+
+                <mat-datepicker-toggle matSuffix [for]="resolvedDate">
+                    <mat-icon matDatepickerToggleIcon class="material-icons-outlined">
+                        date_range
+                    </mat-icon>
+                </mat-datepicker-toggle>
+
+                <mat-datepicker #resolvedDate></mat-datepicker>
+
+                <mat-error *ngIf="getError('resolved_date')?.required">
+                    Campo obrigatório
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="form-column">
+            <label for="resolved_photo">Foto:</label>
+            <mat-form-field appearance="outline" class="field-photo">
+                <ngx-mat-file-input
+                    formControlName="resolved_photo"
+                    [accept]="'image/jpeg'"
+                    placeholder="Selecione uma foto">
+                    
+                    <mat-icon ngxMatFileInputIcon class="material-icons-outlined">
+                        photo_camera
+                    </mat-icon>
+                </ngx-mat-file-input>
+
+                <mat-error *ngIf="getError('resolved_photo')?.required">
+                    Campo obrigatório
+                </mat-error>
+
+                <mat-error *ngIf="getError('resolved_photo')?.accept">
+                    O arquivo deve ser uma imagem JPEG
+                </mat-error>
+
+                <mat-error *ngIf="getError('resolved_photo')?.maxSize">
+                    O arquivo não pode ser maior que 2MB
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <label for="notes">Observação:</label>
+    <mat-form-field appearance="outline">
+        <textarea
+            matInput
+            formControlName="notes"
+            rows="5">
+        </textarea>
+
+        <mat-error *ngIf="getError('notes')?.required">
+            Campo obrigatório
+        </mat-error>
+
+        <mat-error *ngIf="getError('notes')?.minlength">
+            A observação deve ter no mínimo {{ getError('notes')?.minlength?.requiredLength }} caracteres
+        </mat-error>
+    </mat-form-field>
+
+    <div class="dialog-actions">
+        <button mat-flat-button color="accent" (click)="submit()">
+          Resolver Ocorrência
+        </button>
+    </div>
+</form>
+
+<button mat-icon-button class="button-close" matDialogClose>
+    <mat-icon>close</mat-icon>
+</button>

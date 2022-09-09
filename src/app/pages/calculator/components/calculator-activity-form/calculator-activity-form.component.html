@@ -1,0 +1,1951 @@
+<div class="container">
+    <div class="btn-menu">
+        <button
+            mat-icon-button
+            class="button-menu"
+            (click)="modalService.getModal('myModal').open()">
+            
+            <img style=" width: 25px;" src="assets/icons/menu.svg" alt="">
+        </button>
+    </div>
+    
+    <div class="gray-container mt-5">
+        <div class="column-1">
+            <ul class="vertical-menu">
+                <li (click)="viewMode = 0" [ngClass]="{'active': viewMode == 0}">
+                    <span>INFORMAÇÕES GERAIS DE PREENCHIMENTO</span>
+                    <mat-icon [class.hidden]="!groupHasErrors('general_info')">error_outline</mat-icon>
+                </li>
+    
+                <li (click)="viewMode = 1" [ngClass]="{'active':viewMode ==1}">
+                    <span>INFORMAÇÕES GERAIS DA PROPRIEDADE</span>
+                    <mat-icon [class.hidden]="!groupHasErrors('farm_info')">error_outline</mat-icon>
+                </li>
+    
+                <li
+                    (click)="viewMode = 2" [ngClass]="{'active':viewMode ==2}">
+                    <span>SISTEMA DE CULTIVO</span>
+                    <mat-icon [class.hidden]="!groupHasErrors('cultivation_system')">error_outline</mat-icon>
+                </li>
+    
+                <li (click)="viewMode = 3" [ngClass]="{'active':viewMode ==3}">
+                    <span>CARACTERÍSTICAS DO SOLO</span>
+                    <mat-icon [class.hidden]="!groupHasErrors('soil_characteristics')">error_outline</mat-icon>
+                </li>
+    
+                <li (click)="viewMode = 4" [ngClass]="{'active':viewMode ==4}">
+                    <span>ADUBAÇÃO NITROGENADA (N)</span>
+                    <mat-icon [class.hidden]="!groupHasErrors('nitrogen_fertilization')">error_outline</mat-icon>
+                </li>
+    
+                <li (click)="viewMode = 5" [ngClass]="{'active':viewMode ==5}">
+                    <span>CORREÇÃO E CONDICIONAMENTO DO SOLO</span>
+                    <mat-icon [class.hidden]="!groupHasErrors('correction')">error_outline</mat-icon>
+                </li>
+    
+                <li (click)="viewMode = 6" [ngClass]="{'active':viewMode ==6}">
+                    <span>DECOMPOSIÇÃO DE RESTOS CULTURAIS</span>
+                    <mat-icon [class.hidden]="!groupHasErrors('decomposition')">error_outline</mat-icon>
+                </li>
+    
+                <li (click)="viewMode = 7" [ngClass]="{'active':viewMode ==7}">
+                    <span>CONSUMO DE COMBUSTÍVEIS (ANUAL)</span>
+                    <mat-icon [class.hidden]="!groupHasErrors('fuel_consumption')">error_outline</mat-icon>
+                </li>
+                
+                <li (click)="viewMode = 8" [ngClass]="{'active':viewMode ==8}">
+                    <span>ENERGIA ELÉTRICA</span>
+                    <mat-icon [class.hidden]="!controlHasErrors('energy_consumption')">error_outline</mat-icon>
+                </li>
+                
+                <li (click)="viewMode = 9" [ngClass]="{'active':viewMode ==9}">
+                    <span>ESTOQUE DE CARBONO NA VEGETAÇÃO NATIVA</span>
+                    <mat-icon [class.hidden]="!groupHasErrors('stock')">error_outline</mat-icon>
+                </li>
+            </ul>
+        </div>
+    
+        <div class="column-2" [ngSwitch]="viewMode">
+            <form class="form" id="calculator-form" [formGroup]="this.formDefault" (ngSubmit)="this.onSubmitFormDefault($event)">
+                <div *ngSwitchCase="0" formGroupName="general_info">
+                    <h3 class="form-title">INFORMAÇÕES GERAIS</h3>
+    
+                    <label>Nome do responsável</label>
+                    <mat-form-field appearance="outline">
+                        <input matInput type="text" formControlName="resp_name" >
+                        
+                        <mat-error *ngIf="getError('general_info.resp_name')?.required">
+                            Campo obrigatório
+                        </mat-error>
+    
+                        <mat-error *ngIf="getError('general_info.resp_name')?.minlength">
+                            Deve haver ao menos {{ getError('general_info.resp_name')?.minlength?.requiredLength }} caracteres
+                        </mat-error>
+                    </mat-form-field>
+    
+                    <div class="form-row">
+                        <div class="form-column" style="flex-basis: 50%;">
+                            <label>Organização</label>
+    
+                            <mat-form-field appearance="outline">
+                                <input matInput type="text" formControlName="organization" >
+                                
+                                <mat-error *ngIf="getError('general_info.organization')?.required">
+                                    Campo obrigatório
+                                </mat-error>
+    
+                                <mat-error *ngIf="getError('general_info.organization')?.minlength">
+                                    Deve haver ao menos {{ getError('general_info.organization')?.minlength?.requiredLength }} caracteres
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+    
+                        <div class="form-column">
+                            <label>Data</label>
+    
+                            <mat-form-field appearance="outline">
+                                <input matInput [matDatepicker]="activityDate" formControlName="date" placeholder="dd/mm/aaaa">
+                                <mat-datepicker-toggle matSuffix [for]="activityDate"></mat-datepicker-toggle>
+                                <mat-datepicker #activityDate></mat-datepicker>
+                                
+                                <mat-error *ngIf="getError('general_info.date')?.required">
+                                    Campo obrigatório
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+    
+                    <label>Propriedade</label>
+                    <mat-form-field appearance="outline">
+                        <mat-select formControlName="farm_id">
+                            <mat-option [value]="''" disabled>
+                                Selecione a propriedade
+                            </mat-option>
+    
+                            <mat-option *ngFor="let farm of farms$ | async" [value]="farm._id">
+                                {{ farm.farm_name }}
+                            </mat-option>
+                        </mat-select>
+                        
+                        <mat-error *ngIf="getError('general_info.farm_id')?.required">
+                            Campo obrigatório
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+    
+                <div *ngSwitchCase="1" formGroupName="farm_info">
+                    <h3 class="form-title">INFORMAÇÕES DA PROPRIEDADE</h3>
+    
+                    <div class="form-row">
+                        <div class="form-column form-info">
+                            <label>Área de Cultivo de Soja</label>
+    
+                            <button mat-icon-button type="button" matTooltip="Área de Cultivo em hectares">
+                                <mat-icon>help_outline</mat-icon>
+                            </button>
+                        </div>
+    
+                        <div class="form-column mb-3">
+                            <mat-form-field appearance="outline">
+                                <input
+                                    matInput
+                                    formControlName="cultivated_area"
+                                    type="number"
+                                    step="5.0"
+                                    min="0.0"
+                                    placeholder="0">
+    
+                                <span matSuffix>ha</span>
+    
+                                <mat-error *ngIf="getError('farm_info.cultivated_area')?.required">
+                                    Campo obrigatório
+                                </mat-error>
+    
+                                <mat-error *ngIf="getError('farm_info.cultivated_area')?.min">
+                                    O valor não pode ser zero
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+    
+                    <div class="form-row">
+                        <div class="form-column form-info">
+                            <label>Área de Cultivo de Braquiária</label>
+    
+                            <button mat-icon-button type="button" matTooltip="Área de braquiária como cobertura do solo em consórcio com outra cultura, ou seja, pós soja e segunda safra. Se não tiver, colocar zero. ">
+                                <mat-icon>help_outline</mat-icon>
+                            </button>
+                        </div>
+    
+                        <div class="form-column mb-3">
+                            <mat-form-field appearance="outline">
+                                <input
+                                    matInput
+                                    formControlName="coverage_use"
+                                    type="number"
+                                    step="5.0"
+                                    min="0.0"
+                                    placeholder="0.0">
+    
+                                <span matSuffix>ha</span>
+    
+                                <mat-error *ngIf="getError('farm_info.coverage_use')?.required">
+                                    Campo obrigatório
+                                </mat-error>
+    
+                                <mat-error *ngIf="getError('farm_info.coverage_use')?.min">
+                                    Valor não pode ser negativo
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+    
+                    <div class="form-row">
+                        <div class="form-column form-info">
+                            <label>Ano Safra</label>
+                        </div>
+    
+                        <div class="form-column mb-3">
+                            <mat-form-field appearance="outline" >
+                                <mat-select value="" formControlName="crop_year" >
+                                    <mat-option value="" disabled>Selecione o período</mat-option>
+                                    <mat-option value="2019/2020">2019/2020</mat-option>
+                                    <mat-option value="2020/2021">2020/2021</mat-option>
+                                    <mat-option value="2021/2022">2021/2022</mat-option>
+                                </mat-select>
+                                
+                                <mat-error *ngIf="getError('farm_info.crop_year')">
+                                    Campo obrigatório
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+    
+                    <div class="form-row">
+                        <div class="form-column form-info">
+                            <label>Realização de 2ª safra</label>
+                        </div>
+    
+                        <div class="form-column">
+                            <mat-button-toggle-group formControlName="crop_year_second" >
+                                <mat-button-toggle [value]="true">Sim</mat-button-toggle>
+                                <mat-button-toggle [value]="false">Não</mat-button-toggle>
+                            </mat-button-toggle-group>
+    
+                            <mat-error class="text-error" *ngIf="getError('farm_info.crop_year_second')?.required">
+                                Campo obrigatório
+                            </mat-error>
+                        </div>
+                    </div>
+    
+                    <!-- Second harvest only -->
+                    <ng-container *ngIf="showSecondHarvest">
+                        <div class="form-row mt-5">
+                            <div class="form-column form-info">
+                                <label>Área de cultivo 2ª safra</label>
+        
+                                <button mat-icon-button type="button" matTooltip="Área de Cultivo em hectares">
+                                    <mat-icon>help_outline</mat-icon>
+                                </button>
+                            </div>
+        
+                            <div class="form-column mb-3">
+                                <mat-form-field appearance="outline" >
+                                    <input
+                                        formControlName="cultivated_area_second_crop"
+                                        matInput
+                                        type="number"
+                                        step="5.0"
+                                        min="0.0"
+                                        placeholder="0.0">
+        
+                                    <span matSuffix>ha</span>
+                                    
+                                    <mat-error *ngIf="getError('farm_info.cultivated_area_second_crop')?.min">
+                                        Valor não pode ser negativo
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+        
+                        <div class="form-row">
+                            <div class="form-column form-info">
+                                <label>Tipo de cultura 2ª safra</label>
+        
+                                <button mat-icon-button type="button" matTooltip="Insira o tipo de cultura">
+                                    <mat-icon>help_outline</mat-icon>
+                                </button>
+                            </div>
+        
+                            <div class="form-column">
+                                <mat-form-field appearance="outline" >
+                                    <input matInput
+                                        formControlName="culture_type_second_crop"
+                                        type="text"
+                                        placeholder="por exemplo milho, algodão...">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </ng-container>
+        
+                    <div class="form-row mt-5">
+                        <div class="form-column form-info">
+                            <label>Bioma/Fitofisionomia #1</label>
+    
+                            <button mat-icon-button type="button" matTooltip="Selecione o bioma/fitofisionomia presente na propriedade">
+                                <mat-icon>help_outline</mat-icon>
+                            </button>
+                        </div>
+    
+                        <div class="form-column mb-3">
+                            <mat-form-field appearance="outline" >
+                                <mat-select value="" formControlName="biome_1">
+                                    <mat-option value="" disabled>Nenhum Bioma selecionado</mat-option>
+    
+                                    <mat-option *ngFor="let biome of biomes$ | async"
+                                        [value]="biome.value" style="font-size: 0.7em !important;">
+                                        {{ biome.description }}
+                                    </mat-option>
+                                </mat-select>
+                                
+                                <mat-error *ngIf="getError('farm_info.biome_1')">
+                                    Campo obrigatório
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+    
+                    <div class="form-row">
+                        <div class="form-column form-info">
+                            <label>Bioma/Fitofisionomia #2</label>
+                        </div>
+    
+                        <div class="form-column mb-3">
+                            <mat-form-field appearance="outline" >
+                                <mat-select value="" formControlName="biome_2">
+                                    <mat-option [value]="0" disabled>Nenhum Bioma selecionado</mat-option>
+    
+                                    <mat-option *ngFor="let biome of biomes$ | async"
+                                        [value]="biome.value" style="font-size: 0.7em !important;">
+                                        {{ biome.description }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+    
+                    <div class="form-row">
+                        <div class="form-column form-info">
+                            <label>Bioma/Fitofisionomia #3</label>
+                        </div>
+    
+                        <div class="form-column mb-3">
+                            <mat-form-field appearance="outline" >
+                                <mat-select value="" formControlName="biome_3">
+                                    <mat-option [value]="0">Selecione o bioma</mat-option>
+    
+                                    <mat-option *ngFor="let biome of biomes$ | async"
+                                        [value]="biome.value" style="font-size: 0.7em !important;">
+                                        {{ biome.description }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+    
+                <div *ngSwitchCase="2" formGroupName="cultivation_system">
+                    <h3 class="form-title">SISTEMA DE CULTIVO</h3>
+    
+                    <div class="form-row">
+                        <div class="form-column form-info">
+                            <label>Sistema de Cultivo</label>
+    
+                            <button mat-icon-button type="button" matTooltip="
+                            1. Sistema de Plantio Direto (SPD) com uso de braquiária: Sistema caracterizado pelo não revolvimento do solo (aração e gradagem), com uso de braquiária em consórcio com outra cultura ou pós soja e rotação de cultura. O subsolador é utilizado desde que não haja revolvimento e apenas corte do solo.
+                            2. Sistema de Plantio Direto (SPD): Sistema caracterizado pelo não revolvimento do solo (aração e gradagem), onde o solo é mantido coberto, pós soja, por outra cultura que não seja braquiária, como por exemplo milheto, sorgo, trigo, milho, etc. O subsolador é utilizado desde que não haja revolvimento e apenas corte do solo.
+                            3. Sistema de Plantio Convencional (SPC): Sistema de cultivo em que há revolvimento do solo com aração e/ou gradagem."
+                            >
+                                <mat-icon>help_outline</mat-icon>
+                            </button>
+                        </div>
+    
+                        <div class="form-column mb-3">
+                            <mat-form-field appearance="outline" >
+                                <mat-select value="" formControlName="cultivation_system">
+                                    <mat-option value="" disabled>Selecione o sistema</mat-option>
+    
+                                    <mat-option *ngFor="let cultivationSystem of cultivationSystems$ | async"
+                                        [value]="cultivationSystem.value" style="font-size: 0.7em !important;">
+                                        {{ cultivationSystem.description }}
+                                    </mat-option>
+                                </mat-select>
+    
+                                <mat-error *ngIf="getError('cultivation_system.cultivation_system')?.required">
+                                    Campo obrigatório
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+    
+                    <fieldset>
+                        <legend>Primeira Safra</legend>
+    
+                        <div class="form-row">
+                            <div class="form-column form-info">
+                                <label>Data de plantio</label>
+    
+                                <button mat-icon-button type="button">
+                                    <mat-icon>help_outline</mat-icon>
+                                </button>
+                            </div>
+    
+                            <div class="form-column mb-3">
+                                <mat-form-field appearance="outline" >
+                                    <input matInput [matDatepicker]="plantingDate" formControlName="planting_date" placeholder="dd/mm/aaaa">
+                                    <mat-datepicker-toggle matSuffix [for]="plantingDate"></mat-datepicker-toggle>
+                                    <mat-datepicker #plantingDate></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+    
+                        <div class="form-row">
+                            <div class="form-column form-info">
+                                <label>Data de colheita</label>
+    
+                                <button mat-icon-button type="button">
+                                    <mat-icon>help_outline</mat-icon>
+                                </button>
+                            </div>
+    
+                            <div class="form-column mb-3">
+                                <mat-form-field appearance="outline">
+                                    <input matInput [matDatepicker]="harvestDate" formControlName="harvest_date" placeholder="dd/mm/aaaa">
+                                    <mat-datepicker-toggle matSuffix [for]="harvestDate"></mat-datepicker-toggle>
+                                    <mat-datepicker #harvestDate></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+    
+                        <div class="form-row">
+                            <div class="form-column form-info">
+                                <label>Produtividade média</label>
+    
+                                <button mat-icon-button type="button" matTooltip="kilos por hectare">
+                                    <mat-icon>help_outline</mat-icon>
+                                </button>
+                            </div>
+    
+                            <div class="form-column mb-3">
+                                <mat-form-field appearance="outline" >
+                                    <input
+                                        matInput
+                                        formControlName="average_productivity"
+                                        type="number"
+                                        step="100.0"
+                                        min="0.0"
+                                        placeholder="0.0">
+    
+                                    <span matSuffix>kg/ha</span>
+                                    
+                                    <mat-error *ngIf="getError('cultivation_system.average_productivity')?.required">
+                                        Campo obrigatório
+                                    </mat-error>
+    
+                                    <mat-error *ngIf="getError('cultivation_system.average_productivity')?.min">
+                                        Valor não pode ser negativo
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </fieldset>
+    
+                    <hr class="mt-4 mb-3" *ngIf="showSecondHarvest">
+    
+                    <fieldset *ngIf="showSecondHarvest">
+                        <legend>Segunda Safra</legend>
+    
+                        <div class="form-row">
+                            <div class="form-column form-info">
+                                <label>Data de plantio</label>
+    
+                                <button
+                                    mat-icon-button
+                                    type="button"
+                                    matTooltip="Mês/ano">
+    
+                                    <mat-icon>help_outline</mat-icon>
+                                </button>
+                            </div>
+    
+                            <div class="form-column mb-3">
+                                <mat-form-field appearance="outline" >
+                                    <input matInput [matDatepicker]="plantingDateSecondCrop" formControlName="planting_date_second_crop" placeholder="dd/mm/aaaa">
+                                    <mat-datepicker-toggle matSuffix [for]="plantingDateSecondCrop"></mat-datepicker-toggle>
+                                    <mat-datepicker #plantingDateSecondCrop></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+    
+                        <div class="form-row">
+                            <div class="form-column form-info">
+                                <label>Data de colheita</label>
+    
+                                <button
+                                    mat-icon-button
+                                    type="button"
+                                    matTooltip="Mês/ano">
+    
+                                    <mat-icon>help_outline</mat-icon>
+                                </button>
+                            </div>
+    
+                            <div class="form-column mb-3">
+                                <mat-form-field appearance="outline" >
+                                    <input matInput [matDatepicker]="harvestDateSecondCrop" formControlName="harvest_date_second_crop" placeholder="dd/mm/aaaa">
+                                    <mat-datepicker-toggle matSuffix [for]="harvestDateSecondCrop"></mat-datepicker-toggle>
+                                    <mat-datepicker #harvestDateSecondCrop></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+    
+                        <div class="form-row">
+                            <div class="form-column form-info">
+                                <label>Produtividade média</label>
+    
+                                <button
+                                    mat-icon-button
+                                    type="button"
+                                    matTooltip="kilos por hectare">
+    
+                                    <mat-icon>help_outline</mat-icon>
+                                </button>
+                            </div>
+    
+                            <div class="form-column mb-3">
+                                <mat-form-field appearance="outline" >
+                                    <input
+                                        matInput
+                                        formControlName="average_productivity_second_crop"
+                                        type="number"
+                                        step="100.0"
+                                        min="0.0"
+                                        placeholder="0.0">
+    
+                                    <span matSuffix>kg/ha</span>
+                                    
+                                    <mat-error *ngIf="getError('cultivation_system.average_productivity_second_crop')?.min">
+                                        Valor não pode ser negativo
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+    
+                <div *ngSwitchCase="3" formGroupName="soil_characteristics">
+                    <h3 class="form-title">CARACTERÍSTICAS DO SOLO</h3>
+    
+                    <div class="form-row">
+                        <div class="form-column form-info">
+                            <label>Classe Textural</label>
+                        </div>
+    
+                        <div class="form-column mb-5">
+                            <mat-button-toggle-group formControlName="texture_class">
+                                <mat-button-toggle value="CLAYISH">Arenoso</mat-button-toggle>
+                                <mat-button-toggle value="SANDY">Argiloso</mat-button-toggle>
+                                <mat-button-toggle value="MEDIUM">Médio</mat-button-toggle>
+                            </mat-button-toggle-group>
+    
+                            <mat-error class="text-error" *ngIf="getError('soil_characteristics.texture_class')?.required">
+                                Campo obrigatório
+                            </mat-error>
+                        </div>
+                    </div>
+    
+                    <div class="form-row">
+                        <div class="form-column form-info">
+                            <label>Teor de argila</label>
+                        </div>
+    
+                        <div class="form-column mb-5">
+                            <mat-button-toggle-group formControlName="clay_content">
+                                <mat-button-toggle [value]="true">Maior que 60%</mat-button-toggle>
+                                <mat-button-toggle [value]="false">Menor que 60%</mat-button-toggle>
+                            </mat-button-toggle-group>
+    
+                            <mat-error class="text-error" *ngIf="getError('soil_characteristics.clay_content')?.required">
+                                Campo obrigatório {{ getError('soil_characteristics.clay_content') | json }}
+                            </mat-error>
+                        </div>
+                    </div>
+    
+                    <div class="form-row">
+                        <div class="form-column form-info">
+                            <label class="py-3">Período que a área está sendo cultivada</label>
+                        </div>
+    
+                        <div class="form-column mb-3">
+                            <mat-form-field appearance="outline" >
+                                <input
+                                    matInput
+                                    formControlName="adoption_years"
+                                    type="number"
+                                    step="1"
+                                    min="0"
+                                    placeholder="0">
+    
+                                <span matSuffix>anos</span>
+    
+                                <mat-error *ngIf="getError('soil_characteristics.adoption_years')?.required">
+                                    Campo obrigatório
+                                </mat-error>
+    
+                                <mat-error *ngIf="getError('soil_characteristics.adoption_years')?.min">
+                                    Valor não pode ser negativo
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+    
+                    <div class="form-row">
+                        <div class="form-column form-info">
+                            <label class="py-3">Área da propriedade caracterizada por solos orgânicos</label>
+    
+                            <button
+                                mat-icon-button
+                                type="button"
+                                matTooltip="Solos orgânicos são caracterizados pelo alto teor de matéria orgânica ( ordem do solo: Organossolo). Caso esse tipo de solo seja presente na área de cultivo de soja, por favor indicar quantos hectares.">
+    
+                                <mat-icon>help_outline</mat-icon>
+                            </button>
+                        </div>
+    
+                        <div class="form-column mb-3">
+                            <mat-form-field appearance="outline" >
+                                <input
+                                    matInput
+                                    [formControlName]="'area_organic_soils'"
+                                    type="number"
+                                    step="5"
+                                    min="0"
+                                    placeholder="0">
+    
+                                <span matSuffix>ha</span>
+                                
+                                <mat-error *ngIf="getError('soil_characteristics.area_organic_soils')?.required">
+                                    Campo obrigatório
+                                </mat-error>
+    
+                                <mat-error *ngIf="getError('soil_characteristics.area_organic_soils')?.min">
+                                    Valor não pode ser negativo
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+    
+                <div *ngSwitchCase="4" formGroupName="nitrogen_fertilization">
+                    <h3 class="form-title">ADUBAÇÃO NITROGENADA (N)</h3>
+    
+                    <fieldset>
+                        <legend>Primeira Safra</legend>
+                        <legend class="mt-4">Adubação Sintética</legend>
+    
+                        <div class="form-row">
+                            <div class="form-column form-info">
+                                <label>Adubo N Sintético</label>
+    
+                                <button
+                                    mat-icon-button
+                                    type="button"
+                                    matTooltip="Indicar a quantidade total aplicada na área de cultivo e não somente por ha">
+    
+                                    <mat-icon>help_outline</mat-icon>
+                                </button>
+                            </div>
+    
+                            <div class="form-column">
+                                <mat-form-field appearance="outline" class="mb-3">
+                                    <input
+                                        matInput
+                                        formControlName="synthetic_n_fertilizer_type1_kg"
+                                        type="number"
+                                        step="100.0"
+                                        min="0.0">
+    
+                                    <span matSuffix>kg</span>
+                                    <mat-hint>Tipo #1</mat-hint>
+                                    
+                                    <mat-error *ngIf="getError('nitrogen_fertilization.synthetic_n_fertilizer_type1_kg')?.required">
+                                        Campo obrigatório
+                                    </mat-error>
+    
+                                    <mat-error *ngIf="getError('nitrogen_fertilization.synthetic_n_fertilizer_type1_kg')?.min">
+                                        Valor não pode ser negativo
+                                    </mat-error>
+                                </mat-form-field>
+    
+                                <mat-form-field appearance="outline" class="mb-3">
+                                    <input
+                                        matInput
+                                        formControlName="synthetic_n_fertilizer_type2_kg"
+                                        type="number"
+                                        step="100.0"
+                                        min="0.0">
+    
+                                    <span matSuffix>kg</span>
+                                    <mat-hint>Tipo #2</mat-hint>
+                                    
+                                    <mat-error *ngIf="getError('nitrogen_fertilization.synthetic_n_fertilizer_type2_kg')?.required">
+                                        Campo obrigatório
+                                    </mat-error>
+    
+                                    <mat-error *ngIf="getError('nitrogen_fertilization.synthetic_n_fertilizer_type2_kg')?.min">
+                                        Valor não pode ser negativo
+                                    </mat-error>
+                                </mat-form-field>
+    
+                                <mat-form-field appearance="outline" class="mb-3">
+                                    <input
+                                        matInput
+                                        formControlName="synthetic_n_fertilizer_type3_kg"
+                                        type="number"
+                                        step="100.0"
+                                        min="0.0">
+    
+                                    <span matSuffix>kg</span>
+                                    <mat-hint>Tipo #3</mat-hint>
+                                    
+                                    <mat-error *ngIf="getError('nitrogen_fertilization.synthetic_n_fertilizer_type3_kg')?.required">
+                                        Campo obrigatório
+                                    </mat-error>
+    
+                                    <mat-error *ngIf="getError('nitrogen_fertilization.synthetic_n_fertilizer_type3_kg')?.min">
+                                        Valor não pode ser negativo
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+    
+                        <div class="form-row">
+                            <div class="form-column form-info">
+                                <label>Teor N adubo sintético</label>
+                            </div>
+    
+                            <div class="form-column">
+                                <mat-form-field appearance="outline" class="mb-3">
+                                    <input
+                                        matInput
+                                        formControlName="synthetic_n_fertilizer_teor_type1"
+                                        type="number"
+                                        step="1.0"
+                                        min="0.0">
+    
+                                    <span matSuffix>%</span>
+                                    <mat-hint>Tipo #1</mat-hint>
+                                    
+                                    <mat-error *ngIf="getError('nitrogen_fertilization.synthetic_n_fertilizer_teor_type1')?.required">
+                                        Campo obrigatório
+                                    </mat-error>
+    
+                                    <mat-error *ngIf="getError('nitrogen_fertilization.synthetic_n_fertilizer_teor_type1')?.min">
+                                        Valor não pode ser negativo
+                                    </mat-error>
+                                </mat-form-field>
+    
+                                <mat-form-field appearance="outline" class="mb-3">
+                                    <input
+                                        matInput
+                                        formControlName="synthetic_n_fertilizer_teor_type2"
+                                        type="number"
+                                        step="1.0"
+                                        min="0.0">
+    
+                                    <span matSuffix>%</span>
+                                    <mat-hint>Tipo #2</mat-hint>
+                                    
+                                    <mat-error *ngIf="getError('nitrogen_fertilization.synthetic_n_fertilizer_teor_type2')?.required">
+                                        Campo obrigatório
+                                    </mat-error>
+    
+                                    <mat-error *ngIf="getError('nitrogen_fertilization.synthetic_n_fertilizer_teor_type2')?.min">
+                                        Valor não pode ser negativo
+                                    </mat-error>
+                                </mat-form-field>
+    
+                                <mat-form-field appearance="outline" class="mb-3">
+                                    <input
+                                        matInput
+                                        formControlName="synthetic_n_fertilizer_teor_type3"
+                                        type="number"
+                                        step="1.0"
+                                        min="0.0">
+    
+                                    <span matSuffix>%</span>
+                                    <mat-hint>Tipo #3</mat-hint>
+                                    
+                                    <mat-error *ngIf="getError('nitrogen_fertilization.synthetic_n_fertilizer_teor_type3')?.required">
+                                        Campo obrigatório
+                                    </mat-error>
+    
+                                    <mat-error *ngIf="getError('nitrogen_fertilization.synthetic_n_fertilizer_teor_type3')?.min">
+                                        Valor não pode ser negativo
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+    
+                        <div class="form-row">
+                            <div class="form-column form-info">
+                                <label>Ureia</label>
+
+                                <button
+                                    mat-icon-button
+                                    type="button"
+                                    matTooltip="Indicar a quantidade total aplicada na área de cultivo e não somente por ha">
+    
+                                    <mat-icon>help_outline</mat-icon>
+                                </button>
+                            </div>
+    
+                            <div class="form-column">
+                                <mat-form-field appearance="outline" class="mb-3">
+                                    <input
+                                        matInput
+                                        formControlName="urea_type1"
+                                        type="number"
+                                        step="1.0"
+                                        min="0.0">
+    
+                                    <span matSuffix>kg</span>
+                                    
+                                    <mat-error *ngIf="getError('nitrogen_fertilization.urea_type1')?.required">
+                                        Campo obrigatório
+                                    </mat-error>
+    
+                                    <mat-error *ngIf="getError('nitrogen_fertilization.urea_type1')?.min">
+                                        Valor não pode ser negativo
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </fieldset>
+    
+                    <fieldset class="mt-4">
+                        <legend>Adubação Orgânica</legend>
+    
+                        <div class="form-row">
+                            <div class="form-column form-info">
+                                <label>Adubo N Orgânico</label>
+    
+                                <button
+                                    mat-icon-button
+                                    type="button"
+                                    matTooltip="Indicar a quantidade total aplicada na área de cultivo e não somente por ha">
+    
+                                    <mat-icon>help_outline</mat-icon>
+                                </button>
+                            </div>
+    
+                            <div class="form-column">
+                                <mat-form-field appearance="outline" class="mb-3">
+                                    <input
+                                        matInput
+                                        formControlName="organic_n_fertilizer_type1_kg"
+                                        type="number"
+                                        step="1.0"
+                                        min="0.0">
+    
+                                    <span matSuffix>kg</span>
+                                    
+                                    <mat-error *ngIf="getError('nitrogen_fertilization.organic_n_fertilizer_type1_kg')?.required">
+                                        Campo obrigatório
+                                    </mat-error>
+    
+                                    <mat-error *ngIf="getError('nitrogen_fertilization.organic_n_fertilizer_type1_kg')?.min">
+                                        Valor não pode ser negativo
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </fieldset>
+    
+                    <fieldset class="mt-4">
+                        <legend>Adubação Verde</legend>
+    
+                        <div class="form-row">
+                            <div class="form-column form-info">
+                                <label>Leguminosa</label>
+
+                                <button
+                                    mat-icon-button
+                                    type="button"
+                                    matTooltip="Indicar a quantidade total aplicada na área de cultivo e não somente por ha">
+    
+                                    <mat-icon>help_outline</mat-icon>
+                                </button>
+                            </div>
+    
+                            <div class="form-column">
+                                <mat-form-field appearance="outline" class="mb-3">
+                                    <input
+                                        matInput
+                                        formControlName="green_adubation"
+                                        type="number"
+                                        step="1.0"
+                                        min="0.0">
+    
+                                    <span matSuffix>kg</span>
+                                    
+                                    <mat-error *ngIf="getError('nitrogen_fertilization.green_adubation')?.required">
+                                        Campo obrigatório
+                                    </mat-error>
+    
+                                    <mat-error *ngIf="getError('nitrogen_fertilization.green_adubation')?.min">
+                                        Valor não pode ser negativo
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+    
+                        <div class="form-row">
+                            <div class="form-column form-info">
+                                <label>Gramínea</label>
+
+                                <button
+                                    mat-icon-button
+                                    type="button"
+                                    matTooltip="Indicar a quantidade total aplicada na área de cultivo e não somente por ha">
+    
+                                    <mat-icon>help_outline</mat-icon>
+                                </button>
+                            </div>
+    
+                            <div class="form-column">
+                                <mat-form-field appearance="outline" class="mb-3">
+                                    <input
+                                        matInput
+                                        formControlName="grassy_type1_kg"
+                                        type="number"
+                                        step="1.0"
+                                        min="0.0">
+    
+                                    <span matSuffix>kg</span>
+                                    
+                                    <mat-error *ngIf="getError('nitrogen_fertilization.grassy_type1_kg')?.required">
+                                        Campo obrigatório
+                                    </mat-error>
+    
+                                    <mat-error *ngIf="getError('nitrogen_fertilization.grassy_type1_kg')?.min">
+                                        Valor não pode ser negativo
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+    
+                        <div class="form-row">
+                            <div class="form-column form-info">
+                                <label>Outros</label>
+
+                                <button
+                                    mat-icon-button
+                                    type="button"
+                                    matTooltip="Indicar a quantidade total aplicada na área de cultivo e não somente por ha">
+    
+                                    <mat-icon>help_outline</mat-icon>
+                                </button>
+                            </div>
+    
+                            <div class="form-column">
+                                <mat-form-field appearance="outline" class="mb-3">
+                                    <input
+                                        matInput
+                                        formControlName="others_type1_kg"
+                                        type="number"
+                                        step="1.0"
+                                        min="0.0"
+                                        placeholder="Tipo #1">
+    
+                                    <span matSuffix>kg</span>
+                                    
+                                    <mat-error *ngIf="getError('nitrogen_fertilization.others_type1_kg')?.required">
+                                        Campo obrigatório
+                                    </mat-error>
+    
+                                    <mat-error *ngIf="getError('nitrogen_fertilization.others_type1_kg')?.min">
+                                        Valor não pode ser negativo
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </fieldset>
+    
+                    <hr class="mt-4 mb-3" *ngIf="showSecondHarvest">
+    
+                    <fieldset *ngIf="showSecondHarvest">
+                        <legend>2º Safra</legend>
+                        <legend class="mt-4">Adubação Sintética</legend>
+    
+                        <div class="form-row">
+                            <div class="form-column form-info">
+                                <label>Adubo N Sintético</label>
+    
+                                <button
+                                    mat-icon-button
+                                    type="button"
+                                    matTooltip="Indicar a quantidade total aplicada na área de cultivo e não somente por ha, conforme feito para a primeira safra">
+    
+                                    <mat-icon>help_outline</mat-icon>
+                                </button>
+                            </div>
+    
+                            <div class="form-column">
+                                <mat-form-field appearance="outline" class="mb-3">
+                                    <input
+                                        matInput
+                                        formControlName="synthetic_n_fertilizer_type1_kg_second_crop"
+                                        type="number"
+                                        step="100.0"
+                                        min="0.0">
+    
+                                    <span matSuffix>kg</span>
+                                    <mat-hint>Tipo #1</mat-hint>
+    
+                                    <mat-error *ngIf="getError('nitrogen_fertilization.others_type1_kg')?.min">
+                                        Valor não pode ser negativo
+                                    </mat-error>
+                                </mat-form-field>
+    
+                                <mat-form-field appearance="outline" class="mb-3">
+                                    <input
+                                        matInput
+                                        formControlName="synthetic_n_fertilizer_type2_kg_second_crop"
+                                        type="number"
+                                        step="100.0"
+                                        min="0.0">
+    
+                                    <span matSuffix>kg</span>
+                                    <mat-hint>Tipo #2</mat-hint>
+                                    
+                                    <mat-error *ngIf="getError('nitrogen_fertilization.synthetic_n_fertilizer_type2_kg_second_crop')?.min">
+                                        Valor não pode ser negativo
+                                    </mat-error>
+                                </mat-form-field>
+    
+                                <mat-form-field appearance="outline" class="mb-3">
+                                    <input
+                                        matInput
+                                        formControlName="synthetic_n_fertilizer_type3_kg_second_crop"
+                                        type="number"
+                                        step="100.0"
+                                        min="0.0">
+    
+                                    <span matSuffix>kg</span>
+                                    <mat-hint>Tipo #3</mat-hint>
+                                    
+                                    <mat-error *ngIf="getError('nitrogen_fertilization.synthetic_n_fertilizer_type3_kg_second_crop')?.min">
+                                        Valor não pode ser negativo
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+    
+                        <div class="form-row">
+                            <div class="form-column form-info">
+                                <label>Teor N adubo sintético</label>
+                            </div>
+    
+                            <div class="form-column">
+                                <mat-form-field appearance="outline" class="mb-3">
+                                    <input
+                                        matInput
+                                        formControlName="synthetic_n_fertilizer_teor_type1_second_crop"
+                                        type="number"
+                                        step="1.0"
+                                        min="0.0">
+    
+                                    <span matSuffix>%</span>
+                                    <mat-hint>Tipo #1</mat-hint>
+                                    
+                                    <mat-error *ngIf="getError('nitrogen_fertilization.synthetic_n_fertilizer_teor_type1_second_crop')?.min">
+                                        Valor não pode ser negativo
+                                    </mat-error>
+                                </mat-form-field>
+    
+                                <mat-form-field appearance="outline" class="mb-3">
+                                    <input
+                                        matInput
+                                        [formControlName]="'synthetic_n_fertilizer_teor_type2_second_crop'"
+                                        type="number"
+                                        step="1.0"
+                                        min="0.0">
+    
+                                    <span matSuffix>%</span>
+                                    <mat-hint>Tipo #2</mat-hint>
+                                    
+                                    <mat-error *ngIf="getError('nitrogen_fertilization.synthetic_n_fertilizer_teor_type2_second_crop')?.min">
+                                        Valor não pode ser negativo
+                                    </mat-error>
+                                </mat-form-field>
+    
+                                <mat-form-field appearance="outline" class="mb-3">
+                                    <input
+                                        matInput
+                                        formControlName="synthetic_n_fertilizer_teor_type3_second_crop"
+                                        type="number"
+                                        step="1.0"
+                                        min="0.0">
+    
+                                    <span matSuffix>%</span>
+                                    <mat-hint>Tipo #3</mat-hint>
+                                    
+                                    <mat-error *ngIf="getError('nitrogen_fertilization.synthetic_n_fertilizer_teor_type3_second_crop')?.min">
+                                        Valor não pode ser negativo
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+    
+                        <div class="form-row">
+                            <div class="form-column form-info">
+                                <label>Ureia</label>
+
+                                <button
+                                    mat-icon-button
+                                    type="button"
+                                    matTooltip="Indicar a quantidade total aplicada na área de cultivo e não somente por ha, conforme feito para a primeira safra">
+    
+                                    <mat-icon>help_outline</mat-icon>
+                                </button>
+                            </div>
+    
+                            <div class="form-column">
+                                <mat-form-field appearance="outline" class="mb-3">
+                                    <input
+                                        matInput
+                                        formControlName="urea_type1_second_crop"
+                                        type="number"
+                                        step="1.0"
+                                        min="0.0">
+    
+                                    <span matSuffix>kg</span>
+                                    
+                                    <mat-error *ngIf="getError('nitrogen_fertilization.urea_type1_second_crop')?.min">
+                                        Valor não pode ser negativo
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </fieldset>
+    
+                    <fieldset class="mt-4" *ngIf="showSecondHarvest">
+                        <legend>Adubação Orgânica</legend>
+    
+                        <div class="form-row">
+                            <div class="form-column form-info">
+                                <label>Adubo N Orgânico</label>
+    
+                                <button
+                                    mat-icon-button
+                                    type="button"
+                                    matTooltip="Indicar a quantidade total aplicada na área de cultivo e não somente por ha, conforme feito para a primeira safra">
+    
+                                    <mat-icon>help_outline</mat-icon>
+                                </button>
+                            </div>
+    
+                            <div class="form-column">
+                                <mat-form-field appearance="outline" class="mb-3">
+                                    <input
+                                        matInput
+                                        formControlName="organic_n_fertilizer_type1_kg_second_crop"
+                                        type="number"
+                                        step="1.0"
+                                        min="0.0">
+    
+                                    <span matSuffix>kg</span>
+                                    
+                                    <mat-error *ngIf="getError('nitrogen_fertilization.organic_n_fertilizer_type1_kg_second_crop')?.min">
+                                        Valor não pode ser negativo
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </fieldset>
+    
+                    <fieldset class="mt-4" *ngIf="showSecondHarvest">
+                        <legend>Adubação Verde</legend>
+    
+                        <div class="form-row">
+                            <div class="form-column form-info">
+                                <label>Leguminosa</label>
+
+                                <button
+                                    mat-icon-button
+                                    type="button"
+                                    matTooltip="Indicar a quantidade total aplicada na área de cultivo e não somente por ha, conforme feito para a primeira safra">
+    
+                                    <mat-icon>help_outline</mat-icon>
+                                </button>
+                            </div>
+    
+                            <div class="form-column">
+                                <mat-form-field appearance="outline" class="mb-3">
+                                    <input
+                                        matInput
+                                        formControlName="green_adubation_second_crop"
+                                        type="number"
+                                        step="1.0"
+                                        min="0.0">
+    
+                                    <span matSuffix>kg</span>
+                                    
+                                    <mat-error *ngIf="getError('nitrogen_fertilization.green_adubation_second_crop')?.min">
+                                        Valor não pode ser negativo
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+    
+                        <div class="form-row">
+                            <div class="form-column form-info">
+                                <label>Gramínea</label>
+
+                                <button
+                                    mat-icon-button
+                                    type="button"
+                                    matTooltip="Indicar a quantidade total aplicada na área de cultivo e não somente por ha, conforme feito para a primeira safra">
+    
+                                    <mat-icon>help_outline</mat-icon>
+                                </button>
+                            </div>
+    
+                            <div class="form-column">
+                                <mat-form-field appearance="outline" class="mb-3">
+                                    <input
+                                        matInput
+                                        formControlName="grassy_type1_kg_second_crop"
+                                        type="number"
+                                        step="1.0"
+                                        min="0.0">
+    
+                                    <span matSuffix>kg</span>
+                                    
+                                    <mat-error *ngIf="getError('nitrogen_fertilization.grassy_type1_kg_second_crop')?.min">
+                                        Valor não pode ser negativo
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+    
+                        <div class="form-row">
+                            <div class="form-column form-info">
+                                <label>Outros</label>
+
+                                <button
+                                    mat-icon-button
+                                    type="button"
+                                    matTooltip="Indicar a quantidade total aplicada na área de cultivo e não somente por ha, conforme feito para a primeira safra">
+    
+                                    <mat-icon>help_outline</mat-icon>
+                                </button>
+                            </div>
+    
+                            <div class="form-column">
+                                <mat-form-field appearance="outline" class="mb-3">
+                                    <input
+                                        matInput
+                                        formControlName="others_type1_kg_second_crop"
+                                        type="number"
+                                        step="1.0"
+                                        min="0.0">
+    
+                                    <span matSuffix>kg</span>
+                                    
+                                    <mat-error *ngIf="getError('nitrogen_fertilization.others_type1_kg_second_crop')?.min">
+                                        Valor não pode ser negativo
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+    
+                <div *ngSwitchCase="5" formGroupName="correction">
+                    <h3 class="form-title">CORREÇÃO E CONDICIONAMENTO DO SOLO</h3>
+    
+                    <fieldset>
+                        <legend>1º Safra</legend>
+    
+                        <div class="form-row">
+                            <div class="form-column form-info">
+                                <label>Calcário calcítico</label>
+    
+                                <button mat-icon-button type="button" matTooltip="Indicar a quantidade total aplicada na área de cultivo e não somente por ha.">
+                                    <mat-icon>help_outline</mat-icon>
+                                </button>
+                            </div>
+    
+                            <div class="form-column mb-3">
+                                <mat-form-field appearance="outline">
+                                    <input
+                                        matInput
+                                        formControlName="calcitic_limestone"
+                                        type="number"
+                                        step="100.0"
+                                        min="0.0"
+                                        placeholder="0.0">
+    
+                                    <span matSuffix>kg</span>
+    
+                                    <mat-error *ngIf="getError('correction.calcitic_limestone')?.required">
+                                        Campo obrigatório
+                                    </mat-error>
+    
+                                    <mat-error *ngIf="getError('correction.calcitic_limestone')?.min">
+                                        Valor não pode ser negativo
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+    
+                        <div class="form-row">
+                            <div class="form-column form-info">
+                                <label>Calcário dolomítico</label>
+                                
+                                <button mat-icon-button type="button" matTooltip="Indicar a quantidade total aplicada na área de cultivo e não somente por ha.">
+                                    <mat-icon>help_outline</mat-icon>
+                                </button>
+                            </div>
+    
+                            <div class="form-column mb-3">
+                                <mat-form-field appearance="outline" >
+                                    <input
+                                        matInput
+                                        formControlName="dolomitic_limestone"
+                                        type="number"
+                                        step="100.0"
+                                        min="0.0"
+                                        placeholder="0.0">
+    
+                                    <span matSuffix>kg</span>
+                                    
+                                    <mat-error *ngIf="getError('correction.dolomitic_limestone')?.required">
+                                        Campo obrigatório
+                                    </mat-error>
+    
+                                    <mat-error *ngIf="getError('correction.dolomitic_limestone')?.min">
+                                        Valor não pode ser negativo
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+    
+                        <div class="form-row">
+                            <div class="form-column form-info">
+                                <label>Gesso agrícola</label>
+    
+                                <button mat-icon-button type="button" matTooltip="Indicar a quantidade total aplicada na área de cultivo e não somente por ha.">
+                                    <mat-icon>help_outline</mat-icon>
+                                </button>
+                            </div>
+    
+                            <div class="form-column mb-3">
+                                <mat-form-field appearance="outline">
+                                    <input
+                                        matInput
+                                        formControlName="agricultural_plaster"
+                                        type="number"
+                                        step="100.0"
+                                        min="0.0"
+                                        placeholder="0.0">
+    
+                                    <span matSuffix>kg</span>
+                                    
+                                    <mat-error *ngIf="getError('correction.agricultural_plaster')?.required">
+                                        Campo obrigatório
+                                    </mat-error>
+    
+                                    <mat-error *ngIf="getError('correction.agricultural_plaster')?.min">
+                                        Valor não pode ser negativo
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </fieldset>
+    
+                    <hr class="mt-4 mb-3" *ngIf="showSecondHarvest">
+    
+                    <fieldset *ngIf="showSecondHarvest">
+                        <legend>2º Safra</legend>
+    
+                        <div class="form-row">
+                            <div class="form-column form-info">
+                                <label>Calcário calcítico</label>
+
+                                <button
+                                    mat-icon-button
+                                    type="button"
+                                    matTooltip="Indicar a quantidade total aplicada na área de cultivo e não somente por ha, conforme feito para a primeira safra">
+    
+                                    <mat-icon>help_outline</mat-icon>
+                                </button>
+                            </div>
+    
+                            <div class="form-column mb-3">
+                                <mat-form-field appearance="outline" >
+                                    <input
+                                        matInput
+                                        formControlName="calcitic_limestone_second_crop"
+                                        type="number"
+                                        step="100.0"
+                                        min="0.0"
+                                        placeholder="0.0">
+    
+                                    <span matSuffix>kg</span>
+    
+                                    <mat-error *ngIf="getError('correction.calcitic_limestone_second_crop')?.min">
+                                        Valor não pode ser negativo
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+    
+                        <div class="form-row">
+                            <div class="form-column form-info">
+                                <label>Calcário dolomítico</label>
+
+                                <button
+                                    mat-icon-button
+                                    type="button"
+                                    matTooltip="Indicar a quantidade total aplicada na área de cultivo e não somente por ha, conforme feito para a primeira safra">
+    
+                                    <mat-icon>help_outline</mat-icon>
+                                </button>
+                            </div>
+    
+                            <div class="form-column mb-3">
+                                <mat-form-field appearance="outline">
+                                    <input
+                                        matInput
+                                        formControlName="dolomitic_limestone_second_crop"
+                                        type="number"
+                                        step="100.0"
+                                        min="0.0"
+                                        placeholder="0.0">
+    
+                                    <span matSuffix>kg</span>
+    
+                                    <mat-error *ngIf="getError('correction.dolomitic_limestone_second_crop')?.min">
+                                        Valor não pode ser negativo
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+    
+                        <div class="form-row">
+                            <div class="form-column form-info">
+                                <label>Gesso agrícola</label>
+
+                                <button
+                                    mat-icon-button
+                                    type="button"
+                                    matTooltip="Indicar a quantidade total aplicada na área de cultivo e não somente por ha, conforme feito para a primeira safra">
+    
+                                    <mat-icon>help_outline</mat-icon>
+                                </button>
+                            </div>
+    
+                            <div class="form-column mb-3">
+                                <mat-form-field appearance="outline">
+                                    <input
+                                        matInput
+                                        formControlName="agricultural_plaster_second_crop"
+                                        type="number"
+                                        step="100.0"
+                                        min="0.0"
+                                        placeholder="0.0">
+    
+                                    <span matSuffix>kg</span>
+    
+                                    <mat-error *ngIf="getError('correction.agricultural_plaster_second_crop')?.min">
+                                        Valor não pode ser negativo
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+    
+                <div *ngSwitchCase="6" formGroupName="decomposition">
+                    <h3 class="form-title">DECOMPOSIÇÃO DE RESTOS CULTURAIS</h3>
+    
+                    <fieldset>
+                        <legend>1º Safra</legend>
+    
+                        <div class="form-row">
+                            <div class="form-column form-info">
+                                <label>Resíduos no campo</label>
+    
+                                <button
+                                    mat-icon-button
+                                    type="button"
+                                    matTooltip="Resíduos da cultura de soja deixados no campo">
+    
+                                    <mat-icon>help_outline</mat-icon>
+                                </button>
+                            </div>
+    
+                            <div class="form-column mb-3">
+                                <mat-form-field appearance="outline">
+                                    <input
+                                        matInput
+                                        formControlName="waste_field"
+                                        type="number"
+                                        step="10"
+                                        min="0"
+                                        placeholder="0">
+    
+                                    <span matSuffix>%</span>
+                                    
+                                    <mat-error *ngIf="getError('decomposition.waste_field')?.required">
+                                        Campo obrigatório
+                                    </mat-error>
+    
+                                    <mat-error *ngIf="getError('decomposition.waste_field')?.min">
+                                        Valor não pode ser negativo
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </fieldset>
+    
+                    <hr class="mt-4 mb-3" *ngIf="showSecondHarvest">
+    
+                    <fieldset *ngIf="showSecondHarvest">
+                        <legend>2º Safra</legend>
+    
+                        <div class="form-row">
+                            <div class="form-column form-info">
+                                <label>Resíduos no campo</label>
+    
+                                <button
+                                    mat-icon-button
+                                    type="button"
+                                    matTooltip="Resíduos da cultura de segunda safra deixados no campo">
+    
+                                    <mat-icon>help_outline</mat-icon>
+                                </button>
+                            </div>
+    
+                            <div class="form-column mb-3">
+                                <mat-form-field appearance="outline">
+                                    <input
+                                        matInput
+                                        formControlName="waste_field_second_crop"
+                                        type="number"
+                                        step="10"
+                                        min="0"
+                                        placeholder="0">
+    
+                                    <span matSuffix>%</span>
+                                    
+                                    <mat-error *ngIf="getError('decomposition.waste_field_second_crop')?.min">
+                                        Valor não pode ser negativo
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+    
+            <div *ngSwitchCase="7" formGroupName="fuel_consumption">
+                    <h3 class="form-title">CONSUMO DE COMBUSTÍVEIS (ANUAL)</h3>
+    
+                    <fieldset>
+                        <legend>Operação Mecanizada</legend>
+    
+                        <div class="form-row">
+                            <div class="form-column form-info">
+                                <label>Gasolina</label>
+                            </div>
+    
+                            <div class="form-column mb-3">
+                                <mat-form-field appearance="outline">
+                                    <input
+                                        matInput
+                                        formControlName="gasoline_mechanical_operation"
+                                        type="number"
+                                        step="10"
+                                        min="0"
+                                        placeholder="0">
+    
+                                    <span matSuffix>litros</span>
+                                    
+                                    <mat-error *ngIf="getError('fuel_consumption.gasoline_mechanical_operation')?.required">
+                                        Campo obrigatório
+                                    </mat-error>
+    
+                                    <mat-error *ngIf="getError('fuel_consumption.gasoline_mechanical_operation')?.min">
+                                        Valor não pode ser negativo
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+    
+                        <div class="form-row">
+                            <div class="form-column form-info">
+                                <label>Diesel B10</label>
+                            </div>
+    
+                            <div class="form-column mb-3">
+                                <mat-form-field appearance="outline">
+                                    <input
+                                        matInput
+                                        formControlName="diesel_b10_mechanical_operation"
+                                        type="number"
+                                        step="10"
+                                        min="0"
+                                        placeholder="0">
+    
+                                    <span matSuffix>litros</span>
+                                    
+                                    <mat-error *ngIf="getError('fuel_consumption.diesel_b10_mechanical_operation')?.required">
+                                        Campo obrigatório
+                                    </mat-error>
+    
+                                    <mat-error *ngIf="getError('fuel_consumption.diesel_b10_mechanical_operation')?.min">
+                                        Valor não pode ser negativo
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+    
+                        <div class="form-row">
+                            <div class="form-column form-info">
+                                <label>Etanol hidratado</label>
+                            </div>
+    
+                            <div class="form-column mb-3">
+                                <mat-form-field appearance="outline">
+                                    <input
+                                        matInput
+                                        formControlName="hydrous_ethanol_mechanical_operation"
+                                        type="number"
+                                        step="10"
+                                        min="0"
+                                        placeholder="0">
+    
+                                    <span matSuffix>litros</span>
+                                    
+                                    <mat-error *ngIf="getError('fuel_consumption.hydrous_ethanol_mechanical_operation')?.required">
+                                        Campo obrigatório
+                                    </mat-error>
+    
+                                    <mat-error *ngIf="getError('fuel_consumption.hydrous_ethanol_mechanical_operation')?.min">
+                                        Valor não pode ser negativo
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </fieldset>
+    
+                    <hr class="mt-4 mb-3">
+    
+                    <fieldset>
+                        <legend>Operação Estacionária</legend>
+    
+                        <div class="form-row">
+                            <div class="form-column form-info">
+                                <label>Gasolina</label>
+                            </div>
+    
+                            <div class="form-column mb-3">
+                                <mat-form-field appearance="outline">
+                                    <input
+                                        matInput
+                                        formControlName="gasoline_stationary_operation"
+                                        type="number"
+                                        step="10"
+                                        min="0"
+                                        placeholder="0">
+    
+                                    <span matSuffix>litros</span>
+                                    
+                                    <mat-error *ngIf="getError('fuel_consumption.gasoline_stationary_operation')?.required">
+                                        Campo obrigatório
+                                    </mat-error>
+    
+                                    <mat-error *ngIf="getError('fuel_consumption.gasoline_stationary_operation')?.min">
+                                        Valor não pode ser negativo
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+    
+                        <div class="form-row">
+                            <div class="form-column form-info">
+                                <label>Diesel B10</label>
+                            </div>
+    
+                            <div class="form-column mb-3">
+                                <mat-form-field appearance="outline">
+                                    <input
+                                        matInput
+                                        formControlName="diesel_b10_stationary_operation"
+                                        type="number"
+                                        step="10"
+                                        min="0"
+                                        placeholder="0">
+    
+                                    <span matSuffix>litros</span>
+                                    
+                                    <mat-error *ngIf="getError('fuel_consumption.diesel_b10_stationary_operation')?.required">
+                                        Campo obrigatório
+                                    </mat-error>
+    
+                                    <mat-error *ngIf="getError('fuel_consumption.diesel_b10_stationary_operation')?.min">
+                                        Valor não pode ser negativo
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+    
+                        <div class="form-row">
+                            <div class="form-column form-info">
+                                <label>Etanol hidratado</label>
+                            </div>
+    
+                            <div class="form-column mb-3">
+                                <mat-form-field appearance="outline">
+                                    <input
+                                        matInput
+                                        formControlName="hydrous_ethanol_stationary_operation"
+                                        type="number"
+                                        step="10"
+                                        min="0"
+                                        placeholder="0">
+    
+                                    <span matSuffix>litros</span>
+                                    
+                                    <mat-error *ngIf="getError('fuel_consumption.hydrous_ethanol_stationary_operation')?.required">
+                                        Campo obrigatório
+                                    </mat-error>
+    
+                                    <mat-error *ngIf="getError('fuel_consumption.hydrous_ethanol_stationary_operation')?.min">
+                                        Valor não pode ser negativo
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            
+                <div *ngSwitchCase="8">
+                    <h3 class="form-title">Energia elétrica</h3>
+    
+                    <div class="form-row">
+                        <div class="form-column form-info">
+                            <label>Consumo de energia</label>
+    
+                            <button
+                                mat-icon-button
+                                type="button"
+                                matTooltip="Consumo total do período em Megawatts">
+    
+                                <mat-icon>help_outline</mat-icon>
+                            </button>
+                        </div>
+    
+                        <div class="form-column">
+                            <mat-form-field appearance="outline">
+                                <input
+                                    matInput
+                                    formControlName="energy_consumption"
+                                    type="number"
+                                    step="10"
+                                    min="0"
+                                    placeholder="0.0">
+    
+                                <span matSuffix>MWh</span>
+                                
+                                <mat-error *ngIf="getError('energy_consumption')?.required">
+                                    Campo obrigatório
+                                </mat-error>
+    
+                                <mat-error *ngIf="getError('energy_consumption')?.min">
+                                    Valor não pode ser negativo
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+    
+                <div *ngSwitchCase="9" formGroupName="stock">
+                    <h3 class="form-title">Estoque de Carbono na Vegetação Nativa</h3>
+    
+                    <div class="form-row">
+                        <div class="form-column form-info">
+                            <label>Área de Reserva Legal (RL)</label>
+    
+                            <button
+                                mat-icon-button
+                                type="button"
+                                matTooltip="Área de Reserva Legal em hectares">
+    
+                                <mat-icon>help_outline</mat-icon>
+                            </button>
+                        </div>
+    
+                        <div class="form-column mb-3">
+                            <mat-form-field appearance="outline">
+                                <input
+                                    matInput
+                                    formControlName="rl"
+                                    type="number"
+                                    step="10"
+                                    min="0"
+                                    placeholder="0.0">
+    
+                                <span matSuffix>ha</span>
+                                
+                                <mat-error *ngIf="getError('stock.rl')?.required">
+                                    Campo obrigatório
+                                </mat-error>
+    
+                                <mat-error *ngIf="getError('stock.rl')?.min">
+                                    Valor não pode ser negativo
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+    
+                    <div class="form-row">
+                        <div class="form-column form-info">
+                            <label>Área de Preservação Permanente (APP)</label>
+    
+                            <button
+                                mat-icon-button
+                                type="button"
+                                matTooltip="Área de Preservação Permanente em hectares">
+    
+                                <mat-icon>help_outline</mat-icon>
+                            </button>
+                        </div>
+    
+                        <div class="form-column mb-3">
+                            <mat-form-field appearance="outline">
+                                <input
+                                    matInput
+                                    formControlName="app"
+                                    type="number"
+                                    step="10"
+                                    min="0"
+                                    placeholder="0.0">
+    
+                                <span matSuffix>ha</span>
+                                
+                                <mat-error *ngIf="getError('stock.app')?.required">
+                                    Campo obrigatório
+                                </mat-error>
+    
+                                <mat-error *ngIf="getError('stock.app')?.min">
+                                    Valor não pode ser negativo
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+    
+                    <div class="form-row">
+                        <div class="form-column form-info">
+                            <label>Área de Excedente de Vegetação Nativa</label>
+    
+                            <button
+                                mat-icon-button
+                                type="button"
+                                matTooltip="Área de Vegetação Nativa excedente ao requerido pelo código florestal em hectares">
+    
+                                <mat-icon>help_outline</mat-icon>
+                            </button>
+                        </div>
+    
+                        <div class="form-column mb-3">
+                            <mat-form-field appearance="outline">
+                                <input
+                                    matInput
+                                    formControlName="forest_surplus"
+                                    type="number"
+                                    step="10"
+                                    min="0"
+                                    placeholder="0.0">
+    
+                                <span matSuffix>ha</span>
+                                
+                                <mat-error *ngIf="getError('stock.forest_surplus')?.required">
+                                    Campo obrigatório
+                                </mat-error>
+    
+                                <mat-error *ngIf="getError('stock.forest_surplus')?.min">
+                                    Valor não pode ser negativo
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </form>
+    
+            <div class="nav-control">
+                <!-- Previous -->
+                <button *ngIf="viewMode > 0"
+                    (click)="previous()"
+                    class="nav-control-left mt-4 mb-5"
+                    mat-flat-button
+                    color="primary">
+    
+                    <mat-icon>arrow_back_ios</mat-icon>
+                    <span>Voltar</span>
+                </button>
+    
+                <!-- Next -->
+                <button *ngIf="viewMode < 9"
+                    (click)="next()"
+                    class="nav-control-right mt-4 mb-5"
+                    mat-flat-button
+                    color="primary">
+    
+                    <span>Próximo</span>
+                    <mat-icon>arrow_forward_ios</mat-icon>
+                </button>
+    
+                <!-- Salve -->
+                <button *ngIf="viewMode == 9"
+                    form="calculator-form"
+                    type="submit"
+                    class="nav-control-right mt-4 mb-5"
+                    mat-flat-button
+                    color="primary">
+                    
+                    <span class="mr-1">Salvar</span>
+                    <mat-icon class="material-icons-outlined">done</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <ngx-smart-modal #myModal identifier="myModal" [customClass]="'custom-modal'" style="background: none">
+        <ul class="vertical-menu">
+            <li (click)="myModal.close()" (click)="viewMode =0" [ngClass]="{'active':viewMode ==0}">INFORMAÇÕES GERAIS DE PREENCHIMENTO</li>
+            <li (click)="myModal.close()" (click)="viewMode =1" [ngClass]="{'active':viewMode ==1}">INFORMAÇÕES GERAIS DA PROPRIEDADE</li>
+            <li (click)="myModal.close()" (click)="viewMode =2" [ngClass]="{'active':viewMode ==2}">SISTEMA DE CULTIVO</li>
+            <li (click)="myModal.close()" (click)="viewMode =3" [ngClass]="{'active':viewMode ==3}">CARACTERÍSTICAS DO SOLO</li>
+            <li (click)="myModal.close()" (click)="viewMode =4" [ngClass]="{'active':viewMode ==4}">ADUBAÇÃO NITROGENADA (N)</li>
+            <li (click)="myModal.close()" (click)="viewMode =5" [ngClass]="{'active':viewMode ==5}">CORREÇÃO E CONDICIONAMENTO DO SOLO</li>
+            <li (click)="myModal.close()" (click)="viewMode =6" [ngClass]="{'active':viewMode ==6}">DECOMPOSIÇÃO DE RESTOS CULTURAIS</li>
+            <li (click)="myModal.close()" (click)="viewMode =7" [ngClass]="{'active':viewMode ==7}">CONSUMO DE COMBUSTÍVEIS</li>
+            <li (click)="myModal.close()" (click)="viewMode =8" [ngClass]="{'active':viewMode ==8}">ENERGIA ELÉTRICA</li>
+            <li (click)="myModal.close()" (click)="viewMode =9" [ngClass]="{'active':viewMode ==9}">ESTOQUE DE C NO SOLO EM MATA NATIVA</li>
+        </ul>
+    </ngx-smart-modal>
+</div>

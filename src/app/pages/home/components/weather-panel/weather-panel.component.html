@@ -1,0 +1,60 @@
+<div class="container" *ngIf="(currentWeekForecast$ | async); else empty">
+    <div class="forecast-box container">
+
+        <div class="card" *ngFor="let forecast of currentWeekForecast$ | async">
+            <div class="header">
+                <h5>{{ forecast.date_time | date: 'E' | uppercase }}</h5>
+            </div>
+
+            <h4>{{ forecast.date_time | date: 'dd/MM/YYYY' }}</h4>
+
+            <div class="body" [ngClass]="{ 
+                'Ensolarado': 'orange',
+                'Nublado': 'blue',
+                'Tempestade': 'grey',
+                'Limpo': 'blue',
+                'Poucas nuvens': 'blue',
+                'Chuvoso': 'grey'
+            } [forecast.summary]">
+
+                <div class="center img-container">
+                    <img class="img-weather" src="assets/img/general/weather-{{ forecast.weather }}.png"
+                        [title]="forecast.summary" [alt]="forecast.summary">
+                </div>
+
+                <div class="card-temp margin-card-temp-min center">
+                    <span class="mono">{{ forecast.min_temp }}°C </span>
+                    <span style="font-size: 22px; vertical-align: middle;">min</span>
+                </div>
+
+                <div class="card-temp margin-card-temp-max center">
+                    <span class="mono">{{ forecast.max_temp }}°C </span>
+                    <span style="font-size: 22px; vertical-align: middle;">máx</span>
+                </div>
+
+                <div style="width: 65%; margin-left: 17.5%;" class="center">
+                    <img class="icon-weather" src="assets/icons/wind-white.svg" alt="">
+                    <div class="card-text">{{ forecast.wind_speed }}</div>
+                    <div class="white-bar"></div>
+                    <img class="icon-weather" src="assets/icons/umidity-white.svg" alt="">
+
+                    <div class="card-text card-text-percentage">
+                        {{ forecast.min_humidity }}%
+                        <img class="arrow" src="assets/img/general/min-arrow.png" alt="">
+                        {{ forecast.max_humidity }}%
+                        <img class="arrow" src="assets/img/general/max-arrow.png" alt="">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #empty>
+    <div class="empty">Selecione a sua cidade</div>
+</ng-template>
+
+<button mat-icon-button class="button-close" (click)="close()">
+    <mat-icon>close</mat-icon>
+</button>

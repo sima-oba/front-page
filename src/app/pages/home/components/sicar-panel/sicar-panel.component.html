@@ -1,0 +1,77 @@
+<div class="container">
+    <button mat-icon-button class="button-close" (click)="close()">
+        <mat-icon>close</mat-icon>
+    </button>
+
+    <section>
+        <h3>SICAR</h3>
+        
+        <mat-progress-bar
+            mode="indeterminate"
+            [style.visibility]="(isLoading$ | async) ? 'visible' : 'hidden'">
+        </mat-progress-bar>
+
+        <div class="form pt-3 pb-2 px-4">
+            <mat-form-field appearance="outline" class="city">
+                <mat-select
+                    placeholder="Selecione a cidade"
+                    [value]="cityGeoid$ | async"
+                    (selectionChange)="onCityChanged($event)">
+        
+                    <mat-option *ngFor="let city of cities$ | async" [value]="city.geoid">
+                        {{ city.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="checkbox-list">
+            <div class="checkbox-list__item">
+                <mat-checkbox
+                    [disabled]="isControlsDisabled$ | async"
+                    [checked]="isFarmsEnabled$ | async"
+                    (change)="onFarmsChecked($event)">
+                    Propriedades
+                </mat-checkbox>
+            </div>
+            
+            <hr class="separator">
+
+            <div class="checkbox-list__item">
+                <mat-checkbox
+                    [disabled]="isControlsDisabled$ | async"
+                    [checked]="(subject$ | async) === 'APP'"
+                    (change)="onSubjectChanged($event, 'APP')">
+                    Área de Preservação Permanente
+                </mat-checkbox>
+            </div>
+
+            <div class="checkbox-list__item">
+                <mat-checkbox
+                    [disabled]="isControlsDisabled$ | async"
+                    [checked]="(subject$ | async) === 'AREA_CONSOLIDADA'"
+                    (change)="onSubjectChanged($event, 'AREA_CONSOLIDADA')">
+                    Área Consolidada
+                </mat-checkbox>
+            </div>
+
+            <div class="checkbox-list__item">
+                <mat-checkbox
+                    [disabled]="isControlsDisabled$ | async"
+                    [checked]="(subject$ | async) === 'RESERVA_LEGAL'"
+                    (change)="onSubjectChanged($event, 'RESERVA_LEGAL')">
+                    Reserva Legal
+                </mat-checkbox>
+            </div>
+
+            <div class="checkbox-list__item">
+                <mat-checkbox
+                    [disabled]="isControlsDisabled$ | async"
+                    [checked]="(subject$ | async) === 'VEGETACAO_NATIVA'"
+                    (change)="onSubjectChanged($event, 'VEGETACAO_NATIVA')">
+                    Vegetação Nativa
+                </mat-checkbox>
+            </div>
+        </div>
+    </section>
+</div>

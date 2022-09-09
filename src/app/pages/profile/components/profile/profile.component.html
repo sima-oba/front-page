@@ -1,0 +1,41 @@
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+</head>
+<div>
+    <div class="header">
+        <p>MINHA PROPRIEDADE</p>
+    </div>
+    <div class="profile-content">
+        <div class="profile">
+            <img id="profile-avatar" class="mt-3" src="assets/icons/user.svg">
+            <button id="editbtn" mat-icon-button color="primary">
+                <mat-icon>edit</mat-icon>
+            </button>
+            <h4 id="profile-name">{{user.firstName}} {{user.lastName}}</h4>
+            <a [routerLink]="['/properties/farms']" class="link-divider">Minhas propriedades</a>
+            <a [routerLink]="['/calculator']" class="link-divider">Calculadora de Carbono</a>
+            <a [routerLink]="['/documents']" class="link-divider">Publicações</a>
+            <a [routerLink]="['/protocol']" class="link-divider">Protocolos</a>
+            <a [routerLink]="['/occurrences']" class="link-divider">Ocorrências</a>
+        </div>
+        <div class="profile-info">
+            <h4>Dados do proprietário</h4>
+            <div class="info-form">
+                <div>
+                    <a class="info">
+                        <p>Nome: </p>
+                        <a id="name">{{user.firstName}} {{user.lastName}}</a>
+                    </a>
+                    <a class="info">
+                        <p>E-mail: </p>
+                        <a id="Email">{{user.email}}</a>
+                    </a>
+                    <a class="info">
+                        <p>CPF: </p>
+                        <a id="CPF">{{user.doc}}</a>
+                    </a>
+                </div>         
+            </div>
+        </div>
+    </div>
+</div>

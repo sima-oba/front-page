@@ -1,0 +1,49 @@
+@use "theme";
+@use "button";
+@use "form";
+@use "stepper";
+@use "dialog";
+@use "drawer";
+@use "map";
+@use "helper";
+@use "util";
+@import "~ngx-smart-modal/ngx-smart-modal";
+
+.swal2-title {
+    font-size: 1em !important;
+}
+
+.swal2-popup {
+    width: 24em !important;
+}
+
+.nsm-content {
+    background-color: #00000000;
+    box-shadow: none;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #ededed;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #d1d5d6;
+    border-radius: 4px;
+
+    &:hover {
+        background-color: #9c9fa0;
+    }
+}

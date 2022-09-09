@@ -1,0 +1,47 @@
+@use "var";
+
+.mat-drawer {
+    min-width: 300px;
+}
+
+.mat-drawer-container {
+    height: 100%;
+}
+
+.drawer-heading {
+    margin: 0;
+    padding: var.$spacing-3 var.$spacing-4;
+    background-color: #e6e6e6;
+    font-weight: 500;
+    color: #458985;
+}
+
+ul.drawer-menu {
+    padding: 0;
+
+    li {
+        padding: var.$spacing-3 var.$spacing-4;
+        color: #689c99;
+        cursor: pointer;
+        transition: 200ms;
+
+        &:hover {
+            background-color: rgb(0, 0, 0, 0.03);
+        }
+
+        &.active {
+            background-color: rgb(0, 0, 0, 0.05);
+            color: #055632;
+        }
+
+        &.active::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 6px;
+            background-color: #055632;
+        }
+    }
+}

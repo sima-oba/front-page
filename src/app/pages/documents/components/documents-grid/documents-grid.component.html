@@ -1,0 +1,90 @@
+<div class="container">
+    <app-page-title>PUBLICAÇÕES</app-page-title>
+
+    <div class="filter block mt-4">
+        <div class="form">
+            <div class="form-row">
+                <div class="form column">
+                    <label>Período</label>
+                    <mat-form-field appearance="outline">
+                        <mat-select
+                            [(ngModel)]="selectedYear"
+                            (selectionChange)="updateQuery()">
+                            
+                            <mat-option 
+                                *ngFor="let year of years"
+                                [value]="year.value">
+                                {{ year.title }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="form column">
+                    <label>Tipo de publicação</label>
+                    <mat-form-field appearance="outline">
+                        <mat-select
+                            panelClass="full-width-select"
+                            [(ngModel)]="selectedDocumentType"
+                            (selectionChange)="updateQuery()">
+
+                            <mat-option [value]="''">Todas</mat-option>
+
+                            <mat-option
+                                *ngFor="let item of documentTypes"
+                                [value]="item.type">
+                                {{ item.title }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-wrapper block mt-3 mb-5">
+        <table #table
+            mat-table
+            matSort
+            [dataSource]="documents$ | async"
+            (matSortChange)="onSort($event)">
+
+            <ng-container matColumnDef="publish_date">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Publicação</th>
+                <td mat-cell *matCellDef="let doc" class="text-center">{{ doc.publish_date | date:'dd/MM/yyyy' }}</td>
+            </ng-container>
+        
+            <ng-container matColumnDef="process">
+                <th mat-header-cell *matHeaderCellDef>Processo</th>
+                <td mat-cell *matCellDef="let doc">{{ doc.process }}</td>
+            </ng-container>
+        
+            <ng-container matColumnDef="issuer">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Emissor</th>
+                <td mat-cell *matCellDef="let doc">{{ doc.issuer_name }}</td>
+            </ng-container>
+        
+            <ng-container matColumnDef="term">
+                <th mat-header-cell *matHeaderCellDef>Prazo</th>
+                <td mat-cell *matCellDef="let doc">{{ doc.term || '-' }}</td>
+            </ng-container>
+        
+            <ng-container matColumnDef="link">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let doc" class="text-right">
+                    <button mat-button>
+                        <mat-icon class="material-icons-outlined">remove_red_eye</mat-icon>
+                        <a href="{{doc.link}}" target="_blank">Acessar</a>
+                    </button>
+                </td>
+            </ng-container>
+        
+            <tr mat-header-row *matHeaderRowDef="columns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+        </table>
+
+        <div class="empty" *ngIf="(documents$ | async)?.length === 0">
+            Não há resultados para exibir
+        </div>
+    </div>
+</div>

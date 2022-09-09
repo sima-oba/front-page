@@ -1,0 +1,113 @@
+@use "var";
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    width: 80%;
+    min-width: 650px;
+    margin: 0 auto;
+    flex-grow: 1;
+}
+
+.actions {
+    display: flex;
+}
+
+.spacing {
+    flex-grow: 1;
+}
+
+.table-wrapper {
+    border-radius: var.$spacing-2;
+    box-shadow: 0 4px 16px #d1d1d1;
+    overflow: hidden;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead tr {
+    background-color: #dfdfdf;
+    color: #4f4f4f;
+}
+
+th {
+    padding: var.$spacing-2 var.$spacing-3;
+    font-weight: 500;
+
+    button {
+        font-size: 1rem !important;
+    }
+}
+
+tbody tr {
+    font-size: 1rem;
+    font-weight: 300;
+    color: #a3aad2;
+    cursor: pointer;
+    transition: 200ms;
+
+    &:nth-child(even) {
+        background-color: #f5f7f8;
+    }
+
+    &:nth-child(odd) {
+        background-color: #f3f3f3;
+    }
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.08);
+    }
+
+    &:active {
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+}
+
+td {
+    padding: var.$spacing-3 var.$spacing-4;
+}
+
+.col-begin {
+    width: 200px;
+}
+
+.col-end {
+    width: 200px;
+}
+
+.col-status {
+    width: 200px;
+}
+
+.empty {
+    line-height: 40px;
+    text-align: center;
+}
+
+.status {
+    &-pending {
+        font-weight: 500;
+        color: #e2c41a;
+    }
+
+    &-progress {
+        font-weight: 500;
+        color: #4d86d1;
+    }
+
+    &-canceled {
+        font-weight: 500;
+        color: #dd5757;
+    }
+
+    &-completed {
+        font-weight: 500;
+        color: rgb(81, 179, 81);
+    }
+}

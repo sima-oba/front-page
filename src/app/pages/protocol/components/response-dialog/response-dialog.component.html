@@ -1,0 +1,116 @@
+<h3 class="title mt-0 mb-3" [ngSwitch]="protocol.protocol_type">
+    <span *ngSwitchCase="'OTHER'">Requerimento Simples</span>
+    <span *ngSwitchCase="'PLANTING_ANTICIPATION'">Antecipação de Plantio</span>
+</h3>
+
+<hr class="separator mb-3">
+
+<mat-dialog-content class="content">
+    <section class="protocol-info">
+        <span class="label">Data de submissão</span>
+        <span class="value">{{ protocol.created_at | date: 'dd/MM/yyyy HH:mm' }}</span>
+
+        <span class="label">Data de análise</span>
+        <span class="value">{{ (protocol.started_at | date: 'dd/MM/yyyy HH:mm') || '—' }}</span>
+
+        <span class="label">Data de resolução</span>
+        <span class="value">{{ (protocol.finished_at | date: 'dd/MM/yyyy HH:mm') || '—' }}</span>
+
+        <span class="label">Status</span>
+        <span class="value" [ngSwitch]="protocol.status">
+            <span *ngSwitchCase="'PENDING'" class="status-pending">PENDENTE</span>
+            <span *ngSwitchCase="'IN_PROGRESS'" class="status-progress">EM ANÁLISE</span>
+            <span *ngSwitchCase="'CANCELED'" class="status-canceled">INDEFERIDO</span>
+            <span *ngSwitchCase="'COMPLETED'" class="status-completed">DEFERIDO</span>
+        </span>
+
+        <ng-container *ngIf="protocol.attachments?.length > 0">
+            <span class="label">Anexos</span>
+            
+            <div class="attachments">
+                <a *ngFor="let attach of protocol.attachments"
+                    [href]="attach.href + '?as_attachment=true'">
+                    {{ attach.filename }}
+                </a>
+            </div>
+        </ng-container>
+    </section>
+
+    <section [ngSwitch]="protocol.protocol_type">
+        <app-simple-request-content
+            *ngSwitchCase="'OTHER'"
+            [protocol]="protocol">
+        </app-simple-request-content>
+
+        <app-planting-anticipating-content
+            *ngSwitchCase="'PLANTING_ANTICIPATION'"
+            [protocol]="protocol">
+        </app-planting-anticipating-content>
+    </section>
+
+    <section *ngIf="!canModify">
+        <div class="label mt-4">Resposta ao requerimento</div>
+        <p class="value mt-2">{{ message || 'Não há resposta para exibir.' }}</p>
+    </section>
+
+    <section class="form mt-4" *ngIf="canModify">
+        <label>Resposta ao requerimento</label>
+
+        <mat-form-field appearance="outline">
+            <textarea
+                matInput
+                rows="10"
+                [(ngModel)]="message">
+            </textarea>
+        </mat-form-field>
+    </section>
+</mat-dialog-content>
+
+<hr class="separator" *ngIf="canModify">
+
+<mat-dialog-actions *ngIf="canModify" align="end" class="py-3">
+    <button
+        *ngIf="protocol.status === 'PENDING' || protocol.status === 'IN_PROGRESS'"
+        mat-flat-button
+        class="button-cancel"
+        color="primary"
+        (click)="cancel()">
+        
+        <span>Indeferir</span>
+        <mat-icon class="ml-1">close</mat-icon>
+    </button>
+
+    <button
+        *ngIf="protocol.status === 'IN_PROGRESS'"
+        mat-flat-button
+        color="primary"
+        (click)="complete()">
+        Deferir
+    </button>
+    
+    <div class="button-with-menu ml-2" *ngIf="protocol.status === 'PENDING'">
+        <button
+            mat-flat-button
+            color="primary"
+            (click)="accept()">
+            Aceitar
+        </button>
+        
+        <button
+            mat-flat-button
+            color="primary"
+            [matMenuTriggerFor]="menuAcceptance">
+
+            <mat-icon>expand_more</mat-icon>
+        </button>
+    </div>
+</mat-dialog-actions>
+
+<button mat-icon-button class="button-close" matDialogClose>
+    <mat-icon>close</mat-icon>
+</button>
+
+<mat-menu #menuAcceptance="matMenu" >
+    <button mat-menu-item (click)="accept()">Aceitar apenas</button>
+    <button mat-menu-item (click)="complete()">Aceitar e deferir</button>
+</mat-menu>

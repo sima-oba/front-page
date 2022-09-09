@@ -1,0 +1,109 @@
+<h3 class="title">Avaliação de contenção de escoamento de água de chuva por curva de nível e microbarragens</h3>
+
+<hr class="separator">
+
+<mat-dialog-content>
+    <form
+        id="containment-microdams-eval"
+        class="form"
+        [formGroup]="form"
+        (ngSubmit)="save()">
+
+        <div class="grid">
+            <div class="evaluator">
+                <span *ngIf="practice.evaluation?.resp_name">
+                    Responsável: <strong>{{ practice.evaluation.resp_name }}</strong>
+                </span>
+            </div>
+            <div class="text-center evaluation-title">Avaliação</div>
+    
+            <div class="mt-4">
+                <label>A propriedade possui microbarragens em margens das estradas internas da propriedade?</label>
+                <div class="answer">{{ practice.has_micro_dams ? 'SIM' : 'Não' }}</div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="has_micro_dams"></mat-checkbox>
+            </div>
+    
+            <div class="mt-4">
+                <label>Nível de qualidade das microbarragens.</label>
+                <div class="answer" [ngSwitch]="practice.micro_dams_quality">
+                    <ng-container *ngSwitchCase="3">Ótimo</ng-container>
+                    <ng-container *ngSwitchCase="2">Bom</ng-container>
+                    <ng-container *ngSwitchCase="1">Regular</ng-container>
+                    <ng-container *ngSwitchCase="0">Ruim</ng-container>
+                </div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="micro_dams_quality"></mat-checkbox>
+            </div>
+
+            <div class="mt-4">
+                <label>A propriedade possui curvas de nível ou terraço?</label>
+                <div class="answer">{{ practice.has_level_curves ? 'Sim' : 'Não' }}</div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="has_level_curves"></mat-checkbox>
+            </div>
+
+            <div class="mt-4">
+                <label>Nível de qualidade das curvas de nível ou terraço.</label>
+                <div class="answer" [ngSwitch]="practice.level_curves_quality">
+                    <ng-container *ngSwitchCase="3">Ótimo</ng-container>
+                    <ng-container *ngSwitchCase="2">Bom</ng-container>
+                    <ng-container *ngSwitchCase="1">Regular</ng-container>
+                    <ng-container *ngSwitchCase="0">Ruim</ng-container>
+                </div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="level_curves_quality"></mat-checkbox>
+            </div>
+
+            <div class="mt-4">
+                <label>As curvas de nível ou terraço são convergentes com as propriedades vizinhas?</label>
+                <div class="answer">{{ practice.level_curves_convergent_with_neighbors ? 'SIM' : 'Não' }}</div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="level_curves_convergent_with_neighbors"></mat-checkbox>
+            </div>
+        </div>
+
+        <div class="mt-5">
+            <label>Observações</label>
+            <mat-form-field appearance="outline">
+                <textarea
+                    matInput
+                    rows="5"
+                    formControlName="notes">
+                </textarea>
+            </mat-form-field>
+        </div>
+    </form>
+</mat-dialog-content>
+
+<hr class="separator">
+
+<mat-dialog-actions align="end" class="py-2">
+    <button *ngIf="canSave"
+        mat-flat-button
+        form="containment-microdams-eval"
+        type="submit"
+        color="primary">
+        Salvar
+    </button>
+
+    <button *ngIf="!canSave"
+        mat-flat-button
+        matDialogClose
+        color="primary">
+        Fechar
+    </button>
+</mat-dialog-actions>
+
+<button
+    matDialogClose
+    mat-icon-button
+    class="button-close">
+
+    <mat-icon>close</mat-icon>
+</button>

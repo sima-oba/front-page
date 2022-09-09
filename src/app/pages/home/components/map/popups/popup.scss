@@ -1,0 +1,66 @@
+@use "var";
+
+$close-button-size: 36px;
+
+:host ::ng-deep {
+    .map-popup {
+        max-width: none !important;
+
+        .mapboxgl-popup-content {
+            padding: var.$spacing-3;
+            border-radius: var.$radius-2;
+            box-shadow: 4px 4px 10px 0 #00000040;
+            font-family: Roboto, sans-serif;
+        }
+
+        .mapboxgl-popup-close-button {
+            width: $close-button-size;
+            height: $close-button-size;
+            padding: 0;
+            border-radius: calc(#{$close-button-size} / 2);
+            color: #a3aad2;
+            font-size: 2rem;
+        }
+
+        .popup-title {            
+            width: fit-content;
+            padding-right: var.$spacing-4;
+            font-size: 1.3em;
+            font-weight: 500;
+        }
+
+        .popup-grid {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            column-gap: var.$spacing-2;
+        }
+
+        .popup-label {
+            text-align: right;
+            color: #5f5f5f;
+        }
+
+        .popup-value {
+            font-weight: 500;
+        }
+
+        .popup-action {
+            width: 100%;
+            margin-top: 8px;
+            padding: 8px;
+            border: none;
+            border-radius: 8px;
+            background-color: #0093c7;
+            font-family: Roboto, sans-serif;
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: #fff;
+            transition: 150ms;
+            cursor: pointer;
+
+            &:hover {
+                background-color: #42add4;
+            }
+        }
+    }
+}

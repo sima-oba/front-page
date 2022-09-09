@@ -1,0 +1,36 @@
+.container {
+    position: relative;
+}
+
+#map-location-picker {
+    position: relative;
+    min-height: 300px;
+    width: 100%;
+    border-radius: 8px;
+}
+
+.map-coordinates {
+    position: absolute;
+    padding: 8px;
+    font-family: "Courier New", Courier, monospace;
+
+    &.top-left {
+        top: 0;
+        left: 0;
+    }
+
+    &.top-right {
+        top: 0;
+        right: 0;
+    }
+
+    &.bottom-right {
+        bottom: 0;
+        right: 0;
+    }
+
+    &.bottom-left {
+        bottom: 0;
+        left: 0;
+    }
+}

@@ -1,0 +1,14 @@
+@use "var";
+@use "util";
+
+$color-label: #458985;
+
+.title {
+    margin: 0;
+    font-size: 1.6rem;
+    font-weight: 600;
+    letter-spacing: 0.08rem;
+    text-align: center;
+    text-transform: uppercase;
+    color: $color-label;
+}

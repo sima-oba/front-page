@@ -1,0 +1,51 @@
+@use "var";
+@use "util";
+
+.container {
+    @extend %flex-column;
+    height: 100%;
+    width: 350px;
+    overflow: hidden;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    background-color: #e6e6e6;
+    color: #458985;
+    overflow: hidden;
+}
+
+h3 {
+    margin: var.$spacing-3 var.$spacing-4;
+    font-size: var.$font-size-3;
+    font-weight: 500;
+    color: #458985;
+}
+
+mat-radio-button {
+    display: block;
+    margin-bottom: var.$spacing-2;
+}
+
+.radio-list {
+    @extend %flex-column;
+    width: 100%;
+    background-color: #f5f5f5;
+    padding: var.$spacing-3;
+}
+
+:host ::ng-deep {
+    .mat-radio-outer-circle {
+        border-color: #458985 !important;
+    }
+
+    .mat-radio-inner-circle {
+        background-color: #458985 !important;
+    }
+
+    .mat-ripple-element {
+        display: none !important;
+    }
+}

@@ -1,0 +1,24 @@
+<div class="container" *ngIf="filteredFarms">
+    <app-search-box
+        class="mx-4 my-3"
+        placeholder="Buscar propriedade"
+        [normalize]="true"
+        [debounce]="500"
+        (textChanges)="applyFilter($event)"
+        (deleteClick)="clearFilter()">
+    </app-search-box>
+
+    <hr class="separator mx-4 mb-2">
+
+    <ul class="farm-list">
+        <li *ngFor="let farm of filteredFarms"
+            matRipple
+            class="farm-item pl-4 py-2"
+            [class.farm-selected]="isSelected(farm)"
+            (click)="onItemClick(farm)">
+            
+            <div class="farm-label">{{ farm?.farm_name }}</div>
+            <div class="farm-legend">{{ farm?.farm_code }}</div>
+        </li>
+    </ul>
+</div>

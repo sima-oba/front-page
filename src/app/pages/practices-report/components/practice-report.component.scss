@@ -1,0 +1,45 @@
+@use "var";
+@use "util";
+
+@mixin desktop {
+    @media (min-width: 800px) {
+        @content;
+    }
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    
+    @include desktop {
+        padding: var.$spacing-4;
+    }
+}
+
+.title {
+    margin-top: 0;
+    color: #a3aad2;
+    font-weight: 400;
+    font-size: var.$font-size-3;
+    text-align: center;
+}
+
+.subtitle {
+    margin-bottom: var.$spacing-2;
+    color: #a3aad2;
+    font-size: var.$font-size-2;
+    font-weight: 400;
+}
+
+.chart {
+    padding: var.$spacing-4 var.$spacing-4;
+    border-radius: var.$radius-2;
+    background-color: #f1f1f1;
+}
+
+.chart-wrapper {
+    position: relative;
+    padding: var.$spacing-2;
+    border-radius: var.$radius-2;
+    background-color: #f8f7f7;
+}

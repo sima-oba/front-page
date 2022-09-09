@@ -1,0 +1,73 @@
+<h2 class="title mt-5">Acesse o SIMA</h2>
+
+<form [formGroup]="form" class="form block-center pb-4">
+    <div class="invalid-credentials mb-4" *ngIf="showCredentialsError">
+        <span>Usuário ou senha incorretos</span>
+        
+        <button mat-icon-button type="button" (click)="showCredentialsError = false">
+            <mat-icon>close</mat-icon>   
+        </button>
+    </div>
+
+    <label for="username">CPF/CNPJ</label>
+    <mat-form-field appearance="outline">
+        <div matPrefix class="icon-wrapper">
+            <mat-icon class="material-icons-outlined">
+                email
+            </mat-icon>
+        </div>
+        
+        <input
+            formControlName="username"
+            matInput
+            type="text"
+            autocomplete="username">
+
+        <mat-error *ngIf="getError('username')?.required">
+            Campo obrigatório
+        </mat-error>
+    </mat-form-field>
+
+    <label for="password">Senha</label>
+    <mat-form-field appearance="outline">
+        <button
+            mat-icon-button
+            matPrefix
+            class="material-icons-outlined"
+            (click)="isPasswordHidden = !isPasswordHidden">
+
+            <mat-icon class="material-icons-outlined">
+                {{ isPasswordHidden ? 'visibility' : 'visibility_off' }}
+            </mat-icon>
+        </button>
+        
+        <input
+            matInput
+            formControlName="password"
+            autocomplete="current-password"
+            [type]="isPasswordHidden ? 'password' : 'text'">
+
+        <mat-error *ngIf="getError('password')?.required">
+            Campo obrigatório
+        </mat-error>
+
+        <mat-error *ngIf="getError('password')?.minlength">
+            Senha deve ter no mínimo {{ getError('password').minlength.requiredLength }} caracteres
+        </mat-error>
+    </mat-form-field>
+
+    <div class="form-footer mt-4">
+        <button
+            mat-flat-button
+            color="primary"
+            class="button-green"
+            (click)="submit()">
+            
+            <span>Acessar</span>
+            <mat-icon class="ml-2">east</mat-icon>
+        </button>
+            
+        <a routerLink="../sign-up" class="link-green mt-2">Ou cadastre-se</a>
+        <a routerLink="../forgot-password" class="link-green mt-2 text-gray">Esqueceu a senha?</a>
+    </div>
+</form>

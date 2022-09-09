@@ -1,0 +1,69 @@
+<h3 class="title">Sistema de tráfego controlado (STC)</h3>
+
+<hr class="separator">
+
+<mat-dialog-content>
+    <form
+        id="controlled-traffic-form"
+        class="form"
+        [formGroup]="form"
+        (ngSubmit)="save()">
+
+        <div class="form">
+            <label class="mt-4">Faz uso de STC na propriedade?</label>
+            <mat-button-toggle-group formControlName="use_stc">
+                <mat-button-toggle [value]="true">Sim</mat-button-toggle>
+                <mat-button-toggle [value]="false">Não</mat-button-toggle>
+            </mat-button-toggle-group>
+            <mat-error class="text-left mt-2" *ngIf="form.get('use_stc').touched && form.get('use_stc').errors?.required">
+                Escolha uma opção
+            </mat-error>
+
+            <label class="mt-4">Total da área em que faz uso de STC?</label>
+            <mat-form-field appearance="outline">
+                <input matInput
+                    formControlName="total_area_stc"
+                    type="number"
+                    min="0"
+                    placeholder="hectares">
+
+                <mat-error *ngIf="form.get('total_area_stc').touched && form.get('total_area_stc').errors?.required">
+                    Campo obrigatório
+                </mat-error>
+            </mat-form-field>
+
+            <label class="mt-4" >Há quanto tempo pratica STC?</label>
+            <mat-form-field appearance="outline">
+                <input matInput
+                    formControlName="stc_usage_months"
+                    type="number"
+                    min="0"
+                    placeholder="meses">
+
+                <mat-error *ngIf="form.get('stc_usage_months').touched && form.get('stc_usage_months').errors?.required">
+                    Campo obrigatório
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </form>
+</mat-dialog-content>    
+
+<hr class="separator">
+
+<mat-dialog-actions align="end" class="py-2">
+    <button
+        mat-flat-button
+        form="controlled-traffic-form"
+        type="submit"
+        color="primary">
+        Salvar
+    </button>
+</mat-dialog-actions>
+
+<button
+    matDialogClose
+    mat-icon-button
+    class="button-close">
+
+    <mat-icon>close</mat-icon>
+</button>

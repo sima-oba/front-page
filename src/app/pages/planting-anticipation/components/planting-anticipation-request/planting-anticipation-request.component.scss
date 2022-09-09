@@ -1,0 +1,59 @@
+@use 'util';
+
+.container {
+    @extend %flex-column;
+}
+
+header {
+    background-color: #cbd862;
+    padding: 18px;
+}
+
+header h2 {
+    text-align: center;
+    font-size: 1.75rem;
+    font-weight: 500;
+    letter-spacing: 0.05rem;
+    color: #fff;
+}
+
+.scroll {
+    flex-basis: 0;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.super {
+    vertical-align: super;
+}
+
+.map-hint {
+    margin-bottom: 8px;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #a3aad2;
+}
+
+#map {
+    height: 300px;
+    width: 100%;
+    border-radius: 8px;
+}
+
+@media (min-width: 586px) {
+    .form-column-download {
+        width: 72px;
+    }
+
+    .stepper-controls {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-height: 960px) {
+    footer {
+        z-index: 1;
+        box-shadow: 0 0 4px 0 rgb(0 0 0 / 10%);
+    }
+}

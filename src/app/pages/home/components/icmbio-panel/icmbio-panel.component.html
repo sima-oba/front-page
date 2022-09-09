@@ -1,0 +1,116 @@
+<div class="container">
+    <button mat-icon-button class="button-close" (click)="close()">
+        <mat-icon>close</mat-icon>
+    </button>
+
+    <section>
+        <h3 class="title">Unidades de Conservação</h3>
+
+        <mat-progress-bar
+            mode="indeterminate"
+            [style.visibility]="(isConservationLoading$ | async) ? 'visible' : 'hidden'">
+        </mat-progress-bar>
+
+        <div class="checkbox-list">
+            <mat-checkbox
+                class="checkbox-list__item"
+                [(ngModel)]="isConservationEnabled"
+                (ngModelChange)="onConservationCheckChanged()">
+                Exibir/ocultar
+            </mat-checkbox>
+        </div>
+
+        <div class="form pt-0">
+            <label>Domínio</label>
+            <mat-form-field appearance="outline">
+                <mat-select
+                    placeholder="Selecione o domínio"
+                    [(value)]="conservationQuery.sphere"
+                    [disabled]="!isConservationEnabled"
+                    (valueChange)="onConservationValuesChanged()">
+
+                    <mat-option value="federal">Federal</mat-option>
+                    <mat-option value="estadual">Estadual</mat-option>
+                    <mat-option value="municipal">Municipal</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <label>Categoria</label>
+            <mat-form-field appearance="outline">
+                <mat-select
+                    placeholder="Selecione a categoria"
+                    [(value)]="conservationQuery.category"
+                    [disabled]="!isConservationEnabled"
+                    (valueChange)="onConservationValuesChanged()">
+
+                    <mat-option value="Estao Ecolgica">Estação Ecológica</mat-option>
+                    <mat-option value="Floresta">Floresta</mat-option>
+                    <mat-option value="Monumento Natural">Monumento Natural</mat-option>
+                    <mat-option value="Parque">Parque</mat-option>
+                    <mat-option value="Refgio de Vida Silvestre">Refúgio de Vida Silvestre</mat-option>
+                    <mat-option value="Reserva Biolgica">Reserva Biológica</mat-option>
+                    <mat-option value="Reserva Extrativista">Reserva Extrativista</mat-option>
+                    <mat-option value="Reserva Particular do Patrimnio Natural">Reserva Particular do Patrimônio Natural</mat-option>
+                    <mat-option value="Reserva de Desenvolvimento Sustentvel">Reserva de Desenvolvimento Sustentável</mat-option>
+                    <mat-option value="rea de Proteo Ambiental">Área de Proteção Ambiental</mat-option>
+                    <mat-option value="Reserva de Desenvolvimento Sustentvel">Reserva de Desenvolvimento Sustentável</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </section>
+
+    <section>
+        <h3 class="title">Terras Indígenas</h3>
+
+        <mat-progress-bar
+            mode="indeterminate"
+            [style.visibility]="(isIndiLoading$ | async) ? 'visible' : 'hidden'">
+        </mat-progress-bar>
+
+        <div class="form">
+            <label>Unidade Federal</label>
+
+            <mat-form-field appearance="outline">
+                <mat-select
+                    [value]="indiState || ''"
+                    (selectionChange)="onIndigenousLandChanged($event)">
+
+                    <mat-option [value]="''">Desabilitado</mat-option>
+
+                    <mat-option *ngFor="let state of states$ | async" [value]="state">
+                        {{ state }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </section>
+
+    <section>
+        <h3 class="title">Outros</h3>
+
+        <mat-progress-bar
+            mode="indeterminate"
+            [style.visibility]="(isOtherLoading$ | async) ? 'visible' : 'hidden'">
+        </mat-progress-bar>
+
+        <div class="checkbox-list">
+            <mat-checkbox class="checkbox-list__item"
+                [checked]="isGeoSitesEnabled"
+                (change)="onGeoSitesChanged($event)">
+                Sítios Geológicos
+            </mat-checkbox>
+
+            <mat-checkbox class="checkbox-list__item"
+                [checked]="isGeoParksEnabled"
+                (change)="onGeoParksChanged($event)">
+                Geoparques
+            </mat-checkbox>
+
+            <mat-checkbox class="checkbox-list__item" 
+                [checked]="isCorridorsEnabled"
+                (change)="onCorridorsChanged($event)">
+                Corredores Ecológicos
+            </mat-checkbox>
+        </div>
+    </section>
+</div>

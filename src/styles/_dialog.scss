@@ -1,0 +1,36 @@
+@use "var";
+
+.mat-dialog-container {
+    position: relative;
+    border-radius: var.$radius-2 !important;
+}
+
+.full-bleed-dialog .mat-dialog-container {
+    padding: 0 !important;
+    background-color: transparent;
+}
+
+.rounded-dialog .mat-dialog-container {
+    border-radius: var.$radius-2;
+}
+
+.image-dialog .mat-dialog-container {
+    padding: var.$spacing-2 !important;
+    border-radius: var.$radius-2;
+}
+
+.button-close {
+    position: absolute !important;
+    top: var.$spacing-2;
+    right: var.$spacing-2;
+    color: #a3aad2;
+
+    .mat-button-focus-overlay {
+        background-color: transparent !important;
+    }
+}
+
+.snackbar {
+    border-radius: var.$radius-2 !important;
+    background-color: #fff;
+}

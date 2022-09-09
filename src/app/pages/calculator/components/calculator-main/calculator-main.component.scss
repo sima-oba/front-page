@@ -1,0 +1,96 @@
+@use "var";
+
+.container {
+    margin: 0 auto;
+    max-width: 900px;
+}
+
+.text {
+    position: relative;
+    padding: 24px 36px;
+    font-family: "Roboto";
+    color: #3b3b3b;
+    font-size: 1em;
+    font-weight: 400;
+    text-align: justify;
+    background-color: rgba(194, 220, 218, 0.92);
+    border-radius: 24px;
+
+    strong {
+        font-weight: 600;
+    }
+}
+
+.aside {
+    background-image: url("../../../../../assets/img/general/calculator-background.png");
+    width: 100%;
+    border-radius: 24px;
+    position: relative;
+    text-align: center;
+}
+
+.options-button {
+    position: relative;
+    height: 130px;
+    width: 150px;
+    margin: 30px;
+    border: 3px solid #ffffff;
+    border-radius: 30px;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.button-label {
+    font-size: 1rem;
+    font-weight: 400;
+    text-align: center;
+    white-space: normal;
+    line-height: 1.1rem;
+    color: #fff;
+}
+
+.icon {
+    height: 50px;
+    margin-bottom: 8px;
+}
+
+h4 {
+    text-align: center;
+}
+
+.box {
+    width: 60px;
+    height: 60px;
+    padding: 10px;
+    background: #ffffff;
+    border: 3px solid #ffffff;
+    border-radius: 5px;
+    display: inline-block;
+    margin: 15px;
+    font-size: 13px;
+    text-align: center;
+}
+
+.symbol {
+    width: 20px;
+    height: 90px;
+    padding: 2px;
+    background: #ffffff;
+    display: inline-block;
+    margin: 2px;
+    text-align: center;
+    line-height: 30px;
+    font-size: 60px;
+    vertical-align: middle;
+}
+
+.support {
+    text-align: center;
+    margin: 40px;
+}
+
+.link {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    color: #458985;
+}

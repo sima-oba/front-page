@@ -1,0 +1,64 @@
+<app-page-title>Calculadora de Balanço de Carbono</app-page-title>
+
+<div class="container">
+
+    <div class="aside my-4">
+        <button mat-button class="options-button" routerLink="../activity">
+            <img class="icon" src="assets/img/buttons/leaf-calculator-icon.png" alt="Coleta de Dados">
+            <div class="button-label">Coleta de<br> Dados</div>
+        </button>
+        
+        <button mat-button class="options-button" routerLink="../settings" *ngIf="auth.hasRole(auth.roles.MANAGE_PROPERTIES)">
+            <img class="icon" src="assets/img/buttons/factor-calculator-icon.png" alt="Fatores e Constantes">
+            <div class="button-label">Fatores e Constantes</div>
+        </button>
+        
+        <button mat-button class="options-button" routerLink="../result-list">
+            <img class="icon" src="assets/img/buttons/gee-calculator-icon.png" alt="Balanço de GEE">
+            <div class="button-label">Balanço de<br> Carbono</div>
+        </button>
+
+        <div class="text">
+            <p>
+                <strong>Importância:</strong>
+                A calculadora possibilitará ter um retrato do balanço de carbono na produção 
+                de soja da região. Com o sistema, os proprietários são sinalizados se o balanço de carbono 
+                na fazenda está positivo ou negativo, auxiliando na gestão da propriedade e na tomada de 
+                decisões sobre as melhores práticas agrícolas, que permitem acúmulo de matéria orgânica 
+                e seus benefícios, aumento da resiliência da produção aos veranicos e conservação da 
+                produção para gerações futuras.
+            </p>
+    
+            <p>
+                <strong>Como funciona:</strong>
+                a partir do preenchimento de dados das atividades realizadas da propriedade como: 
+                sistema de manejo (sistema de plantio direto ou sistema de plantio convencional), 
+                área plantada com soja, produção, adubação, correção do solo, uso de combustíveis e 
+                energia é possível calcular as emissões de cada uma das atividades e também o sequestro 
+                de carbono ligado a elas. Com isso teremos o balando de carbono (emissões – sequestro=balanço) 
+                da propriedade,  por área (ha) e por saca de soja produzida (sc) e um comparativo da fazenda 
+                com a média da região (BA) e do Matopiba.
+            </p>
+            <p>
+                Além do balanço de carbono, a calculadora emite um relatório com recomendações técnicas de 
+                práticas agrícolas de baixo carbono para aumentar o sequestro e reduzir as emissões. 
+                Essas práticas também aumentam a produtividade, resiliência e melhoram o aporte de 
+                matéria orgânica no solo.
+            </p>
+    
+            <p>
+                <strong>Objetivo:</strong>
+                O objetivo da calculadora é fazer a estimativa de balanço de carbono da produção de soja,
+                trazendo um retrato da fazenda sobre as atividades que emitem e que sequestram carbono da atmosfera 
+                para o solo.  Auxiliando na gestão da propriedade em práticas que acumulam carbono e seus benefícios 
+                para o sistema de produção.
+            </p>
+
+            <a href="https://www.youtube.com/watch?v=97-nOeNiJQ8&list=PLQO0fPE16d-pbeGFjei7Xlx2UgXnINAe2&index=11"
+                target="_blank"
+                class="link mt-4 mb-3">
+                Assista o vídeo institucional
+            </a>
+        </div>
+    </div>
+</div> 

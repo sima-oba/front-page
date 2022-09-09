@@ -1,0 +1,70 @@
+<div class="container">
+    <app-page-title>INSTRUÇÕES - ANEXAR DOCUMENTO SICAR</app-page-title>
+
+    <div class="stepper-container">
+        <div class="block-center text-center py-3">
+            <button mat-flat-button color="accent" routerLink="./upload">
+                {{ stepper.selectedIndex < 3 ? 'Pular tutorial' : 'Anexar arquivo' }}
+            </button>
+        </div>
+        <mat-horizontal-stepper #stepper>
+            <mat-step>   
+                <div class="step-content">
+                    <mat-card class="mat-elevation-z6 mb-3">
+                        <p>
+                            Primeiramente, acesse o site
+                            <a class="link-green" href="https://www.car.gov.br/" target="_blank">SICAR - Sistema Nacional de Cadastro Ambiental Rural.</a>
+                        </p>
+
+                        <p>Clique em CONSULTA PÚBLICA, e siga os passos a seguir:</p>
+                    </mat-card>
+
+                    <img src="assets/img/general/print-sicar-1.png" alt="">
+                </div>
+            </mat-step>
+
+            <mat-step>
+                <div class="step-content">
+                    <mat-card class="mat-elevation-z6 mb-3">
+                        <p>Clique em “alterar UF” e selecione o seu Estado.</p>
+                    </mat-card>
+
+                    <img src="assets/img/general/print-sicar-2.png" alt="">
+                </div>
+            </mat-step>
+
+            <mat-step>
+                <div class="step-content">
+                    <mat-card class="mat-elevation-z6 mb-3">
+                        Clique em “alterar UF” e selecione o seu Estado.
+                    </mat-card>
+
+                    <img src="assets/img/general/print-sicar-4.png" alt="">
+                </div>
+            </mat-step>
+
+            <mat-step> 
+                <div class="step-content">
+                    <mat-card class="mat-elevation-z6 mb-3">
+                        <p>Informe o município desejado, depois clique no ícone do “globo”.</p>
+                        
+                        <p>
+                            Posteriormente, informe seu e-mail e o código CAPTCHA que foi exibido. Então, clique em
+                            BAIXAR DADOS.
+                        </p>
+                    </mat-card>
+
+                    <img src="assets/img/general/print-sicar-3.png" alt="">
+                </div>
+            </mat-step>
+        </mat-horizontal-stepper>
+
+        <button mat-icon-button class="button-previous" (click)="stepper.previous()">
+            <mat-icon [inline]="true">arrow_back_ios_new</mat-icon>
+        </button>
+
+        <button mat-icon-button class="button-next" (click)="stepper.next()">
+            <mat-icon [inline]="true">arrow_forward_ios</mat-icon>
+        </button>
+    </div>
+</div>

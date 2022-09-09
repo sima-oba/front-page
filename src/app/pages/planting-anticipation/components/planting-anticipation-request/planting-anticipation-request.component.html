@@ -1,0 +1,527 @@
+<div class="container">
+    <div class="scroll">
+        <app-page-title>Antecipação de Plantio</app-page-title>
+
+        <mat-horizontal-stepper #stepper linear>
+            <!-- Personal form -->
+            <mat-step [stepControl]="personalInfoForm" [editable]="true">
+                <form [formGroup]="personalInfoForm" class="form block-center">
+                    
+                    <label for="owner_name">Nome*</label>
+                    <mat-form-field appearance="outline">
+                        <input
+                            matInput
+                            formControlName="owner_name"
+                            type="text">
+
+                        <mat-error *ngIf="getError(personalInfoForm, 'owner_name').required">
+                            Campo obrigatório
+                        </mat-error>
+                    </mat-form-field>
+
+                    <div class="form-row">
+                        <div class="form-column">
+                            <label for="cpf_cnpj">CPF/CNPJ*</label>
+
+                            <mat-form-field appearance="outline">
+                                <input 
+                                    matInput
+                                    formControlName="cpf_cnpj"
+                                    type="text"
+                                    mask="CPF_CNPJ">
+
+                                <mat-error *ngIf="getError(personalInfoForm, 'cpf_cnpj').required">
+                                    Campo obrigatório
+                                </mat-error>
+
+                                <mat-error *ngIf="getError(personalInfoForm, 'cpf_cnpj').mask && !getError(personalInfoForm, 'cpf_cnpj').required">
+                                    CPF ou CNPJ inválido
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-column">
+                            <label for="cep">CEP*</label>
+
+                            <mat-form-field appearance="outline">
+                                <input
+                                    matInput
+                                    formControlName="cep"
+                                    type="text"
+                                    mask="00000-000">
+
+                                <mat-error *ngIf="getError(personalInfoForm, 'cep').required">
+                                    Campo obrigatório
+                                </mat-error>
+
+                                <mat-error *ngIf="getError(personalInfoForm, 'cep').mask">
+                                    CEP inválido
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-column">
+                            <label for="address">Endereço*</label>
+
+                            <mat-form-field appearance="outline">
+                                <input 
+                                    matInput
+                                    formControlName="address"
+                                    type="text">
+
+                                <mat-error *ngIf="getError(personalInfoForm, 'address').required">
+                                    Campo obrigatório
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-column">
+                            <label for="nucleos">Bairro/Núcleo*</label>
+
+                            <mat-form-field appearance="outline">
+                                <input
+                                    matInput
+                                    formControlName="nucleos"
+                                    type="text">
+
+                                <mat-error *ngIf="getError(personalInfoForm, 'nucleos').required">
+                                    Campo obrigatório
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-column">
+                            <label for="state">Estado*</label>
+
+                            <mat-form-field appearance="outline">
+                                <mat-select formControlName="state">
+                                    <mat-option value="" disabled>
+                                        Selecione o estado
+                                    </mat-option>
+                                    
+                                    <mat-option *ngFor="let state of states$ | async" [value]="state">
+                                        {{ state }}
+                                    </mat-option>
+                                </mat-select>
+
+                                <mat-error *ngIf="getError(personalInfoForm, 'state').required">
+                                    Campo obrigatório
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-column">
+                            <label for="city">Município*</label>
+
+                            <mat-form-field appearance="outline">
+                                <mat-select formControlName="city">
+                                    <mat-option value="" disabled>
+                                        Selecione a cidade
+                                    </mat-option>
+
+                                    <mat-option *ngFor="let city of cities" [value]="city.nome">
+                                        {{ city.nome }}
+                                    </mat-option>
+                                </mat-select>
+
+                                <mat-error *ngIf="getError(personalInfoForm, 'city').required">
+                                    Campo obrigatório
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-column">
+                            <label for="phone">Tel. Fixo*</label>
+
+                            <mat-form-field appearance="outline">
+                                <input
+                                    matInput
+                                    formControlName="phone"
+                                    type="tel"
+                                    mask="(00) 0000-0000">
+
+                                <mat-error *ngIf="getError(personalInfoForm, 'phone').required">
+                                    Campo obrigatório
+                                </mat-error>
+
+                                <mat-error *ngIf="getError(personalInfoForm, 'phone').mask">
+                                    Número de telefone inválido
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-column">
+                            <label for="cellphone">Celular*</label>
+
+                            <mat-form-field appearance="outline">
+                                <input
+                                    matInput
+                                    formControlName="cellphone"
+                                    type="tel"
+                                    mask="(00) 0000-0000||(00) 0 0000-0000">
+
+                                <mat-error *ngIf="getError(personalInfoForm, 'cellphone').required">
+                                    Campo obrigatório
+                                </mat-error>
+
+                                <mat-error *ngIf="getError(personalInfoForm, 'cellphone').mask">
+                                    Número de telefone inválido
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <label for="email">E-mail</label>
+                    <mat-form-field appearance="outline">
+                        <input
+                            matInput
+                            formControlName="email"
+                            type="email">
+
+                        <mat-error *ngIf="getError(personalInfoForm, 'email').required">
+                            Campo obrigatório
+                        </mat-error>
+
+                        <mat-error *ngIf="getError(personalInfoForm, 'email').email">
+                            E-mail inválido
+                        </mat-error>
+                    </mat-form-field>
+
+                </form>
+            </mat-step>
+
+            <!-- Farm form -->
+            <mat-step [stepControl]="farmForm" [editable]="true">
+                <form [formGroup]="farmForm" class="form block-center">
+            
+                    <label for="farm_name">Nome da propriedade*</label>
+                    <mat-form-field appearance="outline">
+                        <input
+                            matInput
+                            formControlName="farm_name"
+                            type="text">
+            
+                        <mat-error *ngIf="getError(farmForm, 'farm_name').required">
+                            Campo obrigatório
+                        </mat-error>
+                    </mat-form-field>
+
+                    <label for="latitude">Coordenadas*</label>
+                    <div class="form-row">
+                        <div class="form-column">
+                            <mat-form-field appearance="outline">
+                                <input 
+                                    matInput
+                                    formControlName="latitude"
+                                    placeholder="Latitude"
+                                    type="number"
+                                    step="0.1"
+                                    min="-90"
+                                    max=90>
+                                    
+                                <span class="super" matSuffix>&#186;</span>
+                    
+                                <mat-error *ngIf="getError(farmForm, 'latitude').required">
+                                    Campo obrigatório
+                                </mat-error>
+
+                                <mat-error *ngIf="getError(farmForm, 'latitude').min || getError(farmForm, 'latitude').max">
+                                    Latitude deve estar entre -90 e 90
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-column">
+                            <mat-form-field appearance="outline">
+                                <input 
+                                    matInput
+                                    formControlName="longitude"
+                                    placeholder="Longitude"
+                                    type="number"
+                                    min="-180"
+                                    max=180>
+
+                                <span class="super" matSuffix>&#186;</span>
+                    
+                                <mat-error *ngIf="getError(farmForm, 'longitude').required">
+                                    Campo obrigatório
+                                </mat-error>
+
+                                <mat-error *ngIf="getError(farmForm, 'longitude').min || getError(farmForm, 'longitude').max">
+                                    Longitude deve estar entre -180 e 180
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <p class="map-hint">Selecione no mapa o local da propriedade</p>
+                    <app-location-picker
+                        (onLocationChange)="fillCoordinatesControl($event.lng, $event.lat, true)">
+                    </app-location-picker>
+                </form>
+            </mat-step>
+
+            <!-- Attachments form -->
+            <mat-step [stepControl]="attachmentsForm" [editable]="true">
+                <form [formGroup]="attachmentsForm" class="form block-center">
+
+                    <div class="form-row">
+                        <div class="form-column">
+                            <label for="sketch">Croqui da área cadastrada*</label>
+                            
+                            <mat-form-field appearance="outline">
+                                <ngx-mat-file-input
+                                    formControlName="sketch"
+                                    accept="application/pdf"
+                                    placeholder="Anexar arquivo">
+
+                                    <mat-icon ngxMatFileInputIcon class="material-icons-outlined">
+                                        arrow_circle_up
+                                    </mat-icon>
+                                </ngx-mat-file-input>
+
+                                <mat-error *ngIf="getError(attachmentsForm, 'sketch')?.required">
+                                    Selecione um arquivo
+                                </mat-error>
+                                
+                                <mat-error *ngIf="getError(attachmentsForm, 'sketch')?.accept">
+                                    Deve ser um documento PDF
+                                </mat-error>
+                                
+                                <mat-error *ngIf="getError(attachmentsForm, 'sketch')?.maxSize">
+                                    Não pode ser maior que {{ MAX_FILE_SIZE | bytes }} MB
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-column">
+                            <label for="rg_cnpj">RG/CNH ou CNPJ*</label>
+                            
+                            <mat-form-field appearance="outline">
+                                <ngx-mat-file-input
+                                    formControlName="rg_cnpj"
+                                    accept="application/pdf"
+                                    placeholder="Anexar arquivo">
+
+                                    <mat-icon ngxMatFileInputIcon class="material-icons-outlined">
+                                        arrow_circle_up
+                                    </mat-icon>
+                                </ngx-mat-file-input>
+
+                                <mat-error *ngIf="getError(attachmentsForm, 'rg_cnpj')?.required">
+                                    Selecione um arquivo
+                                </mat-error>
+                                
+                                <mat-error *ngIf="getError(attachmentsForm, 'rg_cnpj')?.accept">
+                                    Deve ser um documento PDF
+                                </mat-error>
+                                
+                                <mat-error *ngIf="getError(attachmentsForm, 'rg_cnpj')?.maxSize">
+                                    Não pode ser maior que {{ MAX_FILE_SIZE | bytes }} MB
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-column">
+                            <label for="art">ART preenchida e assinada*</label>
+                            
+                            <mat-form-field appearance="outline">
+                                <ngx-mat-file-input
+                                    formControlName="art"
+                                    accept="application/pdf"
+                                    placeholder="Anexar arquivo">
+
+                                    <mat-icon ngxMatFileInputIcon class="material-icons-outlined">
+                                        arrow_circle_up
+                                    </mat-icon>
+                                </ngx-mat-file-input>
+
+                                <mat-error *ngIf="getError(attachmentsForm, 'art')?.required">
+                                    Selecione um arquivo
+                                </mat-error>
+                                
+                                <mat-error *ngIf="getError(attachmentsForm, 'art')?.accept">
+                                    Deve ser um documento PDF
+                                </mat-error>
+                                
+                                <mat-error *ngIf="getError(attachmentsForm, 'art')?.maxSize">
+                                    Não pode ser maior que {{ MAX_FILE_SIZE | bytes }} MB
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-column">
+                            <label for="attorney_letter">Procuração (opcional)</label>
+                            
+                            <mat-form-field appearance="outline">
+                                <ngx-mat-file-input
+                                    formControlName="attorney_letter"
+                                    accept="application/pdf"
+                                    placeholder="Anexar arquivo">
+
+                                    <mat-icon ngxMatFileInputIcon class="material-icons-outlined">
+                                        arrow_circle_up
+                                    </mat-icon>
+                                </ngx-mat-file-input>
+
+                                <mat-error *ngIf="getError(attachmentsForm, 'attorney_letter')?.required">
+                                    Selecione um arquivo
+                                </mat-error>
+                                
+                                <mat-error *ngIf="getError(attachmentsForm, 'attorney_letter')?.accept">
+                                    Deve ser um documento PDF
+                                </mat-error>
+                                
+                                <mat-error *ngIf="getError(attachmentsForm, 'attorney_letter')?.maxSize">
+                                    Não pode ser maior que {{ MAX_FILE_SIZE | bytes }} MB
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <label for="commitment">Termo de compromisso e responsabilidade</label>
+                    <div class="form-row">
+                        <div class="form-column">
+                            <mat-form-field appearance="outline">
+                                <ngx-mat-file-input
+                                    formControlName="commitment"
+                                    accept="application/pdf"
+                                    placeholder="Anexar arquivo">
+
+                                    <mat-icon ngxMatFileInputIcon class="material-icons-outlined">
+                                        arrow_circle_up
+                                    </mat-icon>
+                                </ngx-mat-file-input>
+
+                                <mat-error *ngIf="getError(attachmentsForm, 'commitment')?.required">
+                                    Selecione um arquivo
+                                </mat-error>
+                                
+                                <mat-error *ngIf="getError(attachmentsForm, 'commitment')?.accept">
+                                    Deve ser um documento PDF
+                                </mat-error>
+                                
+                                <mat-error *ngIf="getError(attachmentsForm, 'commitment')?.maxSize">
+                                    Não pode ser maior que {{ MAX_FILE_SIZE | bytes }} MB
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-column form-column-download mb-4">
+                            <a class="download-button"
+                                target="_blank"
+                                download
+                                href="https://aiba.org.br/wp-content/uploads/2021/08/Termo-de-compromisso-plantio-de-soja-safra-2021-22.pdf">
+                                
+                                <p>Termo de compromisso<br>e responsabilidade</p>
+                                <mat-icon>arrow_circle_down</mat-icon>
+                            </a>
+                        </div>
+                    </div>
+
+                    <label for="soy_planting">Requerimento para plantio de soja</label>
+                    <div class="form-row">
+                        <div class="form-column">
+                            <mat-form-field appearance="outline">
+                                <ngx-mat-file-input
+                                    formControlName="soy_planting"
+                                    accept="application/pdf"
+                                    placeholder="Anexar arquivo">
+
+                                    <mat-icon ngxMatFileInputIcon class="material-icons-outlined">
+                                        arrow_circle_up
+                                    </mat-icon>
+                                </ngx-mat-file-input>
+
+                                <mat-error *ngIf="getError(attachmentsForm, 'soy_planting')?.required">
+                                    Selecione um arquivo
+                                </mat-error>
+                                
+                                <mat-error *ngIf="getError(attachmentsForm, 'soy_planting')?.accept">
+                                    Deve ser um documento PDF
+                                </mat-error>
+                                
+                                <mat-error *ngIf="getError(attachmentsForm, 'soy_planting')?.maxSize">
+                                    Não pode ser maior que {{ MAX_FILE_SIZE | bytes }} MB
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-column form-column-download mb-4">
+                            <a class="download-button"
+                                target="_blank"
+                                download
+                                href="https://aiba.org.br/wp-content/uploads/2021/08/REQUERIMENTO-PLANTIO-ANTECIPADO-SOJA-2021-22.pdf">
+
+                                <p>Requerimento de <br>plantio de soja</p>
+                                <mat-icon>arrow_circle_down</mat-icon>
+                            </a>
+                        </div>
+                    </div>
+
+                    <label for="work_plan">Plano de trabalho</label>
+                    <div class="form-row">
+                        <div class="form-column">
+                            <mat-form-field appearance="outline">
+                                <ngx-mat-file-input
+                                    formControlName="work_plan"
+                                    accept="application/pdf"
+                                    placeholder="Anexar arquivo">
+
+                                    <mat-icon ngxMatFileInputIcon class="material-icons-outlined">
+                                        arrow_circle_up
+                                    </mat-icon>
+                                </ngx-mat-file-input>
+
+                                <mat-error *ngIf="getError(attachmentsForm, 'work_plan')?.required">
+                                    Selecione um arquivo
+                                </mat-error>
+                                
+                                <mat-error *ngIf="getError(attachmentsForm, 'work_plan')?.accept">
+                                    Deve ser um documento PDF
+                                </mat-error>
+                                
+                                <mat-error *ngIf="getError(attachmentsForm, 'work_plan')?.maxSize">
+                                    Não pode ser maior que {{ MAX_FILE_SIZE | bytes }} MB
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-column form-column-download">
+                            <a class="download-button"
+                                target="_blank"
+                                download
+                                href="https://aiba.org.br/wp-content/uploads/2021/08/Termo-de-compromisso-plantio-de-soja-safra-2021-22.pdf">
+                                
+                                <p>Plano de trabalho</p>
+                                <mat-icon>arrow_circle_down</mat-icon>
+                            </a>
+                        </div>
+                    </div>
+
+                </form>
+            </mat-step>
+
+        </mat-horizontal-stepper>
+    </div>
+
+    <footer>
+        <div class="stepper-controls" [class.animated]="step > PERSONAL_INFO_STEP">
+            <button mat-flat-button color="secondary" class="stepper-controls-previous" (click)="previous()">
+                Anterior
+            </button>
+            
+            <button mat-flat-button color="accent" class="stepper-controls-next" (click)="next()">
+                {{ step < ATTACHMENTS_STEP ? 'Próximo' : 'Enviar' }}
+            </button>
+        </div>
+    </footer>
+</div>

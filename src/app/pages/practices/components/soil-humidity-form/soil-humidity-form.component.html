@@ -1,0 +1,58 @@
+<h3 class="title">Recarga e Umidade do Solo</h3>
+
+<hr class="separator">
+
+<mat-dialog-content>
+    <form
+        id="soil-humidity-form"
+        class="form"
+        [formGroup]="this.form"
+        (ngSubmit)="save()">
+        
+        <label class="mt-4">Faz registro e controle de umidade de solo?</label>
+        <mat-button-toggle-group 
+            class="toggle-group"
+            formControlName="soil_moisture_management">
+
+            <mat-button-toggle [value]="true">Sim</mat-button-toggle>
+            <mat-button-toggle [value]="false">Não</mat-button-toggle>
+        </mat-button-toggle-group>
+        <mat-error class="text-left mt-2" *ngIf="form.get('soil_moisture_management').touched && form.get('soil_moisture_management').errors?.required">
+            Escolha uma opção
+        </mat-error>
+
+        <label class="mt-4"> Faz relação desse controle com as práticas agrícolas?</label>
+        <mat-button-toggle-group
+            class="toggle-group"
+            formControlName="has_agricultural_practices_relationship">
+            
+            <mat-button-toggle [value]="true">Sim</mat-button-toggle>
+            <mat-button-toggle [value]="false">Não</mat-button-toggle>
+        </mat-button-toggle-group>
+        <mat-error class="text-left mt-2" *ngIf="form.get('has_agricultural_practices_relationship').touched && form.get('has_agricultural_practices_relationship').errors?.required">
+            Escolha uma opção
+        </mat-error>
+
+        <hr class="separator">
+    </form>
+</mat-dialog-content>
+
+<hr class="separator">
+
+<mat-dialog-actions align="end" class="py-2">
+    <button
+        mat-flat-button
+        form="soil-humidity-form"
+        type="submit"
+        color="primary">
+        Salvar
+    </button>
+</mat-dialog-actions>
+
+<button
+    matDialogClose
+    mat-icon-button
+    class="button-close">
+
+    <mat-icon>close</mat-icon>
+</button>

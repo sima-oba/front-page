@@ -1,0 +1,58 @@
+@use "var";
+
+.container {
+    height: 100%;
+    background-color: #fafafa;
+}
+
+.title {
+    margin: 0;
+    padding: var.$spacing-3 var.$spacing-4;
+    background-color: #e6e6e6;
+    font-size: var.$font-size-3;
+    font-weight: 500;
+    color: #458985;
+}
+
+.menu {
+    margin: 0;
+    padding: 0;
+
+    li {
+        position: relative;
+        padding: var.$spacing-3 var.$spacing-4;
+        border: none;
+        background-color: transparent;
+        list-style: none;
+
+        &.active {
+            background-color: #f1f1f1;
+
+            a {
+                color: #055632;
+            }
+
+            &::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                width: 4px;
+                background-color: #055632;
+            }
+        }
+
+        &:hover:not(.active) {
+            background-color: #f7f7f7;
+        }
+    }
+
+    a {
+        display: block;
+        font-size: var.$font-size-2;
+        font-weight: 500;
+        color: #689c99;
+        text-decoration: none;
+    }
+}

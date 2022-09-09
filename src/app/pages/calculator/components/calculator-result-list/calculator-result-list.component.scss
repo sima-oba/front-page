@@ -1,0 +1,57 @@
+@use "var";
+
+.block-center {
+    max-width: 1100px;
+}
+
+table {
+    width: 100%;
+    border-spacing: var.$spacing-2;
+}
+
+th {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #d8c850;
+
+    sub {
+        font-size: 0.7rem;
+    }
+}
+
+tr {
+    column-gap: var.$spacing-2;
+}
+
+td {
+    padding: var.$spacing-2 var.$spacing-4;
+    border-radius: var.$radius-1;
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: #a3aad2;
+    background-color: #fff;
+}
+
+.balance {
+    width: 200px;
+}
+
+.date {
+    width: 200px;
+}
+
+.delete {
+    width: 128px;
+}
+
+.empty {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: #bdbdbd;
+}
+
+.clickable {
+    cursor: pointer;
+}

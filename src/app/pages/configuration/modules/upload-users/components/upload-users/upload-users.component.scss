@@ -1,0 +1,39 @@
+@use "var";
+
+.block-center {
+    max-width: 900px;
+}
+
+table {
+    width: 100%;
+    border-spacing: var.$spacing-2;
+    table-layout: fixed;
+}
+
+th {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: #d8c850;
+}
+
+tr {
+    column-gap: var.$spacing-2;
+}
+
+td {
+    width: 33.3%;
+    padding: var.$spacing-3 var.$spacing-4;
+    border-radius: var.$radius-1;
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: #a3aad2;
+    background-color: #f5f7f8;
+}
+
+.empty {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: #bdbdbd;
+}

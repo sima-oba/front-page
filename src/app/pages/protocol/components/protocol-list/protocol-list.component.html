@@ -1,0 +1,75 @@
+<div class="container">
+    <app-page-title>Protocolos</app-page-title>
+
+    <div class="content mt-4">
+        <div class="actions py-3">
+            <span class="spacing"></span>
+
+            <button
+                *ngIf="!auth.hasRole(auth.roles.ADMIN)"
+                mat-flat-button
+                color="primary"
+                (click)="onAdd()">
+                
+                <span>Novo</span>
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+
+        <div class="table-wrapper mb-4">
+            <table>
+                <colgroup>
+                    <col>
+                    <col class="col-begin">
+                    <col class="col-end">
+                    <col class="col-status">
+                </colgroup>
+
+                <thead>
+                    <tr>
+                        <th>Categoria</th>
+                        <th>
+                            <button mat-button (click)="sortBy('creation')">Submissão</button>
+                        </th>
+
+                        <th>Resolução</th>
+                        
+                        <th>
+                            <button mat-button (click)="sortBy('status')">Status</button>
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <ng-container *ngIf="protocols$ | async as protocols">
+                        <tr *ngFor="let proto of protocols" (click)="onRowClick(proto)">
+                            <td class="text-center" [ngSwitch]="proto.protocol_type">
+                                <span *ngSwitchCase="'OTHER'">Requerimento Simples</span>
+                                <span *ngSwitchCase="'PLANTING_ANTICIPATION'">Antecipação de Plantio</span>
+                            </td>
+
+                            <td class="text-center">
+                                {{ proto.created_at | date: 'dd/MM/yyyy hh:mm' }}
+                            </td>
+
+                            <td class="text-center">
+                                {{ (proto.finished_at | date: 'dd/MM/yyyy hh:mm') || '—' }}
+                            </td>
+
+                            <td class="text-center" [ngSwitch]="proto.status">
+                                <span *ngSwitchCase="'PENDING'" class="status-pending">PENDENTE</span>
+                                <span *ngSwitchCase="'IN_PROGRESS'" class="status-progress">EM ANÁLISE</span>
+                                <span *ngSwitchCase="'CANCELED'" class="status-canceled">INDEFERIDO</span>
+                                <span *ngSwitchCase="'COMPLETED'" class="status-completed">DEFERIDO</span>
+                            </td>
+                        </tr>
+
+                        <tr *ngIf="protocols.length === 0">
+                            <td colspan="4" class="empty">Não há protocolos ainda</td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

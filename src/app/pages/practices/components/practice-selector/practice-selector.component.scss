@@ -1,0 +1,46 @@
+@use "var";
+
+.container {
+    height: 100%;
+    box-sizing: border-box;
+    background-color: #f4f8fa;
+}
+
+.panel {
+    max-width: 712px;
+    margin: 0 auto;
+    border-radius: var.$radius-3;
+    background-color: #a3bcc0;
+}
+
+.title {
+    font-weight: 500;
+    color: #fff;
+}
+
+.buttons-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var.$spacing-4;
+}
+
+button {
+    height: 140px;
+    width: 160px;
+    color: #458985;
+    background-color: #fff;
+
+    img {
+        height: 40px;
+        margin-bottom: var.$spacing-3;
+    }
+
+    .label {
+        font-size: 1rem;
+        font-weight: 500;
+        text-align: center;
+        white-space: normal;
+        line-height: 1.1rem;
+        color: #458985;
+    }
+}

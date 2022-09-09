@@ -1,0 +1,11 @@
+@use "var";
+
+.container {
+    background-color: #fff;
+    border-radius: var.$radius-2;
+}
+
+.scroll {
+    height: 60vh;
+    overflow-y: scroll;
+}

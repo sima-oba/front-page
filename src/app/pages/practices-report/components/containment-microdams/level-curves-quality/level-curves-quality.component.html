@@ -1,0 +1,7 @@
+<div class="chart-wrapper">
+    <canvas baseChart *ngIf="data$ | async; let data"
+        [data]="data"
+        [options]="chartOptions"
+        type="bar">
+    </canvas>
+</div>

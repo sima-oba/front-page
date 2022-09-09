@@ -1,0 +1,17 @@
+<app-page-title>Definições de Importação</app-page-title>
+
+<div class="container cascade-child my-4">
+    <mat-tab-group 
+        mat-align-tabs="center"
+        [animationDuration]="0"
+        (selectedTabChange)="onTabChange($event)">
+
+        <mat-tab label="Importação">        
+            <app-job-list></app-job-list>
+        </mat-tab>
+
+        <mat-tab label="Eventos">
+            <app-event-list #eventListEl></app-event-list>
+        </mat-tab>
+    </mat-tab-group>
+</div>

@@ -1,0 +1,14 @@
+<div class="container">
+    <h4 class="title">{{ jobEvent.name }}</h4>
+    
+    <ng-container [ngSwitch]="jobEvent.status">
+        <p class="status start" *ngSwitchCase="'START'">INICIADO</p>
+        <p class="status success" *ngSwitchCase="'SUCCESS'">SUCESSO</p>
+        <p class="status error" *ngSwitchCase="'ERROR'">ERRO</p>
+        <p class="status missed" *ngSwitchCase="'MISSED'">CANCELADO</p>
+    </ng-container>
+</div>
+
+<button mat-icon-button class="button-close" (click)="close()">
+    <mat-icon>close</mat-icon>
+</button>

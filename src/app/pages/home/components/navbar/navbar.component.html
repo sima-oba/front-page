@@ -1,0 +1,103 @@
+<div class="container">
+    <mat-button-toggle-group [vertical]="true">
+        
+        <mat-button-toggle *ngIf="auth.hasRole(auth.roles.READ_PROPERTIES)"
+            matTooltip="Propriedades"
+            matTooltipPosition="right"
+            aria-label="Button that displays a tooltip"
+            (click)="openDrawer('farm')">
+            
+            <img src="assets/icons/farm.svg">
+        </mat-button-toggle>
+
+        <!--<mat-button-toggle *ngIf="auth.hasRole(auth.roles.READ_WEATHER)"
+            matTooltip="Previsão do Tempo"
+            matTooltipPosition="right"
+            ria-label="Button that displays a tooltip"
+            (click)="openDrawer('weather')">
+
+            <img src="assets/icons/weather.svg">
+        </mat-button-toggle>-->
+
+        <mat-button-toggle *ngIf="auth.hasRole(auth.roles.READ_WEATHER)"
+            matTooltip="Estações Meteorológicas"
+            matTooltipPosition="right"
+            aria-label="Button that displays a tooltip"
+            (click)="openDrawer('rainfall')">
+
+            <img src="assets/icons/estacao.svg">
+        </mat-button-toggle>
+
+        <mat-button-toggle *ngIf="auth.hasRole(auth.roles.READ_HYDROGRAPHY)"
+            matTooltip="Malhas Hidrográficas"
+            matTooltipPosition="right"
+            aria-label="Button that displays a tooltip"
+            (click)="openDrawer('hydrography')">
+
+            <img src="assets/icons/hydrography.svg">
+        </mat-button-toggle>
+
+        <mat-button-toggle *ngIf="auth.hasRole(auth.roles.READ_RISK)"
+            matTooltip="Risco de Fogo"
+            matTooltipPosition="right"
+            aria-label="Button that displays a tooltip"
+            (click)="openDrawer('fire-risk')">
+
+            <img src="assets/icons/fire.svg">
+        </mat-button-toggle>
+
+        <mat-button-toggle *ngIf="auth.hasRole(auth.roles.READ_HYDROGRAPHY)"
+            matTooltip="Áreas Irrigadas"
+            matTooltipPosition="right"
+            aria-label="Button that displays a tooltip"
+            (click)="openDrawer('irrigated-areas')">
+
+            <img src="assets/icons/irrigated.svg">
+        </mat-button-toggle>
+
+        <mat-button-toggle *ngIf="auth.hasRole(auth.roles.READ_ORDINANCES)"
+            matTooltip="Ocorrências" 
+            matTooltipPosition="right"
+            aria-label="Button that displays a tooltip"
+            (click)="openDrawer('occurrences')">
+
+            <img src="assets/icons/bell.svg">
+        </mat-button-toggle>
+
+        <!-- <mat-button-toggle *ngIf="auth.hasRole(auth.roles.READ_ORDINANCES)"
+            matTooltip="Publicações"
+            matTooltipPosition="right"
+            aria-label="Button that displays a tooltip"
+            (click)="openDrawer('ordinance')">
+
+            <img src="assets/icons/layers.svg">
+        </mat-button-toggle> -->
+
+        <mat-button-toggle *ngIf="auth.hasRole(auth.roles.READ_VISITS)"
+            matTooltip="Visitas"
+            matTooltipPosition="right"
+            aria-label="Button that displays a tooltip"
+            (click)="openDrawer('visit')">
+
+            <img src="assets/icons/visitante.svg">
+        </mat-button-toggle>
+
+        <mat-button-toggle
+            matTooltip="SICAR"
+            matTooltipPosition="right"
+            aria-label="Button that displays a tooltip"
+            (click)="openDrawer('sicar')">
+
+            <img src="assets/icons/car.svg">
+        </mat-button-toggle>
+
+        <mat-button-toggle
+            matTooltip="Áreas Especiais"
+            matTooltipPosition="right"
+            aria-label="Áreas Especiais"
+            (click)="openDrawer('icmbio')">
+
+            <img src="assets/icons/icmbio.svg">
+        </mat-button-toggle>
+    </mat-button-toggle-group>
+</div>

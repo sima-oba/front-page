@@ -1,0 +1,108 @@
+@use "var";
+
+.title {
+    font-weight: 500;
+    color: #4f4f4f;
+}
+
+.content {
+    min-width: 60vw;
+}
+
+.label {
+    color: #a3aad2;
+}
+
+.protocol-info {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: var.$spacing-3;
+
+    .label {
+        text-align: right;
+    }
+
+    .value {
+        color: #4f4f4f;
+    }
+
+    .attachments {
+        display: flex;
+        max-width: 500px;
+        flex-wrap: wrap;
+        gap: 8px;
+
+        a {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 24px;
+            background-color: #efefef;
+            text-decoration: none;
+            color: #458985;
+            transition: 200ms;
+
+            &:hover {
+                background-color: #dfdfdf;
+            }
+
+            &:active {
+                background-color: #c5c5c5;
+            }
+        }
+    }
+}
+
+.status {
+    &-pending {
+        font-weight: 500;
+        color: #e2c41a;
+    }
+
+    &-progress {
+        font-weight: 500;
+        color: #4d86d1;
+    }
+
+    &-canceled {
+        font-weight: 500;
+        color: #dd5757;
+    }
+
+    &-completed {
+        font-weight: 500;
+        color: rgb(81, 179, 81);
+    }
+}
+
+.form {
+    background-color: transparent;
+    padding: 0;
+}
+
+.button-cancel {
+    background-color: #f50;
+}
+
+.button-with-menu {
+    button:first-child {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+
+        &::after {
+            position: absolute;
+            content: '';
+            top: 8px;
+            bottom: 8px;
+            right: 0;
+            border-right: 2px solid rgb(255, 255, 255, 0.8);
+        }
+    }
+
+    button:nth-child(2) {
+        margin: 0;
+        padding: 0;
+        min-width: 36px;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+}

@@ -1,0 +1,75 @@
+<h3 class="title">Avalição de recarga e umidade do Solo</h3>
+
+<hr class="separator">
+
+<mat-dialog-content>
+    <form
+        id="soil-humidity-eval"
+        class="form"
+        [formGroup]="this.form"
+        (ngSubmit)="save()">
+
+        <div class="grid">
+            <div class="evaluator">
+                <span *ngIf="practice.evaluation?.resp_name">
+                    Responsável: <strong>{{ practice.evaluation.resp_name }}</strong>
+                </span>
+            </div>
+            <div class="text-center evaluation-title">Avaliação</div>
+    
+            <div class="mt-4">
+                <label>Faz registro e controle de umidade de solo?</label>
+                <div class="answer">{{ practice.soil_moisture_management ? 'Sim' : 'Não' }}</div>
+            </div>
+            <div class="evaluation-check mt-4">
+                <mat-checkbox formControlName="soil_moisture_management"></mat-checkbox>
+            </div>
+    
+            <div class="mt-5">
+                <label> Faz relação desse controle com as práticas agrícolas?</label>
+                <div class="answer">{{ practice.has_agricultural_practices_relationship ? 'Sim' : 'Não' }}</div>
+            </div>
+            <div class="evaluation-check mt-5">
+                <mat-checkbox formControlName="has_agricultural_practices_relationship"></mat-checkbox>
+            </div>
+        </div>
+
+        <div class="mt-5">
+            <label>Observações</label>
+            <mat-form-field appearance="outline">
+                <textarea
+                    matInput
+                    rows="5"
+                    formControlName="notes">
+                </textarea>
+            </mat-form-field>
+        </div>
+    </form>
+</mat-dialog-content>
+
+<hr class="separator">
+
+<mat-dialog-actions align="end" class="py-2">
+    <button *ngIf="canSave"
+        mat-flat-button
+        form="soil-humidity-eval"
+        type="submit"
+        color="primary">
+        Salvar
+    </button>
+
+    <button *ngIf="!canSave"
+        mat-flat-button
+        matDialogClose
+        color="primary">
+        Fechar
+    </button>
+</mat-dialog-actions>
+
+<button
+    matDialogClose
+    mat-icon-button
+    class="button-close">
+
+    <mat-icon>close</mat-icon>
+</button>

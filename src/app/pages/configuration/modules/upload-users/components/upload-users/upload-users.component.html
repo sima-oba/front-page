@@ -1,0 +1,30 @@
+<app-page-title>Upload de Produtores/Propriedades</app-page-title>
+
+<div class="block-center my-4">
+    <table>
+        <thead>
+            <tr>
+                <th>Nº produtores</th>
+                <th>Nº propriedades</th>
+                <th>
+                    <button mat-flat-button color="accent" (click)="openUploadDialog()">
+                        <span>Upload</span>
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let info of importInfo$ | async">
+                <td class="text-right">{{info.imported_owners}}</td>
+                <td class="text-right">{{info.imported_farms}}</td>
+                <td class="text-center">{{info.created_at | date: 'dd/MM/yyyy'}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3 class="empty pt-5" *ngIf="!importInfo$ | async">
+        Ainda não há uploads registrados
+    </h3>
+</div>

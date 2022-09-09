@@ -1,0 +1,58 @@
+<div class="container">
+    <weather-bar></weather-bar>
+    <app-navbar [hidden]="drawerState !== 'closed'"></app-navbar>
+
+    <mat-drawer-container
+        class="drawer-container"
+        [ngSwitch]="drawerState"
+        [hasBackdrop]="false">
+
+        <mat-drawer #drawer mode="over" *ngSwitchCase="'farm'">
+            <app-farm-panel></app-farm-panel>
+        </mat-drawer>
+
+        <mat-drawer #drawer mode="over" *ngSwitchCase="'hydrography'">
+            <app-hydrography-panel></app-hydrography-panel>
+        </mat-drawer>
+
+        <mat-drawer #drawer mode="over" *ngSwitchCase="'fire-risk'">
+            <app-fire-risk-panel></app-fire-risk-panel>
+        </mat-drawer>
+
+        <mat-drawer #drawer mode="over" class="full-width" *ngSwitchCase="'weather'">
+            <app-weather-panel></app-weather-panel>
+        </mat-drawer>
+
+        <mat-drawer #drawer mode="over" *ngSwitchCase="'rainfall'">
+            <app-rainfall-panel></app-rainfall-panel>
+        </mat-drawer>
+
+        <mat-drawer #drawer mode="over" *ngSwitchCase="'ordinance'">
+            <app-ordinance-panel></app-ordinance-panel>
+        </mat-drawer>
+
+        <mat-drawer #drawer mode="over" *ngSwitchCase="'irrigated-areas'">
+            <app-irrigated-areas-panel></app-irrigated-areas-panel>
+        </mat-drawer>
+
+        <mat-drawer #drawer mode="over" *ngSwitchCase="'occurrences'">
+            <app-occurrences-panel></app-occurrences-panel>
+        </mat-drawer>
+
+        <mat-drawer #drawer mode="over" *ngSwitchCase="'visit'">
+            <app-visit-panel></app-visit-panel>
+        </mat-drawer>
+
+        <mat-drawer #drawer mode="over" *ngSwitchCase="'sicar'">
+            <app-sicar-panel></app-sicar-panel>
+        </mat-drawer>
+
+        <mat-drawer #drawer mode="over" *ngSwitchCase="'icmbio'">
+            <app-icmbio-panel></app-icmbio-panel>
+        </mat-drawer>
+
+        <mat-drawer-content>
+            <app-map></app-map>
+        </mat-drawer-content>
+    </mat-drawer-container>
+</div>

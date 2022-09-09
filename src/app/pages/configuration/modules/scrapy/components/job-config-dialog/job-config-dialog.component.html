@@ -1,0 +1,268 @@
+<form [formGroup]="form" class="form cascade-child">
+    <mat-tab-group mat-align-tabs="center" [animationDuration]="0">
+        <mat-tab label="Agendamento">
+            <div class="scheduling-container py-4">
+                <mat-button-toggle-group [value]="selectedPeriod" class="period-group">                    
+                    <mat-button-toggle value="DAILY" (change)="onPeriodTypeChange('DAILY')">
+                        Diariamente
+                    </mat-button-toggle>
+
+                    <mat-button-toggle value="WEEKLY" (change)="onPeriodTypeChange('WEEKLY')">
+                        Semanalmente
+                    </mat-button-toggle>
+
+                    <mat-button-toggle value="MONTHLY" (change)="onPeriodTypeChange('MONTHLY')">
+                        Mensalmente
+                    </mat-button-toggle>
+
+                    <mat-button-toggle value="YEARLY" (change)="onPeriodTypeChange('YEARLY')">
+                        Anualmente
+                    </mat-button-toggle>
+                </mat-button-toggle-group>
+
+                <hr class="mobile-only">
+
+                <fieldset *ngIf="selectedPeriod === 'DAILY'">    
+                    <mat-button-toggle-group formControlName="hour" [multiple]="true" class="hour-group">
+                        <mat-button-toggle [value]="0">00:00</mat-button-toggle>
+                        <mat-button-toggle [value]="1">01:00</mat-button-toggle>
+                        <mat-button-toggle [value]="2">02:00</mat-button-toggle>
+                        <mat-button-toggle [value]="3">03:00</mat-button-toggle>
+                        <mat-button-toggle [value]="4">04:00</mat-button-toggle>
+                        <mat-button-toggle [value]="5">05:00</mat-button-toggle>
+                        <mat-button-toggle [value]="6">06:00</mat-button-toggle>
+                        <mat-button-toggle [value]="7">07:00</mat-button-toggle>
+                        <mat-button-toggle [value]="8">08:00</mat-button-toggle>
+                        <mat-button-toggle [value]="9">09:00</mat-button-toggle>
+                        <mat-button-toggle [value]="10">10:00</mat-button-toggle>
+                        <mat-button-toggle [value]="11">11:00</mat-button-toggle>
+                        <mat-button-toggle [value]="12">12:00</mat-button-toggle>
+                        <mat-button-toggle [value]="13">13:00</mat-button-toggle>
+                        <mat-button-toggle [value]="14">14:00</mat-button-toggle>
+                        <mat-button-toggle [value]="15">15:00</mat-button-toggle>
+                        <mat-button-toggle [value]="16">16:00</mat-button-toggle>
+                        <mat-button-toggle [value]="17">17:00</mat-button-toggle>
+                        <mat-button-toggle [value]="18">18:00</mat-button-toggle>
+                        <mat-button-toggle [value]="19">19:00</mat-button-toggle>
+                        <mat-button-toggle [value]="20">20:00</mat-button-toggle>
+                        <mat-button-toggle [value]="21">21:00</mat-button-toggle>
+                        <mat-button-toggle [value]="22">22:00</mat-button-toggle>
+                        <mat-button-toggle [value]="23">23:00</mat-button-toggle>
+                    </mat-button-toggle-group>
+
+                    <mat-error class="form-error mt-2" *ngIf="getError('hour')?.required">
+                        Selecione ao menos um horário
+                    </mat-error>
+                </fieldset>
+
+                <fieldset *ngIf="selectedPeriod === 'WEEKLY'">
+                    <label>Dia da semana</label>
+                    <mat-form-field appearance="outline">
+                        <mat-select formControlName="day_of_week">
+                            <mat-option [value]="''" disabled>Selecione o dia</mat-option>
+                            <mat-option [value]="6">Domingo</mat-option>
+                            <mat-option [value]="0">Segunda-feira</mat-option>
+                            <mat-option [value]="1">Terça-feira</mat-option>
+                            <mat-option [value]="2">Quarta-feira</mat-option>
+                            <mat-option [value]="3">Quinta-feira</mat-option>
+                            <mat-option [value]="4">Sexta-feira</mat-option>
+                            <mat-option [value]="5">Sábado</mat-option>
+                        </mat-select>
+
+                        <mat-error *ngIf="getError('day_of_week')?.required">
+                            Campo obrigatório
+                        </mat-error>
+                    </mat-form-field>
+    
+                    <label>Hora</label>
+                    <mat-form-field appearance="outline">
+                        <input matInput
+                            type="number"
+                            formControlName="hour"
+                            min="0"
+                            max="23"
+                            step="1">
+                        
+                        <span matSuffix>hora(s)</span>
+
+                        <mat-error *ngIf="getError('hour')?.required">
+                            Campo obrigatório
+                        </mat-error>
+
+                        <mat-error *ngIf="getError('hour')?.min; let value">
+                            Valor deve ser maior ou igual a {{ value.min }}
+                        </mat-error>
+
+                        <mat-error *ngIf="getError('hour')?.max; let value">
+                            Valor deve ser menor ou igual a {{ value.max }}
+                        </mat-error>
+                    </mat-form-field>
+                </fieldset>
+    
+                <fieldset *ngIf="selectedPeriod === 'MONTHLY'">
+                    <label>Dia do mês</label>
+                    <mat-form-field appearance="outline">
+                        <input matInput
+                            type="number"
+                            formControlName="day"
+                            min="1"
+                            max="31"
+                            step="1">
+
+                        <mat-error *ngIf="getError('day')?.required">
+                            Campo obrigatório
+                        </mat-error>
+
+                        <mat-error *ngIf="getError('day')?.min; let value">
+                            Valor deve ser maior ou igual a {{ value.min }}
+                        </mat-error>
+
+                        <mat-error *ngIf="getError('day')?.min; let value">
+                            Valor deve ser menor ou igual a {{ value.max }}
+                        </mat-error>
+                    </mat-form-field>
+    
+                    <label>Hora</label>
+                    <mat-form-field appearance="outline">
+                        <input matInput
+                            type="number"
+                            formControlName="hour"
+                            min="0"
+                            max="23"
+                            step="1">
+                        
+                        <span matSuffix>hora(s)</span>
+
+                        <mat-error *ngIf="getError('hour')?.required">
+                            Campo obrigatório
+                        </mat-error>
+
+                        <mat-error *ngIf="getError('hour')?.min; let value">
+                            Valor deve ser maior ou igual a {{ value.min }}
+                        </mat-error>
+
+                        <mat-error *ngIf="getError('hour')?.max; let value">
+                            Valor deve ser menor ou igual a {{ value.max }}
+                        </mat-error>
+                    </mat-form-field>
+                </fieldset>
+    
+                <fieldset *ngIf="selectedPeriod === 'YEARLY'">
+                    <label>Mês</label>
+                    <mat-form-field appearance="outline">
+                        <mat-select formControlName="month">
+                            <mat-option [value]="''" disabled>Selecione o mês</mat-option>
+                            <mat-option [value]="1">Janeiro</mat-option>
+                            <mat-option [value]="2">Fevereiro</mat-option>
+                            <mat-option [value]="3">Março</mat-option>
+                            <mat-option [value]="4">Abril</mat-option>
+                            <mat-option [value]="5">Maio</mat-option>
+                            <mat-option [value]="6">Junho</mat-option>
+                            <mat-option [value]="7">Julho</mat-option>
+                            <mat-option [value]="8">Agosto</mat-option>
+                            <mat-option [value]="9">Setembro</mat-option>
+                            <mat-option [value]="10">Outubro</mat-option>
+                            <mat-option [value]="11">Novembro</mat-option>
+                            <mat-option [value]="12">Dezembro</mat-option>
+                        </mat-select>
+
+                        <mat-error *ngIf="getError('month')?.required">
+                            Campo obrigatório
+                        </mat-error>
+
+                        <mat-error *ngIf="getError('month')?.min; let value">
+                            Valor deve ser maior ou igual a {{ value.min }}
+                        </mat-error>
+
+                        <mat-error *ngIf="getError('month')?.max; let value">
+                            Valor deve ser menor ou igual a {{ value.max }}
+                        </mat-error>
+                    </mat-form-field>
+    
+                    <label>Dia do mês</label>
+                    <mat-form-field appearance="outline">
+                        <input matInput
+                            type="number"
+                            formControlName="day"
+                            min="1"
+                            max="31"
+                            step="1">
+
+                        <mat-error *ngIf="getError('day')?.required">
+                            Campo obrigatório
+                        </mat-error>
+
+                        <mat-error *ngIf="getError('day')?.min; let value">
+                            Valor deve ser maior ou igual a {{ value.min }}
+                        </mat-error>
+
+                        <mat-error *ngIf="getError('day')?.max; let value">
+                            Valor deve ser menor ou igual a {{ value.max }}
+                        </mat-error>
+                    </mat-form-field>
+    
+                    <label>Hora</label>
+                    <mat-form-field appearance="outline">
+                        <input matInput
+                            type="number"
+                            formControlName="hour"
+                            min="0"
+                            max="23"
+                            step="1">
+                        
+                        <span matSuffix>hora(s)</span>
+
+                        <mat-error *ngIf="getError('hour')?.required">
+                            Campo obrigatório
+                        </mat-error>
+
+                        <mat-error *ngIf="getError('hour')?.min; let value">
+                            Valor deve ser maior ou igual a {{ value.min }}
+                        </mat-error>
+
+                        <mat-error *ngIf="getError('hour')?.max; let value">
+                            Valor deve ser menor ou igual a {{ value.max }}
+                        </mat-error>
+                    </mat-form-field>
+                </fieldset>
+            </div>
+        </mat-tab>
+    
+        <mat-tab label="Parâmetros">
+            <label class="mt-4">Nome</label>
+            <mat-form-field appearance="outline">
+                <input matInput type="text" formControlName="name">
+
+                <mat-error *ngIf="getError('name')?.required">
+                    Campo obrigatório
+                </mat-error>
+            </mat-form-field>
+
+            <div formArrayName="args">
+                <ng-container *ngFor="let arg of job.args; let i = index">
+                    <label>{{ getParam(i) }}</label>
+    
+                    <mat-form-field appearance="outline">
+                        <input matInput type="text" [formControlName]="i">
+
+                        <mat-error *ngIf="getError('args.' + i)?.required">
+                            Campo obrigatório
+                        </mat-error>
+                    </mat-form-field>
+                </ng-container>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</form>
+
+<mat-dialog-actions class="pb-4">
+    <div class="actions">
+        <button mat-flat-button color="primary" (click)="save()">
+            Salvar
+        </button>
+    </div>
+</mat-dialog-actions>
+
+<button mat-icon-button matDialogClose cdkFocusInitial class="button-close">
+    <mat-icon>close</mat-icon>
+</button>

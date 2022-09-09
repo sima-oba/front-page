@@ -1,0 +1,14 @@
+@use "util";
+
+.container {
+    @extend %flex-column;
+    position: relative;
+}
+
+.drawer-container {
+    flex-grow: 1;
+}
+
+.full-width {
+    width: 100%;
+}

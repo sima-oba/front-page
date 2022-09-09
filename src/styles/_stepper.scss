@@ -1,0 +1,82 @@
+@use "var";
+
+$transition-duration: 400ms;
+
+.mat-horizontal-stepper {
+    &-header {
+        height: fit-content !important;
+        margin: 0 var.$spacing-2;
+        padding: var.$spacing-2 !important;
+        border-radius: var.$radius-3;
+
+        &-container {
+            margin: var.$spacing-3 0;
+            justify-content: center;
+        }
+    }
+}
+
+.mat-stepper-horizontal-line {
+    display: none;
+}
+
+.mat-horizontal-content-container {
+    padding: 0 !important;
+}
+
+.mat-step {
+    &-label {
+        display: none !important;
+    }
+
+    &-icon {
+        height: 12px !important;
+        width: 12px !important;
+        margin: 0 !important;
+
+        &-content {
+            display: none !important;
+        }
+
+        &-state-number {
+            background-color: #c4c4c4 !important;
+        }
+
+        &-state-edit {
+            background-color: #cad8627e !important;
+        }
+
+        &-selected {
+            height: 18px !important;
+            width: 18px !important;
+            background-color: #cbd862 !important;
+        }
+    }
+}
+
+.stepper-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: var.$spacing-3;
+    padding: var.$spacing-3;
+
+    &-previous {
+        opacity: 0;
+        transform: translate(calc(50% + 12px));
+        transition-duration: $transition-duration;
+    }
+
+    &-next {
+        transform: translate(calc(-50% - 12px));
+        transition-duration: $transition-duration;
+    }
+
+    &.animated &-previous {
+        opacity: 1;
+        transform: translate(0);
+    }
+
+    &.animated &-next {
+        transform: translate(0);
+    }
+}

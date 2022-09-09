@@ -1,0 +1,8 @@
+<div class="container">
+    <div id="map-location-picker"></div>
+
+    <div class="map-coordinates" [ngClass]="textSide" [hidden]="isTextHidden">
+        lat: {{ latitude | number: '1.1-3' }}<br>
+        lng: {{ longitude | number: '1.1-3' }}
+    </div>
+</div>
