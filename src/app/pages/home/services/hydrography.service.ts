@@ -13,10 +13,25 @@ const PATH = '/hydrography'
     providedIn: 'root'
 })
 export class HydrographyService {
-    private _isLimitsSelected$ = new BehaviorSubject(false);
-    isLimitsLoading$ = new BehaviorSubject(false)
-    isLimitsSelected$ = this._isLimitsSelected$.asObservable()
-    limits$: Observable<FeatureCollection>
+    private _isLimitLevel1Selected$ = new BehaviorSubject(false);
+    isLimitLevel1Selected$ = this._isLimitLevel1Selected$.asObservable()
+    isLimitLevel1Loading$ = new BehaviorSubject(false)
+    limitLevel1$: Observable<FeatureCollection>
+
+    private _isLimitLevel2Selected$ = new BehaviorSubject(false);
+    isLimitLevel2Loading$ = new BehaviorSubject(false)
+    isLimitLevel2Selected$ = this._isLimitLevel2Selected$.asObservable()
+    limitLevel2$: Observable<FeatureCollection>
+
+    private _isLimitLevel4Selected$ = new BehaviorSubject(false);
+    isLimitLevel4Loading$ = new BehaviorSubject(false)
+    isLimitLevel4Selected$ = this._isLimitLevel4Selected$.asObservable()
+    limitLevel4$: Observable<FeatureCollection>
+
+    private _isLimitLevel5Selected$ = new BehaviorSubject(false);
+    isLimitLevel5Loading$ = new BehaviorSubject(false)
+    isLimitLevel5Selected$ = this._isLimitLevel5Selected$.asObservable()
+    limitLevel5$: Observable<FeatureCollection>
 
     private _isQ90Selected$ = new BehaviorSubject(false);
     isQ90Selected$ = this._isQ90Selected$.asObservable()
@@ -41,13 +56,46 @@ export class HydrographyService {
     aquifers$: Observable<FeatureCollection>
 
     constructor(private client: HttpClient) {
-        this.limits$ = this.isLimitsSelected$
+        this.limitLevel1$ = this.isLimitLevel1Selected$
             .pipe(
-                tap(() => this.isLimitsLoading$.next(true)),
-                switchMap(isSelected => isSelected ? this.getLimits() : this.empty()),
-                tap(() => this.isLimitsLoading$.next(false)),
+                tap(() => this.isLimitLevel1Loading$.next(true)),
+                switchMap(isSelected => isSelected ? this.getLimitLevel1() : this.empty()),
+                tap(() => this.isLimitLevel1Loading$.next(false)),
                 catchError(() => {
-                    this.isLimitsLoading$.next(false)
+                    this.isLimitLevel1Loading$.next(false)
+                    return this.empty()
+                })
+            )
+
+        this.limitLevel2$ = this.isLimitLevel2Selected$
+            .pipe(
+                tap(() => this.isLimitLevel2Loading$.next(true)),
+                switchMap(isSelected => isSelected ? this.getLimitLevel2() : this.empty()),
+                tap(() => this.isLimitLevel2Loading$.next(false)),
+                catchError(() => {
+                    this.isLimitLevel2Loading$.next(false)
+                    return this.empty()
+                })
+            )
+
+        this.limitLevel4$ = this.isLimitLevel4Selected$
+            .pipe(
+                tap(() => this.isLimitLevel4Loading$.next(true)),
+                switchMap(isSelected => isSelected ? this.getLimitLevel4() : this.empty()),
+                tap(() => this.isLimitLevel4Loading$.next(false)),
+                catchError(() => {
+                    this.isLimitLevel4Loading$.next(false)
+                    return this.empty()
+                })
+            )
+
+        this.limitLevel5$ = this.isLimitLevel5Selected$
+            .pipe(
+                tap(() => this.isLimitLevel5Loading$.next(true)),
+                switchMap(isSelected => isSelected ? this.getLimitLevel5() : this.empty()),
+                tap(() => this.isLimitLevel5Loading$.next(false)),
+                catchError(() => {
+                    this.isLimitLevel5Loading$.next(false)
                     return this.empty()
                 })
             )
@@ -147,8 +195,20 @@ export class HydrographyService {
         this._isQmldSelected$.next(isSelected);
     }
 
-    selectLimits(selected: boolean) {
-        this._isLimitsSelected$.next(selected);
+    selectLevel1(selected: boolean) {
+        this._isLimitLevel1Selected$.next(selected);
+    }
+
+    selectLevel2(selected: boolean) {
+        this._isLimitLevel2Selected$.next(selected);
+    }
+
+    selectLevel4(selected: boolean) {
+        this._isLimitLevel4Selected$.next(selected);
+    }
+
+    selectLevel5(selected: boolean) {
+        this._isLimitLevel5Selected$.next(selected);
     }
 
     private summaryRivers(): Observable<RiverSummary[]> {
@@ -200,8 +260,20 @@ export class HydrographyService {
         return this.client.get<FeatureCollection>(PATH + '/flow_rates');
     }
 
-    private getLimits(): Observable<FeatureCollection> {
+    private getLimitLevel1(): Observable<FeatureCollection> {
         return this.client.get<FeatureCollection>(PATH + '/limits_lvl_2');
+    }
+
+    private getLimitLevel2(): Observable<FeatureCollection> {
+        return this.client.get<FeatureCollection>(PATH + '/contribs');
+    }
+
+    private getLimitLevel4(): Observable<FeatureCollection> {
+        return this.client.get<FeatureCollection>(PATH + '/limits_lvl_5');
+    }
+
+    private getLimitLevel5(): Observable<FeatureCollection> {
+        return this.client.get<FeatureCollection>(PATH + '/limits_lvl_4');
     }
 
     private empty(): Observable<FeatureCollection> {

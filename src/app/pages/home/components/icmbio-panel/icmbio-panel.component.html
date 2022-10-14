@@ -111,6 +111,36 @@
                 (change)="onCorridorsChanged($event)">
                 Corredores Ecológicos
             </mat-checkbox>
+
+            <mat-checkbox class="checkbox-list__item" 
+                [checked]="isAtlanticForestEnabled"
+                (change)="onAtlanticForestChanged($event)">
+                Mata Atlântica
+            </mat-checkbox>
+
+            <mat-checkbox class="checkbox-list__item" 
+                [checked]="isBiomeEnabled"
+                (change)="onBiomeChanged($event)">
+                Biomas Brasileiros
+            </mat-checkbox>
+
+            <mat-checkbox class="checkbox-list__item" 
+                [checked]="isCerradoEnabled"
+                (change)="onCerradoChanged($event)">
+                Cerrado Stricto Sensu
+            </mat-checkbox>
+
+            <mat-checkbox class="checkbox-list__item" 
+                [checked]="isMatopibaEnabled"
+                (change)="onMatopibaChanged($event)">
+                Matopiba
+            </mat-checkbox>
+
+            <mat-checkbox class="checkbox-list__item" 
+                [checked]="isVegetationEnabled"
+                (change)="onVegetationChanged($event)">
+                Vegetação
+            </mat-checkbox>
         </div>
     </section>
 </div>

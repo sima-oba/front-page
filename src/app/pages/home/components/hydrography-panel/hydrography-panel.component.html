@@ -3,21 +3,64 @@
         <mat-icon>close</mat-icon>
     </button>
 
+    <section>
+        <h3>Limites</h3>
+
+        <div class="checkbox-list">
+            <mat-progress-bar
+                mode="indeterminate"
+                [style.visibility]="(isLimitsLoading$ | async) ? 'visible' : 'hidden'">
+            </mat-progress-bar>
+
+            <div class="checkbox-item">
+                <mat-checkbox
+                    [checked]="isLimitLevel1Selected$ | async"
+                    (change)="selectLevel1($event.checked)">
+                    Bacias de Nível 1
+                </mat-checkbox>
+            </div>
+
+            <div class="checkbox-item">
+                <mat-checkbox
+                    [checked]="isLimitLevel2Selected$ | async"
+                    (change)="selectLevel2($event.checked)">
+                    Bacias de Nível 2
+                </mat-checkbox>
+            </div>
+
+            <div class="checkbox-item">
+                <mat-checkbox
+                    [checked]="isLimitLevel4Selected$ | async"
+                    (change)="selectLevel4($event.checked)">
+                    Bacias de Nível 4
+                </mat-checkbox>
+            </div>
+
+            <div class="checkbox-item">
+                <mat-checkbox
+                    [checked]="isLimitLevel5Selected$ | async"
+                    (change)="selectLevel5($event.checked)">
+                    Bacias de Nível 5
+                </mat-checkbox>
+            </div>
+        </div>
+    </section>
+
     <section style="flex-grow: 1;">
         <h3>Malhas Hidrográficas</h3>
 
         <mat-progress-bar
             mode="indeterminate"
-            [style.visibility]="(isRiversAndLimitsLoading$ | async) ? 'visible' : 'hidden'">
+            [style.visibility]="(isRiversLoading$ | async) ? 'visible' : 'hidden'">
         </mat-progress-bar>
 
         <div class="checkbox-list">
             <div class="checkbox-item">
-                <mat-checkbox
+                <!-- <mat-checkbox
                     [checked]="isLimitsSelected$ | async"
                     (change)="selectLimits($event.checked)">
                     Limites da Bacia do São Francisco
-                </mat-checkbox>
+                </mat-checkbox> -->
 
                 <mat-checkbox
                     [checked]="isAllRiversSelected"

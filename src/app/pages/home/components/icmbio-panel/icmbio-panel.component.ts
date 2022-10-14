@@ -23,6 +23,11 @@ export class IcmbioPanelComponent {
     isGeoSitesEnabled = this.icmbioService.isGeoSitesEnabled
     isGeoParksEnabled = this.icmbioService.isGeoParksEnabled
     isCorridorsEnabled = this.icmbioService.isCorridorsEnabled
+    isAtlanticForestEnabled = this.icmbioService.isAtlanticForestEnabled
+    isBiomeEnabled = this.icmbioService.isBiomeEnabled
+    isCerradoEnabled = this.icmbioService.isCerradoEnabled
+    isMatopibaEnabled = this.icmbioService.isMatopibaEnabled
+    isVegetationEnabled = this.icmbioService.isVegetationEnabled
     isOtherLoading$ = this.icmbioService.isOtherLoading$
 
     states$ = this.locationService.getStateCodes()
@@ -66,6 +71,26 @@ export class IcmbioPanelComponent {
 
     onGeoParksChanged(event: MatCheckboxChange) {
         this.icmbioService.isGeoParksEnabled = event.checked
+    }
+
+    onAtlanticForestChanged(event: MatCheckboxChange) {
+        this.icmbioService.isAtlanticForestEnabled = event.checked
+    }
+
+    onBiomeChanged(event: MatCheckboxChange) {
+        this.icmbioService.isBiomeEnabled = event.checked
+    }
+
+    onCerradoChanged(event: MatCheckboxChange) {
+        this.icmbioService.isCerradoEnabled = event.checked
+    }
+
+    onMatopibaChanged(event: MatCheckboxChange) {
+        this.icmbioService.isMatopibaEnabled = event.checked
+    }
+
+    onVegetationChanged(event: MatCheckboxChange) {
+        this.icmbioService.isVegetationEnabled = event.checked
     }
 
     close() {

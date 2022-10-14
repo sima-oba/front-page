@@ -30,6 +30,7 @@ import { IndigenousLand } from '../../models/indi-land.model';
 import { IrrigatedArea } from '../../models/irrigated-area.model';
 import { Ordinance } from '../../models/ordinance.model';
 import { Pivot } from '../../models/pivot.model';
+import { Vegetation } from '../../models/vegetation.model';
 import { RainfallStation } from '../../models/rainfall-station.model';
 import { Sicar, SicarFarm } from '../../models/sicar.model';
 import { Visit } from '../../models/visit.model';
@@ -52,8 +53,21 @@ const RIVERS_SOURCE = 'source-rivers'
 const RIVERS_LAYER = 'layer-rivers'
 const RIVERS_TEXT_LAYER = 'layer-rivers-text'
 
-const BASINS_SOURCE = 'source-basins'
-const BASINS_LAYER = 'layer-basins'
+const LIMIT_LVL_1_SOURCE = 'source-limit-lvl-1'
+const LIMIT_LVL_1_LAYER = 'layer-limit-lvl-1'
+const LIMIT_LVL_1_TEXT_LAYER = 'layer-limit-lvl-1-text'
+
+const LIMIT_LVL_2_SOURCE = 'source-limit-lvl-2'
+const LIMIT_LVL_2_LAYER = 'layer-limit-lvl-2'
+const LIMIT_LVL_2_BORDER_LAYER = 'layer-limit-lvl-2-border'
+
+const LIMIT_LVL_4_SOURCE = 'source-limit-lvl-4'
+const LIMIT_LVL_4_LAYER = 'layer-limit-lvl-4'
+const LIMIT_LVL_4_BORDER_LAYER = 'layer-limit-lvl-4-border'
+
+const LIMIT_LVL_5_SOURCE = 'source-limit-lvl-5'
+const LIMIT_LVL_5_LAYER = 'layer-limit-lvl-5'
+const LIMIT_LVL_5_BORDER_LAYER = 'layer-limit-lvl-5-border'
 
 const FLOW_RATES_SOURCE = 'source-flow-rates'
 const FLOW_RATES_LAYER = 'layer-flow-rates'
@@ -133,6 +147,23 @@ const GEO_PARKS_LAYER = 'layer-geo-parks'
 const CONSERVATION_SOURCE = 'source-conservation'
 const CONSERVATION_LAYER = 'layer-conservation'
 const CONSERVATION_BORDER_LAYER = 'layer_conservation-border'
+
+const ATLANTIC_FOREST_SOURCE = 'source-atlantic-forest'
+const ATLANTIC_FOREST_LAYER = 'layer-atlantic-forest'
+
+const BIOME_SOURCE = 'source-biome'
+const BIOME_LAYER = 'layer-biome'
+const BIOME_TEXT_LAYER = 'layer-biome-text'
+
+const CERRADO_SOURCE = 'source-cerrado'
+const CERRADO_LAYER = 'layer-cerrado'
+
+const MATOPIBA_SOURCE = 'source-matopiba'
+const MATOPIBA_LAYER = 'layer-matopiba'
+
+const VEGETATION_SOURCE = 'source-vegetation'
+const VEGETATION_LAYER = 'layer-vegetation'
+const VEGETATION_BORDER_LAYER = 'layer-vegetation-border'
 
 @UntilDestroy()
 @Component({
@@ -237,15 +268,126 @@ export class MapComponent implements AfterViewInit {
             data: null
         }
 
-        // Basins
-        this.map.addSource(BASINS_SOURCE, initialData)
+        // Limit Level 1
+        this.map.addSource(LIMIT_LVL_1_SOURCE, initialData)
         this.map.addLayer({
-            id: BASINS_LAYER,
+            id: LIMIT_LVL_1_LAYER,
             type: 'fill',
-            source: BASINS_SOURCE,
+            source: LIMIT_LVL_1_SOURCE,
             paint: {
-                'fill-color': 'blue',
+                'fill-color': [
+                    'case',
+                    ['==', ['get', 'level'], 'Alto'],
+                    '#80b3ff',
+                    ['==', ['get', 'level'], 'Médio'],
+                    '#3385ff',
+                    ['==', ['get', 'level'], 'Submédio'],
+                    '#005ce6',
+                    ['==', ['get', 'level'], 'Baixo'],
+                    '#003d99',
+                    '#000'
+                ],
                 'fill-opacity': 0.25,
+            }
+        })
+
+        this.map.addLayer({
+            id: LIMIT_LVL_1_TEXT_LAYER,
+            type: 'symbol',
+            source: LIMIT_LVL_1_SOURCE,
+            paint: {
+                'text-color': '#001f4d'
+            },
+            layout: {
+                'symbol-placement': 'point',
+                'text-field': 'Nível {level}',
+                'text-anchor': 'center',
+                'text-size': 18,
+                'text-letter-spacing': 0.2
+            }
+        })
+
+        // Limit Level 2
+        this.map.addSource(LIMIT_LVL_2_SOURCE, initialData)
+        this.map.addLayer({
+            id: LIMIT_LVL_2_LAYER,
+            type: 'fill',
+            source: LIMIT_LVL_2_SOURCE,
+            paint: {
+                'fill-color': '#80b3ff',
+                'fill-opacity': 0.25
+            }
+        })
+
+        this.map.addLayer({
+            id: LIMIT_LVL_2_BORDER_LAYER,
+            type: 'line',
+            source: LIMIT_LVL_2_SOURCE,
+            paint: {
+                'line-width': 2,
+                'line-color': '#80b3ff',
+                'line-opacity': 0.33,
+            }
+        })
+
+        // this.map.addLayer({
+        //     id: LIMIT_LVL_2_TEXT_LAYER,
+        //     type: 'symbol',
+        //     source: LIMIT_LVL_2_SOURCE,
+        //     paint: {
+        //         'text-color': '#001f4d'
+        //     },
+        //     layout: {
+        //         'symbol-placement': 'point',
+        //         'text-field': '{nunivotto5}',
+        //         'text-anchor': 'center',
+        //         'text-size': 8,
+        //         'text-letter-spacing': 0.2
+        //     }
+        // })
+
+        // Limit Level 5
+        this.map.addSource(LIMIT_LVL_5_SOURCE, initialData)
+        this.map.addLayer({
+            id: LIMIT_LVL_5_LAYER,
+            type: 'fill',
+            source: LIMIT_LVL_5_SOURCE,
+            paint: {
+                'fill-color': '#003d99',
+                'fill-opacity': 0.25
+            }
+        })
+
+        this.map.addLayer({
+            id: LIMIT_LVL_5_BORDER_LAYER,
+            type: 'line',
+            source: LIMIT_LVL_5_SOURCE,
+            paint: {
+                'line-width': 2,
+                'line-color': '#80b3ff',
+                'line-opacity': 0.33,
+            }
+        })
+
+        this.map.addSource(LIMIT_LVL_4_SOURCE, initialData)
+        this.map.addLayer({
+            id: LIMIT_LVL_4_LAYER,
+            type: 'fill',
+            source: LIMIT_LVL_4_SOURCE,
+            paint: {
+                'fill-color': '#80b3ff',
+                'fill-opacity': 0.25
+            }
+        })
+
+        this.map.addLayer({
+            id: LIMIT_LVL_4_BORDER_LAYER,
+            type: 'line',
+            source: LIMIT_LVL_4_SOURCE,
+            paint: {
+                'line-width': 2,
+                'line-color': '#80b3ff',
+                'line-opacity': 0.33,
             }
         })
 
@@ -811,10 +953,133 @@ export class MapComponent implements AfterViewInit {
                 ]
             }
         })
+
+        // Atlantic Forest
+        this.map.addSource(ATLANTIC_FOREST_SOURCE, initialData)
+        this.map.addLayer({
+            id: ATLANTIC_FOREST_LAYER,
+            type: 'fill',
+            source: ATLANTIC_FOREST_SOURCE,
+            paint: {
+                'fill-color': '#0d8521',
+                'fill-opacity': 0.5
+            }
+        })
+
+        // Biomes
+        this.map.addSource(BIOME_SOURCE, initialData)
+        this.map.addLayer({
+            id: BIOME_LAYER,
+            type: 'fill',
+            source: BIOME_SOURCE,
+            paint: {
+                'fill-color': [
+                    'case',
+                    ['==', ['get', 'name'], 'AMAZÔNIA'],
+                    '#009999',
+                    ['==', ['get', 'name'], 'CAATINGA'],
+                    '#cc6600',
+                    ['==', ['get', 'name'], 'CERRADO'],
+                    '#669900',
+                    ['==', ['get', 'name'], 'PAMPA'],
+                    '#999966',
+                    ['==', ['get', 'name'], 'MATA ATLÂNTICA'],
+                    '#009900',
+                    ['==', ['get', 'name'], 'PANTANAL'],
+                    '#33cccc',
+                    '#000'
+                ],
+                'fill-opacity': 0.5
+            }
+        })
+
+        this.map.addLayer({
+            id: BIOME_TEXT_LAYER,
+            type: 'symbol',
+            source: BIOME_SOURCE,
+            paint: {
+                'text-color': '#000',
+            },
+            layout: {
+                'symbol-placement': 'point',
+                'text-field': '{name}',
+                'text-anchor': 'center',
+                'text-size': 16,
+                'text-letter-spacing': 0.2,
+                'text-font': ["Open Sans Bold", "Arial Unicode MS Bold"]
+            }
+        })
+
+        // Cerrado
+        this.map.addSource(CERRADO_SOURCE, initialData)
+        this.map.addLayer({
+            id: CERRADO_LAYER,
+            type: 'fill',
+            source: CERRADO_SOURCE,
+            filter: ['==', ['get', 'name'], 'CERRADO'],
+            paint: {
+                'fill-color': '#669900',
+                'fill-opacity': 0.5
+            }
+        })
+
+        // Matopiba
+        this.map.addSource(MATOPIBA_SOURCE, initialData)
+        this.map.addLayer({
+            id: MATOPIBA_LAYER,
+            type: 'fill',
+            source: MATOPIBA_SOURCE,
+            paint: {
+                'fill-color': [
+                    'match', ['get', 'state'],
+                    'Bahia', '#999966',
+                    'Maranhão', '#cccc00',
+                    'Piauí', '#996633',
+                    'Tocantins', '#669900',
+                    'black'
+                ],
+                'fill-opacity': 0.5
+            }
+        })
+
+        // Vegetation
+        this.map.addSource(VEGETATION_SOURCE, initialData)
+        this.map.addLayer({
+            id: VEGETATION_LAYER,
+            type: 'fill',
+            source: VEGETATION_SOURCE,
+            paint: {
+                'fill-color': '#cc3300',
+                'fill-opacity': [
+                    'case',
+                    ['boolean', ['feature-state', 'click'], false],
+                    0.5,
+                    0.0
+                ]
+            }
+        })
+
+        this.map.addLayer({
+            'id': VEGETATION_BORDER_LAYER,
+            'type': 'line',
+            'source': VEGETATION_SOURCE,
+            'paint': {
+                'line-color': '#cc3300',
+                'line-width': [
+                    'case',
+                    ['boolean', ['feature-state', 'click'], false],
+                    3,
+                    2
+                ]
+            }
+        })
     }
 
     setUpDataSources() {
-        this.bindSourceToData(BASINS_SOURCE, this.hydroService.limits$)
+        this.bindSourceToData(LIMIT_LVL_1_SOURCE, this.hydroService.limitLevel1$)
+        this.bindSourceToData(LIMIT_LVL_2_SOURCE, this.hydroService.limitLevel2$)
+        this.bindSourceToData(LIMIT_LVL_4_SOURCE, this.hydroService.limitLevel4$)
+        this.bindSourceToData(LIMIT_LVL_5_SOURCE, this.hydroService.limitLevel5$)
         this.bindSourceToData(RIVERS_SOURCE, this.hydroService.rivers$)
         this.bindSourceToData(FLOW_RATES_SOURCE, this.hydroService.flowRates$)
         this.bindSourceToData(Q90_SOURCE, this.hydroService.q90$)
@@ -836,6 +1101,11 @@ export class MapComponent implements AfterViewInit {
         this.bindSourceToData(GEO_SITE_SOURCE, this.icmbioService.geoSiteFeatures$)
         this.bindSourceToData(GEO_PARKS_SOURCE, this.icmbioService.geoParksFeatures$)
         this.bindSourceToData(CONSERVATION_SOURCE, this.icmbioService.conservationFeatures$)
+        this.bindSourceToData(ATLANTIC_FOREST_SOURCE, this.icmbioService.atlanticForestFeatures$)
+        this.bindSourceToData(BIOME_SOURCE, this.icmbioService.biomeFeatures$)
+        this.bindSourceToData(CERRADO_SOURCE, this.icmbioService.cerradoFeatures$)
+        this.bindSourceToData(MATOPIBA_SOURCE, this.icmbioService.matopibaFeatures$)
+        this.bindSourceToData(VEGETATION_SOURCE, this.icmbioService.vegetationFeatures$)
     }
 
     setUpEvents() {
@@ -959,6 +1229,13 @@ export class MapComponent implements AfterViewInit {
             .onPhotoClick(this.openOccurrencePhotoDialog)
             .onDetailsClick(this.openOccurrenceDetailsDialog)
             .onResolveClick(this.openResolveOccurrenceDialog)
+
+        this.setUpClickEffect(VEGETATION_SOURCE, VEGETATION_LAYER)
+        this.addClickListener<Vegetation>(
+            VEGETATION_SOURCE,
+            VEGETATION_LAYER,
+            this.vegetationConfig
+        )
     }
 
     private bindSourceToData(source: string, observableData$: Observable<FeatureCollection>) {
@@ -983,7 +1260,7 @@ export class MapComponent implements AfterViewInit {
 
     private openOccurrencePopup = (event: EventData) => {
         if (event.cancel) return
-        
+
         event.cancel = true
         const feature = event.features[0]
         const occurrence: Occurrence = { ...feature.properties, position: feature.geometry }
@@ -1278,6 +1555,18 @@ export class MapComponent implements AfterViewInit {
                 'Qualidade': conservation.quality,
                 'Ato Legal': conservation.legal_act,
                 'Nome original': conservation.original_name
+            }
+        }
+    }
+
+    private vegetationConfig = (vegetation: Vegetation): PopupConfig => {
+        return {
+            maxWidth: 400,
+            title: vegetation.name,
+            grid: {
+                'Tipo': vegetation.type,
+                'Descrição': vegetation.description,
+                'Fonte': vegetation.source
             }
         }
     }

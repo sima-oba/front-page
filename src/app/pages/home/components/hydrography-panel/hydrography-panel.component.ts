@@ -1,7 +1,7 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component } from '@angular/core';
 import { combineLatest, Observable } from 'rxjs';
-import {delay, map, tap} from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 import { DrawerService } from '../../services/drawer.service';
 import { HydrographyService } from '../../services/hydrography.service';
@@ -18,19 +18,18 @@ const FEATURED_AQUIFERS = ['Bambuí Cárstico', 'Urucuia-Areado', 'Fraturado Cen
     styleUrls: ['./hydrography-panel.component.scss']
 })
 export class HydrographyPanelComponent {
-    isRiversAndLimitsLoading$ = combineLatest([
-        this.hydrographyService.isRiversLoading$,
-        this.hydrographyService.isLimitsLoading$
-    ]).pipe(
-        map(([isRiversLoading, isLimitsLoading]) => isRiversLoading || isLimitsLoading)
-    )
+    isRiversLoading$ = this.hydrographyService.isRiversLoading$
 
-    isLimitsSelected$ = this.hydrographyService.isLimitsSelected$
+    isLimitsLoading$: Observable<boolean>
+    isLimitLevel1Selected$ = this.hydrographyService.isLimitLevel1Selected$
+    isLimitLevel2Selected$ = this.hydrographyService.isLimitLevel2Selected$
+    isLimitLevel4Selected$ = this.hydrographyService.isLimitLevel4Selected$
+    isLimitLevel5Selected$ = this.hydrographyService.isLimitLevel5Selected$
 
     isFlowRatesLoading$ = this.hydrographyService.isFlowRatesLoading$
     isQmldSelected$ = this.hydrographyService.isQmldSelected$
     isQ90Selected$ = this.hydrographyService.isQ90Selected$
-    
+
     riversSelection = new SelectionModel(true)
     riversSummary$: Observable<RiverSummary[]>
     isAllRiversSelected = false
@@ -39,12 +38,20 @@ export class HydrographyPanelComponent {
     aquiferSummary$ = this.hydrographyService.aquiferSummary$
     featuredAquiferSummary$: Observable<Aquifer[]>
     selectedAquifer = ''
-    isloading: boolean = false;
 
     constructor(
         private drawerService: DrawerService,
         private hydrographyService: HydrographyService
     ) {
+        this.isLimitsLoading$ = combineLatest([
+            hydrographyService.isLimitLevel1Loading$,
+            hydrographyService.isLimitLevel2Loading$,
+            hydrographyService.isLimitLevel4Loading$,
+            hydrographyService.isLimitLevel5Loading$
+        ]).pipe(
+            map(([lvl1, lvl2, lvl4, lvl5]) => lvl1 || lvl2 || lvl4 || lvl5)
+        )
+
         this.riversSummary$ = this.hydrographyService.riverSummary$
             .pipe(tap(this.setUpSelectedRivers))
 
@@ -100,21 +107,27 @@ export class HydrographyPanelComponent {
         this.hydrographyService.selectQmld(checked);
     }
 
-    selectLimits(checked: boolean) {
-        this.isloading = true;
-        this.hydrographyService.selectLimits(checked);
-        setTimeout(() =>
-            {
-                this.isloading = false;            },
-            2000);
+    selectLevel1(checked: boolean) {
+        this.hydrographyService.selectLevel1(checked);
+    }
 
+    selectLevel2(checked: boolean) {
+        this.hydrographyService.selectLevel2(checked);
+    }
+
+    selectLevel4(checked: boolean) {
+        this.hydrographyService.selectLevel4(checked);
+    }
+
+    selectLevel5(checked: boolean) {
+        this.hydrographyService.selectLevel5(checked);
     }
 
     close() {
         this.drawerService.closeDrawer()
     }
 
-    private setUpSelectedRivers = (rivers: RiverSummary[]) => {        
+    private setUpSelectedRivers = (rivers: RiverSummary[]) => {
         rivers.forEach(river => {
             if (river.isSelected) {
                 this.riversSelection.select(river._id)

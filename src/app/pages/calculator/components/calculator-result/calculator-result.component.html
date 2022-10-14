@@ -214,10 +214,7 @@
                     <div class="box-value">
                         <p class="box-value box-value-green">
                             {{ 
-                                bundle.result.baseline_removal / 
-                                (bundle.data_collect.average_productivity * 
-                                bundle.data_collect.cultivated_area) / 
-                                60 | number: '1.4-4' 
+                                bundle.result.baseline_removal / ((bundle.data_collect.average_productivity * bundle.data_collect.cultivated_area) / 60) | number: '1.4-4' 
                             }}
                         </p>
     
