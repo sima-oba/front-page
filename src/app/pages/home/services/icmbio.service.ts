@@ -33,6 +33,26 @@ export class IcmbioService {
     private isCorridorsLoading$ = new BehaviorSubject(false)
     corridorsFeatures$: Observable<FeatureCollection>
 
+    private isAtlanticForestEnabled$ = new BehaviorSubject(false)
+    private isAtlanticForestLoading$ = new BehaviorSubject(false)
+    atlanticForestFeatures$: Observable<FeatureCollection>
+
+    private isBiomeEnabled$ = new BehaviorSubject(false)
+    private isBiomeLoading$ = new BehaviorSubject(false)
+    biomeFeatures$: Observable<FeatureCollection>
+
+    private isCerradoEnabled$ = new BehaviorSubject(false)
+    private isCerradoLoading$ = new BehaviorSubject(false)
+    cerradoFeatures$: Observable<FeatureCollection>
+
+    private isMatopibaEnabled$ = new BehaviorSubject(false)
+    private isMatopibaLoading$ = new BehaviorSubject(false)
+    matopibaFeatures$: Observable<FeatureCollection>
+
+    private isVegetationEnabled$ = new BehaviorSubject(false)
+    private isVegetationLoading$ = new BehaviorSubject(false)
+    vegetationFeatures$: Observable<FeatureCollection>
+
     isOtherLoading$: Observable<boolean>
 
     constructor(private client: HttpClient) {
@@ -66,10 +86,44 @@ export class IcmbioService {
             this.isCorridorsLoading$
         )
 
+        this.atlanticForestFeatures$ = this.bind(
+            this.isAtlanticForestEnabled$,
+            this.getAtlanticForest,
+            this.isAtlanticForestLoading$
+        )
+
+        this.biomeFeatures$ = this.bind(
+            this.isBiomeEnabled$,
+            this.getBiome,
+            this.isBiomeLoading$
+        )
+
+        this.cerradoFeatures$ = this.bind(
+            this.isCerradoEnabled$,
+            this.getBiome,
+            this.isCerradoLoading$
+        )
+
+        this.matopibaFeatures$ = this.bind(
+            this.isMatopibaEnabled$,
+            this.getMatopiba,
+            this.isMatopibaLoading$
+        )
+
+        this.vegetationFeatures$ = this.bind(
+            this.isVegetationEnabled$,
+            this.getVegetation,
+            this.isVegetationLoading$
+        )
+
         this.isOtherLoading$ = combineLatest([
             this.isGeoSitesLoading$,
             this.isGeoParksLoading$,
-            this.isCorridorsLoading$
+            this.isCorridorsLoading$,
+            this.isAtlanticForestLoading$,
+            this.isBiomeLoading$,
+            this.isMatopibaLoading$,
+            this.isCerradoLoading$
         ]).pipe(
             map(loadingArray =>
                 loadingArray.reduce((acc, curr) => acc || curr, false)
@@ -111,6 +165,46 @@ export class IcmbioService {
 
     set isGeoParksEnabled(value: boolean) {
         this.isGeoParksEnabled$.next(value)
+    }
+
+    get isAtlanticForestEnabled(): boolean {
+        return this.isAtlanticForestEnabled$.value
+    }
+
+    set isAtlanticForestEnabled(value: boolean) {
+        this.isAtlanticForestEnabled$.next(value)
+    }
+
+    get isBiomeEnabled(): boolean {
+        return this.isBiomeEnabled$.value
+    }
+
+    set isBiomeEnabled(value: boolean) {
+        this.isBiomeEnabled$.next(value)
+    }
+
+    get isCerradoEnabled(): boolean {
+        return this.isCerradoEnabled$.value
+    }
+
+    set isCerradoEnabled(value: boolean) {
+        this.isCerradoEnabled$.next(value)
+    }
+
+    get isMatopibaEnabled(): boolean {
+        return this.isMatopibaEnabled$.value
+    }
+
+    set isMatopibaEnabled(value: boolean) {
+        this.isMatopibaEnabled$.next(value)
+    }
+
+    get isVegetationEnabled(): boolean {
+        return this.isVegetationEnabled$.value
+    }
+
+    set isVegetationEnabled(value: boolean) {
+        this.isVegetationEnabled$.next(value)
     }
 
     searchConservation(sphere: string, category: string) {
@@ -183,6 +277,38 @@ export class IcmbioService {
         }
 
         return this.getFeatures('/ecocorridors/geojson')
+    }
+
+    private getAtlanticForest = (isEnabled: boolean): Observable<FeatureCollection> => {
+        if (!isEnabled) {
+            return of(emptyFeatures())
+        }
+
+        return this.getFeatures('/atlantic_forest/geojson')
+    }
+
+    private getBiome = (isEnabled: boolean): Observable<FeatureCollection> => {
+        if (!isEnabled) {
+            return of(emptyFeatures())
+        }
+
+        return this.getFeatures('/biomes/geojson')
+    }
+
+    private getMatopiba = (isEnabled: boolean): Observable<FeatureCollection> => {
+        if (!isEnabled) {
+            return of(emptyFeatures())
+        }
+
+        return this.getFeatures('/matopiba/geojson')
+    }
+
+    private getVegetation = (isEnabled: boolean): Observable<FeatureCollection> => {
+        if (!isEnabled) {
+            return of(emptyFeatures())
+        }
+
+        return this.getFeatures('/vegetation/geojson')
     }
 
     private getFeatures(subpath: string, params = {}): Observable<FeatureCollection> {
