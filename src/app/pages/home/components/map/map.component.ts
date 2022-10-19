@@ -606,14 +606,14 @@ export class MapComponent implements AfterViewInit {
         this.map.addSource(OCCURRENCES_SOURCE, initialData)
         this.map.addLayer({
             id: OCCURRENCES_LAYER,
-            type: 'symbol',
+            type: 'circle',
             source: OCCURRENCES_SOURCE,
             filter: ['!', ['has', 'point_count']],
-            layout: {
-                'icon-image': OCCURRENCES_ICON,
-                'icon-size': 0.1
-            }
-            /*paint: {
+            // layout: {
+            //     'icon-image': OCCURRENCES_ICON,
+            //     'icon-size': 0.1
+            // }
+            paint: {
                 'circle-color': [
                     'case',
                     ['!=', ['get', 'resolved_date'], null],
@@ -625,31 +625,31 @@ export class MapComponent implements AfterViewInit {
                 'circle-radius': 8,
                 'circle-stroke-width': 1,
                 'circle-stroke-color': '#fff'
-            }*/
-        });
-
-        this.map.addLayer({
-            id: OCCURRENCES_CLUSTER_LAYER,
-            type: 'symbol',
-            source: OCCURRENCES_SOURCE,
-            layout: {
-                'icon-image': OCCURRENCES_ICON,
-                'icon-size': 0.1
             }
         });
 
-        this.map.addLayer({
-            id: OCCURRENCES_COUNT_LAYER,
-            type: 'symbol',
-            source: OCCURRENCES_SOURCE,
-            filter: ['has', 'point_count'],
-            layout: {
-                'text-field': '{point_count_abbreviated}',
-                'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-                'text-size': 12
-            },
-            paint: { 'text-color': '#ffffff' }
-        });
+        // this.map.addLayer({
+        //     id: OCCURRENCES_CLUSTER_LAYER,
+        //     type: 'symbol',
+        //     source: OCCURRENCES_SOURCE,
+        //     layout: {
+        //         'icon-image': OCCURRENCES_ICON,
+        //         'icon-size': 0.1
+        //     }
+        // });
+
+        // this.map.addLayer({
+        //     id: OCCURRENCES_COUNT_LAYER,
+        //     type: 'symbol',
+        //     source: OCCURRENCES_SOURCE,
+        //     filter: ['has', 'point_count'],
+        //     layout: {
+        //         'text-field': '{point_count_abbreviated}',
+        //         'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+        //         'text-size': 12
+        //     },
+        //     paint: { 'text-color': '#ffffff' }
+        // });
 
         // Visits
         this.map.addSource(VISITS_SOURCE, initialData)
