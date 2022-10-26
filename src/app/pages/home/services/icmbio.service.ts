@@ -17,8 +17,8 @@ export class IcmbioService {
     isConservationLoading$ = new BehaviorSubject(false)
     conservationFeatures$: Observable<FeatureCollection>
 
-    private indiState$ = new BehaviorSubject<string | null>(null)
-    isIndiLoading$ = new BehaviorSubject(false)
+    private isIndiEnabled$ = new BehaviorSubject(false)
+    private isIndiLoading$ = new BehaviorSubject(false)
     indiFeatures$: Observable<FeatureCollection>
 
     private isGeoSitesEnabled$ = new BehaviorSubject(false)
@@ -63,7 +63,7 @@ export class IcmbioService {
         )
 
         this.indiFeatures$ = this.bind(
-            this.indiState$,
+            this.isIndiEnabled$,
             this.getIndigenousLand,
             this.isIndiLoading$
         )
@@ -117,13 +117,15 @@ export class IcmbioService {
         )
 
         this.isOtherLoading$ = combineLatest([
+            this.isIndiLoading$,
             this.isGeoSitesLoading$,
             this.isGeoParksLoading$,
             this.isCorridorsLoading$,
             this.isAtlanticForestLoading$,
             this.isBiomeLoading$,
             this.isMatopibaLoading$,
-            this.isCerradoLoading$
+            this.isCerradoLoading$,
+            this.isVegetationLoading$
         ]).pipe(
             map(loadingArray =>
                 loadingArray.reduce((acc, curr) => acc || curr, false)
@@ -135,12 +137,12 @@ export class IcmbioService {
         return this.conservationQuery$.value
     }
 
-    get indiState(): string | null {
-        return this.indiState$.value
+    get isIndiLoading(): boolean {
+        return this.isIndiLoading$.value
     }
 
-    set indiState(value: string | null) {
-        this.indiState$.next(value)
+    set isIndiEnabled(value: boolean) {
+        this.isIndiEnabled$.next(value)
     }
 
     get isGeoSitesEnabled(): boolean {
@@ -247,12 +249,12 @@ export class IcmbioService {
         return this.getFeatures('/conservation/geojson', params)
     }
 
-    private getIndigenousLand = (state: string | null): Observable<FeatureCollection> => {
-        if (state == null) {
+    private getIndigenousLand = (isEnabled: boolean): Observable<FeatureCollection> => {
+        if (!isEnabled) {
             return of(emptyFeatures())
         }
 
-        return this.getFeatures('/indigenousland/geojson', { state })
+        return this.getFeatures('/indigenousland/geojson')
     }
 
     private getGeoSites = (isEnabled: boolean): Observable<FeatureCollection> => {

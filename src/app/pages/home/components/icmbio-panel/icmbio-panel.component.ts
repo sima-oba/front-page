@@ -17,9 +17,7 @@ export class IcmbioPanelComponent {
     isConservationEnabled: boolean
     isConservationLoading$ = this.icmbioService.isConservationLoading$
 
-    indiState = this.icmbioService.indiState
-    isIndiLoading$ = this.icmbioService.isIndiLoading$
-
+    indiState = this.icmbioService.isIndiEnabled
     isGeoSitesEnabled = this.icmbioService.isGeoSitesEnabled
     isGeoParksEnabled = this.icmbioService.isGeoParksEnabled
     isCorridorsEnabled = this.icmbioService.isCorridorsEnabled
@@ -56,9 +54,8 @@ export class IcmbioPanelComponent {
         }
     }
 
-    onIndigenousLandChanged(event: MatSelectChange) {
-        const state = event.value as string
-        this.icmbioService.indiState = state.length > 0 ? state : null
+    onIndigenousLandChanged(event: MatCheckboxChange) {
+        this.icmbioService.isIndiEnabled = event.checked
     }
 
     onGeoSitesChanged(event: MatCheckboxChange) {

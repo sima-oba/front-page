@@ -60,32 +60,6 @@
     </section>
 
     <section>
-        <h3 class="title">Terras Indígenas</h3>
-
-        <mat-progress-bar
-            mode="indeterminate"
-            [style.visibility]="(isIndiLoading$ | async) ? 'visible' : 'hidden'">
-        </mat-progress-bar>
-
-        <div class="form">
-            <label>Unidade Federal</label>
-
-            <mat-form-field appearance="outline">
-                <mat-select
-                    [value]="indiState || ''"
-                    (selectionChange)="onIndigenousLandChanged($event)">
-
-                    <mat-option [value]="''">Desabilitado</mat-option>
-
-                    <mat-option *ngFor="let state of states$ | async" [value]="state">
-                        {{ state }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-    </section>
-
-    <section>
         <h3 class="title">Outros</h3>
 
         <mat-progress-bar
@@ -94,6 +68,12 @@
         </mat-progress-bar>
 
         <div class="checkbox-list">
+            <mat-checkbox class="checkbox-list__item"
+                [checked]="isGeoSitesEnabled"
+                (change)="onIndigenousLandChanged($event)">
+                Terras Indígenas
+            </mat-checkbox>
+
             <mat-checkbox class="checkbox-list__item"
                 [checked]="isGeoSitesEnabled"
                 (change)="onGeoSitesChanged($event)">
