@@ -146,7 +146,15 @@ export class SignUpComponent {
                 break
 
             case 400:
-                this.showError('Falha ao realizar cadastro', error.message)
+                console.log(error)
+                if (error.error.error.includes('exists')) {
+                    this.showError(
+                        'Erro ao cadastrar usuário',
+                        `Usuário com CPF/CNPJ ${this.form.value.doc} já possui cadastro.`,
+                    )
+                } else {
+                    this.showError('Falha ao realizar cadastro', error.message)
+                }
                 break
 
             default:
