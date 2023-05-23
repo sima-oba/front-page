@@ -170,7 +170,7 @@ export class CalculatorReportComponent {
                 ['Restos', 'Culturais'],
                 'Óleo Diesel',
                 'Energia Elétrica',
-                ['Fertilizalção', 'Nitrogenada'],
+                ['Fertilização', 'Nitrogenada'],
                 'Emissão Total'
             ],
             datasets: [
