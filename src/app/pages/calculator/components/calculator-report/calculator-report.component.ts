@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Chart, ChartConfiguration, ChartData } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import jsPDF from 'jspdf';
 import { from } from 'rxjs';
 import { first } from 'rxjs/operators';
-import { LoadingService } from 'src/app/core/services/loading.service';
 
+import { LoadingService } from 'src/app/core/services/loading.service';
+import { bgColor } from 'src/app/core/utils/chart/plugins';
 import { CalculatorBundle } from '../../models/calculator-bundle.model';
 import { EmissionsPerHectareYear, RemovalPerHectareYear } from '../../models/calculator-report.model';
 import { Item } from '../../models/item.model';
@@ -36,16 +38,17 @@ export class CalculatorReportComponent {
     sceneriesChartOptions: ChartConfiguration['options']
     sceneriesChartData: ChartData<'bar'>
 
+    private containerEl: HTMLElement
+
     constructor(
         activatedRoute: ActivatedRoute,
         resultService: CalculatorResultService,
-        loading: LoadingService
+        private loading: LoadingService
     ) {
         const id = activatedRoute.snapshot.params?.id
+        Chart.register(ChartDataLabels, bgColor)
 
-        Chart.register(ChartDataLabels)
-
-        loading.withObservable(from(resultService.loadById(id)))        
+        loading.withObservable(from(resultService.loadById(id)))
             .pipe(first())
             .subscribe(bundle => {
                 this.bundle = bundle
@@ -54,6 +57,11 @@ export class CalculatorReportComponent {
                 this.setUpBalanceChart()
                 this.setUpSceneriesChart()
             })
+    }
+
+    @ViewChild('container')
+    set container(value: ElementRef<HTMLElement>) {
+        this.containerEl = value?.nativeElement
     }
 
     private setUpEmissionChart() {
@@ -503,4 +511,340 @@ export class CalculatorReportComponent {
         }
     }
 
+    async exportAsPDF() {
+        this.loading.on()
+
+        try {
+            const pdf = new jsPDF('portrait', 'pt', 'a4')
+            pdf.addFont('assets/fonts/Roboto-Regular.ttf', 'Roboto', 'normal')
+            pdf.addFont('assets/fonts/Roboto-Medium.ttf', 'Roboto', 'bold')
+
+            const width = pdf.internal.pageSize.getWidth()
+            const height = pdf.internal.pageSize.getHeight()
+            const content = document.createElement('div')
+
+            const page1 = this.createPage(width, height, 1,
+                this.createTitle(),
+                this.createPresentation(),
+                this.createEmissionComparisonPart1()
+            )
+            content.append(page1)
+
+            const page2 = this.createPage(width, height, 2,
+                this.createEmissionComparisonPart2(),
+                this.createCarbonSequestration(),
+                this.createFarmCarbonBalancePart1(),
+            )
+            content.append(page2)
+
+            const page3 = this.createPage(width, height, 3,
+                this.createFarmCarbonBalancePart2(),
+                this.createCarbonBalanceScenarios(),
+                this.createCarbonStockInNativeVegetation()
+            )
+            content.append(page3)
+
+            const page4 = this.createPage(width, height, 4,
+                this.createConclusion()
+            )
+            content.append(page4)
+
+            await pdf.html(content, { autoPaging: 'slice' })
+            pdf.deletePage(pdf.getNumberOfPages())
+
+            const now = new Date()
+            const filename = `Relatório Emissões e Sequestro de Carbono - ${now.getDate()}.${now.getMonth() + 1}.${now.getFullYear()}.pdf`
+            pdf.save(filename)
+        } finally {
+            this.loading.off()
+        }
+    }
+
+    private createTitle(): HTMLElement {
+        const h3 = document.createElement('h3')
+        h3.style.margin = '0'
+        h3.style.paddingBottom = '4px'
+        h3.style.textAlign = 'center'
+        h3.style.fontSize = '12pt'
+        h3.style.fontStyle = 'bold'
+        h3.style.color = '#458985'
+        h3.style.borderBottom = 'solid 3px #cbd862'
+        h3.textContent = this.containerEl
+            .querySelector<HTMLElement>('h3.title')
+            .innerText
+            .trim()
+            .toUpperCase()
+
+        return h3
+    }
+
+    private createPresentation(): HTMLElement {
+        const titleText = this.containerEl
+            .querySelector<HTMLElement>('#presentation h2')
+            .innerText
+            .trim()
+
+        const paragraphs = Array
+            .from(this.containerEl.querySelectorAll<HTMLElement>('#presentation p'))
+            .map(element => {
+                const p = element.cloneNode(true) as HTMLElement
+                p.style.fontSize = '10pt'
+                return p
+            })
+
+        const section = this.createSection(titleText)
+        section.append(...paragraphs)
+
+        return section
+    }
+
+    private createEmissionComparisonPart1(): HTMLElement {
+        const title = this.containerEl
+            .querySelector<HTMLElement>('#emisison-comparison h2')
+            .innerText
+            .trim()
+
+        const chartDataUrl = this.containerEl
+            .querySelector<HTMLCanvasElement>('canvas')
+            .toDataURL('image/jpg')
+
+        const chartImg = document.createElement('img')
+        chartImg.style.width = '100%'
+        chartImg.src = chartDataUrl
+
+        const note = document
+            .querySelector('#emisison-comparison .legend')
+            .cloneNode(true) as HTMLElement
+        note.className = ''
+        note.style.margin = '0'
+        note.style.padding = '0'
+        note.style.background = 'none'
+        note.style.fontSize = '8pt'
+
+        const section = this.createSection(title)
+        section.append(chartImg, note)
+
+        return section
+    }
+
+    private createEmissionComparisonPart2(): HTMLElement {
+        const paragraph = this.containerEl
+            .querySelector('#emisison-comparison .text p')
+            .cloneNode(true) as HTMLElement
+        paragraph.style.fontSize = '10pt'
+        paragraph.style.color = '#4f4f4f'
+
+        const legends = Array
+            .from(this.containerEl.querySelectorAll<HTMLElement>('#emisison-comparison .box-legend'))
+            .map(element => {
+                const li = document.createElement('li')
+                li.style.paddingLeft = '8px'
+                li.style.fontSize = '10pt'
+                li.style.color = '#4f4f4f'
+                li.textContent = element.innerText
+                return li
+            })
+        const legendsUl = document.createElement('ul')
+        legendsUl.append(...legends)
+
+        const section = this.createSection()
+        section.append(paragraph, legendsUl)
+
+        return section
+    }
+
+    private createCarbonSequestration(): HTMLElement {
+        const title = this.containerEl
+            .querySelector<HTMLElement>('#carbon-sequestration h2')
+            .innerText
+            .trim()
+
+        const chart = this.canvasToImage('#carbon-sequestration canvas')
+
+        const paragraph = this.containerEl
+            .querySelector('#carbon-sequestration p')
+            .cloneNode(true) as HTMLElement
+        paragraph.style.fontSize = '10pt'
+        paragraph.style.color = '#4f4f4f'
+
+        const section = this.createSection(title)
+        section.append(chart, paragraph)
+
+        return section
+    }
+
+    private createFarmCarbonBalancePart1(): HTMLElement {
+        const title = this.containerEl
+            .querySelector<HTMLElement>('#farm-carbon-balance h2')
+            .innerText
+            .trim()
+
+        const chart = this.canvasToImage('#farm-carbon-balance canvas')
+
+        const paragraph = this.containerEl
+            .querySelector('#farm-carbon-balance p')
+            .cloneNode(true) as HTMLElement
+        paragraph.style.fontSize = '10pt'
+        paragraph.style.color = '#4f4f4f'
+
+        const section = this.createSection(title)
+        section.append(chart)
+
+        return section
+    }
+
+    private createFarmCarbonBalancePart2(): HTMLElement {
+        const paragraph = this.containerEl
+            .querySelector('#farm-carbon-balance p')
+            .cloneNode(true) as HTMLElement
+        paragraph.style.fontSize = '10pt'
+        paragraph.style.color = '#4f4f4f'
+
+        const section = this.createSection()
+        section.append(paragraph)
+
+        return section
+    }
+
+    private createCarbonBalanceScenarios(): HTMLElement {
+        const title = this.containerEl
+            .querySelector<HTMLElement>('#carbon-balance-scenarios h2')
+            .innerText
+            .trim()
+
+        const chart = this.canvasToImage('#carbon-balance-scenarios canvas')
+
+        const paragraph = this.containerEl
+            .querySelector('#carbon-balance-scenarios p')
+            .cloneNode(true) as HTMLElement
+        paragraph.style.fontSize = '10pt'
+        paragraph.style.color = '#4f4f4f'
+
+        const section = this.createSection(title)
+        section.append(chart, paragraph)
+
+        return section
+    }
+
+    private createCarbonStockInNativeVegetation(): HTMLElement {
+        const title = this.containerEl
+            .querySelector<HTMLElement>('#carbon-stock-in-native-vegetation h2')
+            .innerText
+            .trim()
+
+        const items = Array
+            .from(this.containerEl.querySelectorAll('#carbon-stock-in-native-vegetation .carbon-box-content'))
+            .map(element => {
+                const value = element.querySelector<HTMLElement>('.carbon-box-value').innerText
+                const legend = element.querySelector<HTMLElement>('.carbon-box-legend').innerText
+                const li = document.createElement('li')
+                li.textContent = `${legend}: ${value}`
+                li.style.paddingLeft = '8px'
+                li.style.fontSize = '10pt'
+                li.style.color = '#4f4f4f'
+                return li
+            })
+
+        const ul = document.createElement('ul')
+        ul.append(...items)
+
+        const paragraph = this.containerEl
+            .querySelector('#carbon-stock-in-native-vegetation p')
+            .cloneNode(true) as HTMLElement
+        paragraph.style.fontSize = '10pt'
+        paragraph.style.color = '#4f4f4f'
+        paragraph.className = ''
+
+        const section = this.createSection(title)
+        section.append(ul, paragraph)
+
+        return section
+    }
+
+    private createConclusion(): HTMLElement {
+        const title = this.containerEl
+            .querySelector<HTMLElement>('#conclusion h1')
+            .innerText
+            .trim()
+
+        const paragraphs = Array
+            .from(this.containerEl.querySelectorAll('#conclusion p'))
+            .map(element => {
+                const p = element.cloneNode(true) as HTMLElement
+                p.style.fontSize = '10pt'
+                return p
+            })
+
+        const section = this.createSection(title)
+        section.append(...paragraphs)
+
+
+        return section
+    }
+
+    private createPage(width: number, height: number, pageNumber: number, ...contents: HTMLElement[]): HTMLElement {
+        const page = document.createElement('div')
+        page.style.boxSizing = 'border-box'
+        page.style.width = width + 'px'
+        page.style.height = height + 'px'
+        page.style.display = 'flex'
+        page.style.flexDirection = 'column'
+        page.style.padding = '40px'
+        page.style.fontFamily = 'Roboto'
+        page.style.letterSpacing = '0.01px'
+
+        const logo = document.createElement('img')
+        logo.style.display = 'block'
+        logo.style.width = '100px'
+        logo.style.margin = '0 auto'
+        logo.style.marginBottom = '16px'
+        logo.src = '/assets/img/logos/logo-normal.png'
+
+        const header = document.createElement('header')
+        header.append(logo)
+        page.append(header)
+
+        const body = document.createElement('div')
+        body.style.flexGrow = '1'
+        body.append(...contents)
+        page.append(body)
+
+        const footer = document.createElement('footer')
+        footer.style.display = 'flex'
+        footer.style.justifyContent = 'end'
+        footer.style.alignItems = 'end'
+        footer.style.fontFamily = 'Roboto'
+        footer.style.fontSize = '8pt'
+        footer.textContent = pageNumber.toString()
+        page.append(footer)
+
+        return page
+    }
+
+    private createSection(title?: string): HTMLElement {
+        const section = document.createElement('section')
+
+        if (title) {
+            const h4 = document.createElement('h4')
+            h4.style.fontSize = '12pt'
+            h4.style.color = '#458985'
+            h4.style.marginBottom = '16px'
+            h4.textContent = title
+            section.append(h4)
+        }
+
+        return section
+    }
+
+    private canvasToImage(canvasSelector: string): HTMLImageElement {
+        const dataUrl = this.containerEl
+            .querySelector<HTMLCanvasElement>(canvasSelector)
+            .toDataURL('image/jpg')
+
+        const img = document.createElement('img')
+        img.style.width = '100%'
+        img.src = dataUrl
+
+        return img
+    }
 }
