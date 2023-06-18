@@ -1,7 +1,18 @@
-<div class="container pb-4" *ngIf="bundle">
+<div #container class="container pb-4" *ngIf="bundle">
     <app-page-title>Comparativo de Emissões e Sequestro de Carbono</app-page-title>
 
-    <section class="block block-solid mt-4">
+    <div class="text-right">
+        <button
+            mat-button
+            color="primary"
+            type="button"
+            (click)="exportAsPDF()">
+            Exportar PDF
+            <mat-icon class="material-icons-outlined">download</mat-icon>
+        </button>
+    </div>
+
+    <section id="presentation" class="block block-solid mt-4">
         <h2 class="title mb-5">Apresentação</h2>
 
         <p class="text">
@@ -28,7 +39,7 @@
         </p>
     </section>
 
-    <section class="block block-light mt-4">
+    <section id="emisison-comparison" class="block block-light mt-4">
         <h2 class="title mb-3">Comparativo de Emissões</h2>
 
         <div class="chart-container">
@@ -96,7 +107,7 @@
         </div>
     </section>
 
-    <section class="block block-light mt-4">
+    <section id="carbon-sequestration" class="block block-light mt-4">
         <h2 class="title mb-3">Sequestro de Carbono</h2>
 
         <div class="chart-container">
@@ -133,7 +144,7 @@
         </div>
     </section>
 
-    <section class="block block-light mt-4">
+    <section id="farm-carbon-balance" class="block block-light mt-4">
         <h2 class="title mb-3">Balanço de Carbono da Fazenda</h2>
 
         <div class="chart-container-y">
@@ -164,7 +175,7 @@
         </div>
     </section>
 
-    <section class="block block-light mt-4">
+    <section id="carbon-balance-scenarios" class="block block-light mt-4">
         <h2 class="title mb-3">Cenários de Balanço de Carbono</h2>
 
         <div class="chart-container">
@@ -197,7 +208,7 @@
         </div>
     </section>
 
-    <section class="block block-light mt-4">
+    <section id="carbon-stock-in-native-vegetation" class="block block-light mt-4">
         <h2 class="title">Estoque de Carbono na Vegetação Nativa</h2>        
         
         <div class="carbon-box mt-5">
@@ -235,7 +246,7 @@
         </p>
     </section>
 
-    <section class="block block-solid mt-4">
+    <section id="conclusion" class="block block-solid mt-4">
         <h1 class="title">Conclusão e Recomendações para Redução das Emissões</h1>
 
         <p class="text mt-5">
