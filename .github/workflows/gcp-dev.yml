@@ -1,0 +1,51 @@
+name: Build and deploy front-page
+on:
+  push:
+    branches: ["develop"]
+jobs:
+  push-image:
+    name: Build and push an image
+    runs-on: ubuntu-20.04
+    environment: staging
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - id: auth
+        name: Google Auth
+        uses: "google-github-actions/auth@v0"
+        with:
+          token_format: "access_token"
+          credentials_json: "${{ secrets.GCP_SECRET }}"
+
+      - name: Set up GKE credentials
+        uses: google-github-actions/get-gke-credentials@v0
+        with:
+          cluster_name: ${{ env.CLUSTER }}
+          location: ${{ env.PROJECT_ZONE }}
+
+      - name: Configure Docker Client
+        run: |-
+          echo ${{ steps.auth.outputs.access_token }} | docker login -u oauth2accesstoken --password-stdin https://$REGISTRY-docker.pkg.dev
+
+      - name: Build Docker Image
+        run: docker build --build-arg BASE_URL=$BASE_URL --build-arg MAP_KEY=$MAP_KEY . --tag front-page:latest
+
+      - name: Push Docker Image to Artifact Registry
+        env:
+          IMAGE_TAG: ${{ github.sha }}
+        run: |-
+          docker tag front-page:latest $REGISTRY-docker.pkg.dev/$PROJECT_ID/$REGISTRY_REPO/front-page:latest
+          docker tag front-page:latest $REGISTRY-docker.pkg.dev/$PROJECT_ID/$REGISTRY_REPO/front-page:$IMAGE_TAG
+          docker push $REGISTRY-docker.pkg.dev/$PROJECT_ID/$REGISTRY_REPO/front-page:latest
+          docker push $REGISTRY-docker.pkg.dev/$PROJECT_ID/$REGISTRY_REPO/front-page:$IMAGE_TAG
+
+      - name: Deploy to GKE
+        env:
+          IMAGE_TAG: ${{ github.sha }}
+        run: |-
+          envsubst < k8s/deployment.yml | kubectl apply -f - -n sima
+          kubectl apply -f k8s/service.yml -n sima
+          kubectl rollout status deployment/front-page -n sima
+          kubectl get services -o wide -n sima

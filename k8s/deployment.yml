@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: front-page
-          image: $REGISTRY-docker.pkg.dev/$PROJECT_ID/sima/front-page:$IMAGE_TAG
+          image: $REGISTRY-docker.pkg.dev/$PROJECT_ID/$REGISTRY_REPO/front-page:$IMAGE_TAG
           imagePullPolicy: Always
           ports:
             - name: http
