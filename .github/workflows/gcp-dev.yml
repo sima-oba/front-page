@@ -22,8 +22,8 @@ jobs:
       - name: Set up GKE credentials
         uses: google-github-actions/get-gke-credentials@v0
         with:
-          cluster_name: ${{ env.CLUSTER }}
-          location: ${{ env.PROJECT_ZONE }}
+          cluster_name: ${{ vars.CLUSTER }}
+          location: ${{ vars.PROJECT_ZONE }}
 
       - name: Configure Docker Client
         run: |-
