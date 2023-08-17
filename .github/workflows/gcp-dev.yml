@@ -7,7 +7,12 @@ jobs:
     name: Build and push an image
     runs-on: ubuntu-20.04
     environment: staging
-
+    env:
+      PROJECT_ID: ${{ vars.PROJECT_ID }}
+      REGISTRY: ${{ vars.REGISTRY }}
+      REGISTRY_REPO: ${{ vars.REGISTRY_REPO }}
+      IMAGE_TAG: ${{ github.sha }}
+    
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -30,11 +35,12 @@ jobs:
           echo ${{ steps.auth.outputs.access_token }} | docker login -u oauth2accesstoken --password-stdin https://$REGISTRY-docker.pkg.dev
 
       - name: Build Docker Image
+        env:
+          BASE_URL: ${{ vars.BASE_URL }}
+          MAP_KEY: ${{ vars.MAP_KEY }}
         run: docker build --build-arg BASE_URL=$BASE_URL --build-arg MAP_KEY=$MAP_KEY . --tag front-page:latest
 
       - name: Push Docker Image to Artifact Registry
-        env:
-          IMAGE_TAG: ${{ github.sha }}
         run: |-
           docker tag front-page:latest $REGISTRY-docker.pkg.dev/$PROJECT_ID/$REGISTRY_REPO/front-page:latest
           docker tag front-page:latest $REGISTRY-docker.pkg.dev/$PROJECT_ID/$REGISTRY_REPO/front-page:$IMAGE_TAG
@@ -42,8 +48,6 @@ jobs:
           docker push $REGISTRY-docker.pkg.dev/$PROJECT_ID/$REGISTRY_REPO/front-page:$IMAGE_TAG
 
       - name: Deploy to GKE
-        env:
-          IMAGE_TAG: ${{ github.sha }}
         run: |-
           envsubst < k8s/deployment.yml | kubectl apply -f - -n sima
           kubectl apply -f k8s/service.yml -n sima
