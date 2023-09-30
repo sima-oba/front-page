@@ -9,6 +9,7 @@ import { FireRiskService } from '../../services/fire-risk.service';
 })
 export class FireRiskPanelComponent {
     isEnabled$ = this.fireRiskService.isEnabled$
+    isLoading$ = this.fireRiskService.isLoading$
 
     constructor(
         private drawer: DrawerService,
