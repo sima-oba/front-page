@@ -6,6 +6,11 @@
     <section>
         <h3>Risco de Fogo</h3>
 
+        <mat-progress-bar
+            mode="indeterminate"
+            [style.visibility]="(isLoading$ | async) ? 'visible' : 'hidden'">
+        </mat-progress-bar>
+
         <div class="checkbox-item">
             <mat-checkbox
                 [checked]="isEnabled$ | async"
