@@ -215,9 +215,9 @@
             <img src="assets/icons/carbon-stock.svg"alt="Estoque de Carbono">
             
             <div class="carbon-box-content">
-                <div class="carbon-box-value">{{ bundle.result.baseline_c_stock | number: '1.2-2' }} tC</div>
+                <div class="carbon-box-value">{{ bundle.result.rl_c_stock + bundle.result.app_c_stock | number: '1.2-2' }} tC</div>
                 <span class="carbon-box-legend">
-                    {{ bundle.result.baseline_c_stock >= 0
+                    {{ bundle.result.rl_c_stock + bundle.result.app_c_stock >= 0
                         ? 'Estoque de carbono na vegetação nativa'
                         : 'Não há estoque de carbono vegetação nativa'
                     }}
