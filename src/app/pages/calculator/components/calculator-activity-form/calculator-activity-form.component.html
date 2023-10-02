@@ -209,9 +209,10 @@
                             <mat-form-field appearance="outline" >
                                 <mat-select value="" formControlName="crop_year" >
                                     <mat-option value="" disabled>Selecione o período</mat-option>
-                                    <mat-option value="2019/2020">2019/2020</mat-option>
-                                    <mat-option value="2020/2021">2020/2021</mat-option>
-                                    <mat-option value="2021/2022">2021/2022</mat-option>
+                                    
+                                    <mat-option *ngFor="let years of cropYears" [value]="years">
+                                        {{ years }}
+                                    </mat-option>
                                 </mat-select>
                                 
                                 <mat-error *ngIf="getError('farm_info.crop_year')">

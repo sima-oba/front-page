@@ -11,6 +11,18 @@ import { CommonForm } from "../../../../configurations/commons/common-form";
 import { CalculatorActivity } from "../../models/calculator-activity.model";
 import { ActivityService } from "../../services/calculator-activity.service";
 
+function getCropYears(): string[] {
+    const startYear = 2019;
+    const currentYear = new Date().getFullYear();
+    const years: string[] = [];
+
+    for (let year = currentYear; year > startYear; year--) {
+        years.push(`${year}/${year - 1}`);
+    }
+
+    return years;
+}
+
 @UntilDestroy()
 @Component({
     selector: 'app-activity-form',
@@ -21,6 +33,7 @@ export class ActivityFormComponent extends CommonForm<CalculatorActivity> implem
     biomes$ = this.activityService.biomes$
     cultivationSystems$ = this.activityService.cultivationSystems$
     landOccupation$ = this.activityService.landOccupation$
+    cropYears = getCropYears()
 
     @ViewChild('container')
     container: ElementRef
