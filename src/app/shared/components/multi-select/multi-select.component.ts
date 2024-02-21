@@ -48,7 +48,7 @@ export class MultiSelectComponent {
 
     onSelectionChange(event: MatCheckboxChange, item: MultiSelectItem<any>) {
         item.isSelected = event.checked
-        
+
         if (item.isSelected) {
             this.lastSelectedItem.next(item.data)
         }
@@ -60,4 +60,14 @@ export class MultiSelectComponent {
         this.selectedItems.next(selectedItems)
     }
 
+    onSelectAll(event: MatCheckboxChange) {
+        this.filteredItems = this.allItems = this.allItems.map(item => ({
+            label: item.label,
+            legend: item.legend,
+            data: item.data,
+            isSelected: event.checked
+        }))
+
+        this.selectedItems.next(event.checked ? this.filteredItems.map(item => item.data) : [])
+    }
 }

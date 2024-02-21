@@ -68,8 +68,8 @@ export class ProducerService {
             return this.empty()
         }
 
-        const params = { ids: farmIds.join(',') }
-        return this.client.get<FeatureCollection>(`${PATH}/farms/geojson`, { params })
+        const body = { ids: farmIds.join(',') }
+        return this.client.post<FeatureCollection>(`${PATH}/farms/geojson`, body)
     }
 
     private getSelectedState = (farms: any[]): MultiSelectItem<Farm>[] => {
