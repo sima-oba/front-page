@@ -7,6 +7,12 @@
         (deleteClick)="clearFilter()">
     </app-search-box>
 
+    <hr class="separator mt-3 mb-3 mr-4">
+
+    <mat-checkbox (change)="onSelectAll($event)">
+        Selecionar todos
+    </mat-checkbox>
+
     <hr class="separator mt-3 mr-4">
 
     <div class="scroll">
