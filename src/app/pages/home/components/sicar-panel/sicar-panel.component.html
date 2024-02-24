@@ -40,7 +40,7 @@
             <div class="checkbox-list__item">
                 <mat-checkbox
                     [disabled]="isControlsDisabled$ | async"
-                    [checked]="(subject$ | async) === 'APP'"
+                    
                     (change)="onSubjectChanged($event, 'APP')">
                     Área de Preservação Permanente
                 </mat-checkbox>
@@ -49,7 +49,7 @@
             <div class="checkbox-list__item">
                 <mat-checkbox
                     [disabled]="isControlsDisabled$ | async"
-                    [checked]="(subject$ | async) === 'AREA_CONSOLIDADA'"
+                    [checked]="(subjects$ | async).has('AREA_CONSOLIDADA')"
                     (change)="onSubjectChanged($event, 'AREA_CONSOLIDADA')">
                     Área Consolidada
                 </mat-checkbox>
@@ -58,7 +58,7 @@
             <div class="checkbox-list__item">
                 <mat-checkbox
                     [disabled]="isControlsDisabled$ | async"
-                    [checked]="(subject$ | async) === 'RESERVA_LEGAL'"
+                    [checked]="(subjects$ | async).has('RESERVA_LEGAL')"
                     (change)="onSubjectChanged($event, 'RESERVA_LEGAL')">
                     Reserva Legal
                 </mat-checkbox>
@@ -67,7 +67,7 @@
             <div class="checkbox-list__item">
                 <mat-checkbox
                     [disabled]="isControlsDisabled$ | async"
-                    [checked]="(subject$ | async) === 'VEGETACAO_NATIVA'"
+                    [checked]="(subjects$ | async).has('VEGETACAO_NATIVA')"
                     (change)="onSubjectChanged($event, 'VEGETACAO_NATIVA')">
                     Vegetação Nativa
                 </mat-checkbox>

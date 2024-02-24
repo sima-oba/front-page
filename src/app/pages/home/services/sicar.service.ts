@@ -15,7 +15,7 @@ const PATH = '/producer'
 })
 export class SicarService {
     isAreasLoading$ = new BehaviorSubject(false)
-    areaSubject$ = new BehaviorSubject<SicarSubject | null>(null)
+    areaSubjects$ = new BehaviorSubject<Set<SicarSubject>>(new Set())
     areaFeatures$: Observable<FeatureCollection>
 
     isFarmsLoading$ = new BehaviorSubject(false)
@@ -27,15 +27,15 @@ export class SicarService {
 
     constructor(private client: HttpClient) {
         this.areaFeatures$ = combineLatest([
-            this.areaSubject$, this.cityGeoid$
+            this.areaSubjects$, this.cityGeoid$
         ]).pipe(
             tap(() => this.isAreasLoading$.next(true)),
-            switchMap(([subject, geoid]) => {
-                if (subject === null || geoid === null) {
+            switchMap(([subjects, geoid]) => {
+                if (subjects === null || geoid === null) {
                     return of(emptyFeatures())
                 }
 
-                return this.getSicar(subject, geoid)
+                return this.getSicar(subjects, geoid)
             }),
             tap(() => this.isAreasLoading$.next(false)),
             catchError(() => {
@@ -71,17 +71,17 @@ export class SicarService {
         this.cityGeoid$.next(value)
     }
 
-    set areaSubject(value: SicarSubject | null) {
-        this.areaSubject$.next(value)
+    set areaSubjects(value: Set<SicarSubject>) {
+        this.areaSubjects$.next(value)        
     }
 
     set isFarmsEnabled(value: boolean) {
         this.isFarmsEnabled$.next(value)
     }
 
-    private getSicar(subject: SicarSubject, city_geoid: string): Observable<FeatureCollection> {
-        const params = { subject, city_geoid }
-        return this.client.get<FeatureCollection>(PATH + '/sicar/areas', { params })
+    private getSicar(subjects: Set<SicarSubject>, city_geoid: string): Observable<FeatureCollection> {
+        const params = { subject: Array.from(subjects).join(','), city_geoid }
+        return this.client.get<FeatureCollection>(PATH + '/sicar/areas2', { params })
     }
 
     private getFarms(cityGeoid: string): Observable<FeatureCollection> {

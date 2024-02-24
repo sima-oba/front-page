@@ -27,7 +27,7 @@ export class SicarPanelComponent {
 
     cities$ = this.sicarService.cities$
     cityGeoid$ = this.sicarService.cityGeoid$
-    subject$ = this.sicarService.areaSubject$
+    subjects$ = this.sicarService.areaSubjects$
     isFarmsEnabled$ = this.sicarService.isFarmsEnabled$
     isControlsDisabled$ = this.sicarService.cityGeoid$
         .pipe(map(geoid => geoid === null))
@@ -42,11 +42,16 @@ export class SicarPanelComponent {
     }
 
     onSubjectChanged(event: MatCheckboxChange, subject: SicarSubject) {
+        const subjects = this.sicarService.areaSubjects$.value
+
         if (event.checked) {
-            this.sicarService.areaSubject = subject
+            subjects.add(subject)
+
         } else {
-            this.sicarService.areaSubject = null
+            subjects.delete(subject)
         }
+
+        this.sicarService.areaSubjects = subjects
     }
 
     onFarmsChecked(event: MatCheckboxChange) {
