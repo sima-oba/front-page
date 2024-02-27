@@ -23,13 +23,19 @@
     </section>
 
     <section style="flex-grow: 1;">
-        <h3>Propriedades</h3>
+        <h3 style="display: flex; justify-content: space-between; align-items: center; padding-top: 0.5rem; padding-bottom: 0.5rem;">
+            <span>Propriedades</span>
+            
+            <button mat-icon-button title="Download" (click)="downloadFarms()">
+                <mat-icon>download</mat-icon>
+            </button>
+        </h3>
 
         <mat-progress-bar
             mode="indeterminate"
             [style.visibility]="(isFarmsLoading$ | async) ? 'visible' : 'hidden'">
         </mat-progress-bar>
-        
+
         <div class="checkbox-list pl-4 pt-3" style="flex-grow: 1;">
             <app-multi-select
                 placeholder="Buscar propriedade"

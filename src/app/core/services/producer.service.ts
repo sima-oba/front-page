@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FeatureCollection } from 'geojson';
 import { BehaviorSubject, Observable, of } from 'rxjs';
@@ -98,6 +98,15 @@ export class ProducerService {
 
     private getCities(): Observable<FeatureCollection> {
         return this.client.get<FeatureCollection>(`${PATH}/cities/geojson`)
+    }
+
+    downloadFarmsAsExcel(): Observable<HttpResponse<ArrayBuffer>> {
+        return this.getAllFarms().pipe(
+            map(list => list.map(farm => farm._id)),
+            switchMap(ids => this.client.post(
+                `${PATH}/farms/excel`, { ids: ids.join(',') }, { observe: 'response', responseType: 'arraybuffer' }
+            ))
+        )
     }
 
 }
