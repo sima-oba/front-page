@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FeatureCollection } from 'geojson';
 import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
@@ -72,7 +72,7 @@ export class SicarService {
     }
 
     set areaSubjects(value: Set<SicarSubject>) {
-        this.areaSubjects$.next(value)        
+        this.areaSubjects$.next(value)
     }
 
     set isFarmsEnabled(value: boolean) {
@@ -93,4 +93,12 @@ export class SicarService {
         return this.client.get<City[]>(PATH + "/cities")
     }
 
+    downloadAreas(): Observable<ArrayBuffer> {
+        const params = {
+            city_geoid: this.cityGeoid$.value,
+            subject: ['APP', 'AREA_CONSOLIDADA', 'RESERVA_LEGAL', 'VEGETACAO_NATIVA'].join(',')
+        }
+
+        return this.client.get(`${PATH}/sicar/excel`, { params, responseType: 'arraybuffer' })
+    }
 }

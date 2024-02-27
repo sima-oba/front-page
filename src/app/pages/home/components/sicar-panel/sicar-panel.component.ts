@@ -3,11 +3,12 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatSelectChange } from '@angular/material/select';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { combineLatest } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 
 import { SicarSubject } from '../../models/sicar.model';
 import { DrawerService } from '../../services/drawer.service';
 import { SicarService } from '../../services/sicar.service';
+import { LoadingService } from 'src/app/core/services/loading.service';
 
 @UntilDestroy()
 @Component({
@@ -34,7 +35,8 @@ export class SicarPanelComponent {
 
     constructor(
         private drawer: DrawerService,
-        private sicarService: SicarService
+        private sicarService: SicarService,
+        private loadingService: LoadingService
     ) { }
 
     onCityChanged(event: MatSelectChange) {
@@ -56,6 +58,24 @@ export class SicarPanelComponent {
 
     onFarmsChecked(event: MatCheckboxChange) {
         this.sicarService.isFarmsEnabled = event.checked
+    }
+
+    downloadAreas() {
+        this.loadingService.on()
+        this.sicarService.downloadAreas()
+            .pipe(first())
+            .subscribe(data => {
+                this.downLoadFile(data, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+                this.loadingService.off()
+            })
+    }
+
+    private downLoadFile(data: any, type: string) {
+        const blob = new Blob([data], { type })
+        const link = document.createElement('a')
+        link.href = URL.createObjectURL(blob)
+        link.download = 'propriedades.xlsx'
+        link.click()
     }
 
     close() {
