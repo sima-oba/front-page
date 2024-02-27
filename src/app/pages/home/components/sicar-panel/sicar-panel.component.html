@@ -4,7 +4,13 @@
     </button>
 
     <section>
-        <h3>SICAR</h3>
+        <h3 style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem; margin-bottom: 0.5rem; padding-right: 2rem;">
+            <span>SICAR</span>
+
+            <button mat-icon-button title="Download" [disabled]="!(cityGeoid$ | async)" (click)="downloadAreas()">
+                <mat-icon>download</mat-icon>
+            </button>
+        </h3>
         
         <mat-progress-bar
             mode="indeterminate"
